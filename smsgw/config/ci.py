@@ -1,4 +1,0 @@
-.*
-!.*
-!default.py
-!ci.py
