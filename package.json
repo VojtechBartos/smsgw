@@ -1,0 +1,37 @@
+{
+    "name": "sms-gateway",
+    "version": "1.0.0",
+    "description": "SMS gateway",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:VojtechBartos/smsgw.git"
+    },
+    "contributors": [
+        "Vojta Bartos <vojta@sleepio.com>"
+    ],
+    "dependencies": {
+        "flux": "^2.0.0",
+        "react": "~0.11.0",
+        "react-router": "*"
+    },
+    "devDependencies": {
+        "browserify": "~4.2.2",
+        "reactify": "~0.14.0",
+        "uglify-js": "~2.4.15",
+        "watchify": "~0.10.2",
+        "coffeeify": "*",
+        "coffee-reactify": "*",
+        "coffee-script": "~1.7.1",
+        "envify": "~2.0.1",
+        "gulp": "~3.8.0",
+        "gulp-coffeelint": "^0.3.2",
+        "gulp-util": "*",
+        "vinyl-source-stream": "*"
+    },
+    "browserify": {
+        "transform": [
+            "reactify",
+            "envify"
+        ]
+    }
+}
