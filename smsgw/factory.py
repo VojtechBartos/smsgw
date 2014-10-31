@@ -5,6 +5,7 @@ import os
 from flask import Flask
 from smsgw import resources
 from smsgw.extensions import db, bcrypt
+from smsgw.config import environments
 
 def create_app(name='smsgw', env=None):
     """
@@ -12,10 +13,10 @@ def create_app(name='smsgw', env=None):
     """
     # override env if its necessary 
     if env is not None: os.environ['SMSGW_ENV'] = env
-    
+
     # flask app inicialization
     app = Flask(name, static_url_path='')
-    app.config.from_object('smsgw.config.settings')
+    app.config.from_object(environments[env])
 
     # extensions inicializatioon
     db.init_app(app)

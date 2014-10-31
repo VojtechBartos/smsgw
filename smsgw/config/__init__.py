@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
-import os
-from smsgw.lib.utils import underscore_to_camelcase
+from smsgw.config.ci import Ci
 
-__all__ = ['env', 'settings']
+__all__ = ['environments']
 
-env = os.environ.get('SMSGW_ENV', 'development')
-module = "{0}.{1}".format(__name__, env) 
-class_name = underscore_to_camelcase(env)
-settings = getattr(__import__(module, fromlist=[class_name]), 
-                   class_name)
+environments = {
+    'ci': Ci,
+    'development': None,
+    'test': None,
+    'production': None
+}
 
-print "Running under `%s` environment" % env
+for env, class_ref in environments.iteritems():
+    if class_ref is None:
+        try:
+            module = "smsgw.config.{}".format(env)
+            class_name = env.title()
+            class_ref = getattr(__import__(module, fromlist=[class_name]), 
+                        class_name)
+
+            environments[env] = class_ref
+        except ImportError, e:
+            pass
