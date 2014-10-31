@@ -17,8 +17,8 @@ class SmsgwUnitTestCase(UnitTestCase):
 class SmsgwIntegrationTestCase(FlaskTestCase):
     
     def create_app(self):
-        ci = os.environ.get('SMSGW_CI', False)
-        env = 'ci' if ci is True else 'test'
+        ci = os.environ.get('SMSGW_CI', '0')
+        env = 'ci' if ci == '1' else 'test'
         return factory.create_app(name="smsgw_testing", env=env)
 
     def setUp(self):
