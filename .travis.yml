@@ -1,0 +1,14 @@
+language: python
+
+python:
+  - 2.7
+
+env:
+  - SMSGW_CI=True
+
+install: "pip install -r requirements.txt"
+
+before_script:
+  - mysql -e 'create database smsgw_test;'
+
+script: nosetests

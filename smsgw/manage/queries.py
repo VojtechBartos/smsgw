@@ -2,7 +2,7 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from flask.ext.script import Command, Option
-from smsgw import db
+from smsgw.extensions import db
 
 
 class SyncCommand(Command):

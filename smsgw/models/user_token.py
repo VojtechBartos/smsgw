@@ -5,11 +5,11 @@ from sqlalchemy.dialects import mysql
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from smsgw.lib.utils import generate_uuid
-from smsgw import bcrypt, db
+from smsgw.models import BaseModel
 
 
 
-class UserToken(db.Model):
+class UserToken(BaseModel):
     """ User token model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
@@ -17,5 +17,3 @@ class UserToken(db.Model):
     token = db.Column(mysql.CHAR(32), unique=True, nullable=False, 
                      default=generate_uuid)
     info = db.Column(mysql.TEXT)
-
-    # user

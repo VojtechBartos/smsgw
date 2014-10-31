@@ -4,6 +4,7 @@
 import os
 from flask import Flask
 from smsgw import resources
+from smsgw.extensions import db, bcrypt
 
 def create_app(name='smsgw', env=None):
     """
@@ -15,6 +16,10 @@ def create_app(name='smsgw', env=None):
     # flask app inicialization
     app = Flask(name, static_url_path='')
     app.config.from_object('smsgw.config.settings')
+
+    # extensions inicializatioon
+    db.init_app(app)
+    bcrypt.init_app(app)
 
     # register resources
     resources.register(app)

@@ -2,6 +2,29 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 import uuid
+from flask import jsonify
+from smsgw.constants.http_status_codes import STATUS_CODES
+
+
+def response(payload, status_code=200, message='OK.'):
+    """
+
+    :param payload: {list|dict|str} response payload
+    :param status_code: {int} http response status code
+    :param message: {str} string message
+    """
+    # check validity of status code
+    if status_code not in STATUS_CODES:
+        raise Exception('Status code does not exist.')
+
+    res = {
+        'meta': {
+            'code': status_code,
+            'message': STATUS_CODES[status_code] if not message else message
+        },
+        'data': payload
+    }
+    return jsonify(res), status_code
 
 
 def underscore_to_camelcase(value):

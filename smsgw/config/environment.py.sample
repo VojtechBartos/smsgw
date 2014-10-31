@@ -4,8 +4,8 @@
 from smsgw.config.default import Default
 
 
-class Development(Default):
-    """ Development config """
+class <#Environament>(Default):
+    """ <#Environament> config """
 
     DEBUG = True
     LOGGING = False

@@ -4,12 +4,12 @@
 from sqlalchemy.dialects import mysql
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
+from smsgw.models import BaseModel
 from smsgw.lib.utils import generate_uuid
-from smsgw import bcrypt, db
+from smsgw.extensions import bcrypt, db
 
 
-
-class User(db.Model):
+class User(BaseModel):
     """ User model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
@@ -37,8 +37,24 @@ class User(db.Model):
         Set user password as bcrypt hash
         :param password: {str}
         """
-        self._password = bcrypt.generate_password_hash(pwd, 12)
+        self._password = bcrypt.generate_password_hash(password, 12)
 
-    def check_password(self, password):
+    def compare_password(self, password):
+        """
+        Comparing bcrypt hash with specified password
+        :param password: {str} password
+        :retur: {bool}
+        """
         return bcrypt.check_password_hash(self.password.encode('utf8'), 
                                           password)
+
+    @classmethod
+    def is_exists_by_email(cls, email):
+        """
+        Checking if user with specified emails is exists
+        :param email: {str} user email
+        """
+        return cls.query \
+                .with_entities(cls.id) \
+                .filter_by(email=email) \
+                .first()

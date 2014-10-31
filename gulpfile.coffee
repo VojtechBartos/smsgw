@@ -13,7 +13,7 @@ watchify = require 'watchify'
 FRONTED_FILES = 
     'main': './smsgw/static/js/app.coffee'
     'bundle': 'bundle.js'
-    'directory': './smsgw/static/js/'
+    'directory': './smsgw/static/build/'
 
 ###
     Watchify, browserify on JS frontend files
@@ -21,7 +21,7 @@ FRONTED_FILES =
 gulp.task 'watch', ->
     bs = browserify FRONTED_FILES['main'], watchify.args
     bundler = watchify bs
-    bundler.transform 'coffeeify';
+    bundler.transform 'coffee-reactify'
 
     rebundle = ->
         bundler.bundle()
