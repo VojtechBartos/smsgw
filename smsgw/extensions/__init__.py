@@ -3,6 +3,8 @@
 
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
+from flask.ext.uuid import FlaskUUID
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
+uuid = FlaskUUID()
