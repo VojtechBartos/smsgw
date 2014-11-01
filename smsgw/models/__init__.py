@@ -15,3 +15,4 @@ class BaseModel(AbstractConcreteBase, db.Model):
 
 # list of models
 from smsgw.models.user import User
+from smsgw.models.user_token import UserToken

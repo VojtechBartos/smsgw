@@ -2,6 +2,7 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from sqlalchemy.dialects import mysql
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from smsgw.models import BaseModel
@@ -21,6 +22,8 @@ class User(BaseModel):
     firstName = db.Column(db.String(16))
     lastName = db.Column(db.String(16))
     company = db.Column(db.String(32))
+
+    tokens = relationship("UserToken", backref='user')
 
 
     @property
