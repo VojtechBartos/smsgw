@@ -11,9 +11,13 @@
     ],
     "dependencies": {
         "flux": "^2.0.0",
-        "react": "~0.11.0",
+        "react": "*",
         "react-router": "*",
-        "superagent": "*"
+        "react-ladda": "*",
+        "superagent": "*",
+        "localStorage": "*",
+        "bluebird": "*",
+        "object-assign": "*"
     },
     "devDependencies": {
         "browserify": "~4.2.2",

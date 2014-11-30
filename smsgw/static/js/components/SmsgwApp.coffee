@@ -9,28 +9,52 @@ request = require 'superagent'
 
 # react libs
 React = require 'react'
+Router = require 'react-router'
+RouteHandler = Router.RouteHandler
 # components
 Header = require './Header.coffee'
-SmsgwApp = React.createClass
+Spinner = require './helpers/Spinner.coffee'
+# stores
+UserStore = require '../stores/UserStore.coffee'
+UserActions = require '../actions/UserActions.coffee'
+UserConstants = require '../constants/UserConstants.coffee'
+
+module.exports = React.createClass
+   
+    mixins: [Router.Navigation]
+
+    getInitialState: ->
+        throbber: yes
+        user: 
+            firstName: null
+            lastName: null
+            company: null
 
     componentDidMount: ->
-        console.log 'DID mount'
+        UserStore.on UserConstants.EVENT.SIGN.OUT, @handleSignOut
+        UserStore.on UserConstants.EVENT.FETCH.ME, @handleFetchMe
+        UserActions.fetchMe()
 
-    componentWillMount: ->
-        request
-            .get '/api/1.0/users'
-            .type 'application/json'
-            .end (res) ->
-                console.log 'DONE'
-                console.log res
+    handleFetchMe: (data) ->
+        if data.success and @isMounted()
+            @setState 
+                throbber: no
+                user: data.data
+            @forceUpdate()
+
+    handleSignOut: (e) ->
+        @transitionTo '/sign/in'
 
     render: ->
-        <div>
-            <Header />
-            <div id="subheader">
-                Test
+        content = 
+            <div>
+                <Header firstName={@state.user.firstName} 
+                        lastName={@state.user.lastName} 
+                        company={@state.user.company} />
+                <div id="subheader">
+                    Test
+                </div>
+                <RouteHandler />
             </div>
-            {@props.activeRouteHandler()}
-        </div>
 
-module.exports = SmsgwApp
+        if @state.throbber then <Spinner fullscreen /> else content

@@ -12,7 +12,8 @@ from smsgw.extensions import db
 class UserToken(BaseModel):
     """ User token model """
 
-    token = db.Column(mysql.CHAR(36), nullable=False, 
+    token = db.Column(mysql.CHAR(64), nullable=False, 
                      default=generate_uuid, primary_key=True)
     user_id = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
     info = db.Column(mysql.TEXT)
+    agent = db.Column(mysql.VARCHAR(128))

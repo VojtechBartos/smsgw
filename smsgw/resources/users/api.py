@@ -8,7 +8,7 @@ from flask.ext.classy import FlaskView, route
 
 from smsgw.models import User
 from smsgw.lib.utils import response
-from smsgw.resources.decorators import jsonschema_validate
+from smsgw.resources import decorators
 from smsgw.resources.users.schemas import post
 from smsgw.resources.error.api import ErrorResource
 from smsgw.extensions import db
@@ -19,12 +19,35 @@ class UsersResource(FlaskView):
 
     route_base = '/users/'
 
-    def index(self):
+    @decorators.auth(User.ROLE_ADMIN)
+    def index(self, **kwargs):
         """
         """
-        return response({'data': True})
+        # find all users
+        users = User.query.all()
 
-    @jsonschema_validate(payload=post.schema)
+        # send payload
+        res_keys = ["uuid", "email", "firstName", "lastName", "company"]
+        payload = [user.to_dict(res_keys) for user in users]
+        return response(payload)
+
+    @route('/<uuid:user_uuid>/', methods=['GET'])
+    @decorators.auth()
+    def get(self, user, **kwargs):
+        """
+        """
+        # if requested user is not logged in, he needs to be 
+        # user with admin role or will be sent 403
+        if request.user.uuid != user.uuid:
+            if request.user.role is not User.ROLE_ADMIN:
+                raise ErrorResource(403)
+
+        # send payload
+        res_keys = ["uuid", "email", "firstName", "lastName", "company"]
+        payload = user.to_dict(properties=res_keys)
+        return response(payload)
+
+    @decorators.jsonschema_validate(payload=post.schema)
     def post(self):
         """
         """

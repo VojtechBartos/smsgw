@@ -8,12 +8,11 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 # react libs
 React = require 'react'
 Router = require 'react-router'
+RouteHandler = Router.RouteHandler
 
 # components
 Sign = React.createClass
     render: ->
-        <div>
-            {@props.activeRouteHandler()}
-        </div>
+        <RouteHandler />
 
 module.exports = Sign

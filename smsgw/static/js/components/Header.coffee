@@ -9,6 +9,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
+UserActions = require '../actions/UserActions.coffee'
 
 
 Menu = React.createClass
@@ -22,18 +23,44 @@ Menu = React.createClass
         </ul>
 
 Header = React.createClass
+    
+    mixins: [Router.Navigation]
+
+    getInitialState: ->
+        userMenuOpened: no
+
+    handleSignOut: ->
+        UserActions.signOut()
+        @transitionTo '/sign/in'
+
+    handleUserMenu: (e) ->
+        e.preventDefault()
+        @setState
+            userMenuOpened: !@state.userMenuOpened
+        @forceUpdate
+
     render: ->
+        if @state.userMenuOpened
+            className = 'opened'
+        else 
+            className = ''
+        
         <header>
             <div id="logo"><strong>sms</strong>gw</div>
             <Menu />
             <div className="user-menu">
-                <a href="#">
+                <a onClick={@handleUserMenu}>
                     <div className="info">
-                        <div className="name">Vojtech Bartos</div>
-                        <div className="company">alinet.cz</div>
+                        <div className="name">{@props.firstName} {@props.lastName}</div>
+                        <div className="company">{@props.company}</div>
                     </div>
                     <div className="chevron" />
                 </a>
+                <ul className={className}>
+                    <li>vojta@sleepio.com</li>
+                    <li><a href="/settings/">Settings</a></li>
+                    <li><a onClick={@handleSignOut}>Sign out</a></li>
+                </ul>
             </div>
             <div className="cleaner"/>
         </header>

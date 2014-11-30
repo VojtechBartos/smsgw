@@ -4,14 +4,15 @@
 import os
 from flask import Flask
 from smsgw import resources
-from smsgw.extensions import db, bcrypt, uuid
+from smsgw.extensions import db, bcrypt
 from smsgw.config import environments
+
 
 def create_app(name='smsgw', env=None):
     """
     :param name: {str} name of package app
     """
-    # override env if its necessary 
+    # override env if its necessary
     if env is not None: os.environ['SMSGW_ENV'] = env
 
     # flask app inicialization
@@ -21,7 +22,6 @@ def create_app(name='smsgw', env=None):
     # extensions inicializatioon
     db.init_app(app)
     bcrypt.init_app(app)
-    uuid.init_app(app)
 
     # register resources
     resources.register(app)

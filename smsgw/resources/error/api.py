@@ -19,8 +19,12 @@ class ErrorResource(Exception):
     def register(app, **kwargs):
 
         @app.errorhandler(404)
+        def on_unauthorized(error):
+            return response(None, status_code=401, message="Unauthorized.")
+
+        @app.errorhandler(404)
         def on_page_not_found(error):
-            return response(None, status_code=404)
+            return response(None, status_code=404, message="Not found.")
 
         @app.errorhandler(ErrorResource)
         def on_error_resource(error):
@@ -29,4 +33,5 @@ class ErrorResource(Exception):
 
         @app.errorhandler(ValidationError)
         def on_validation_error(error):
-            return response(None, status_code=400, message=error.message)
+            message = error.schema.get('message') or error.message
+            return response(None, status_code=400, message=message)

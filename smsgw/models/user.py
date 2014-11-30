@@ -13,6 +13,9 @@ from smsgw.extensions import bcrypt, db
 class User(BaseModel):
     """ User model """
 
+    ROLE_ADMIN = 'admin'
+    ROLE_USER = 'user'
+
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
     uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False, 
                      default=generate_uuid)
@@ -22,6 +25,9 @@ class User(BaseModel):
     firstName = db.Column(db.String(16))
     lastName = db.Column(db.String(16))
     company = db.Column(db.String(32))
+    role = db.Column('role', db.Enum("user", "admin"), default='user', 
+                     nullable=False)
+    isActive = db.Column(db.Boolean, default=True)
 
     tokens = relationship("UserToken", backref='user')
 
@@ -50,6 +56,12 @@ class User(BaseModel):
         """
         return bcrypt.check_password_hash(self.password.encode('utf8'), 
                                           password)
+
+    def is_admin(self):
+        """
+        Returning if user has administration role
+        """
+        return (self.role == User.ROLE_ADMIN)
 
     @classmethod
     def is_exists_by_email(cls, email):

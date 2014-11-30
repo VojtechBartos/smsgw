@@ -5,34 +5,31 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 gulp = require 'gulp'
-gutil = require 'gulp-util'
+watch = require 'gulp-watch'
 source = require 'vinyl-source-stream'
 browserify = require 'browserify'
-watchify = require 'watchify'
 
-FRONTED_FILES = 
-    'main': './smsgw/static/js/app.coffee'
-    'bundle': 'bundle.js'
-    'directory': './smsgw/static/build/'
 
 ###
-    Watchify, browserify on JS frontend files
+    Building coffee script files
+###
+gulp.task 'coffee', ->
+    br = browserify './smsgw/static/js/app.coffee'
+    br.transform 'debowerify', global: yes
+    br.transform 'coffee-reactify'
+    br.bundle()
+        .pipe source 'bundle.js'
+        .pipe gulp.dest './smsgw/static/build/'
+        
+
+
+###
+    Watching files
 ###
 gulp.task 'watch', ->
-    bs = browserify FRONTED_FILES['main'], watchify.args
-    bundler = watchify bs
-    bundler.transform 'coffee-reactify'
-
-    rebundle = ->
-        bundler.bundle()
-        .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-        .pipe source FRONTED_FILES['bundle']
-        .pipe gulp.dest FRONTED_FILES['directory']
-
-    bundler.on 'update', rebundle
-    rebundle()
+    gulp.watch 'smsgw/static/js/**/*.coffee', ['coffee']
 
 ###
     Default task
 ###
-gulp.task 'default', ['watch']
+gulp.task 'default', ['coffee', 'watch']

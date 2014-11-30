@@ -4,9 +4,11 @@
 import os
 import glob
 import importlib
-from flask import render_template, current_app
+from flask import render_template, current_app, request
 from smsgw.lib.utils import underscore_to_camelcase
 from smsgw.resources.users.api import UsersResource
+from smsgw.resources.auth.api import AuthResource
+from smsgw.resources import converters
 
 
 def register(app):
@@ -14,6 +16,9 @@ def register(app):
     Registration of resources modules
     :param app: {Flask} flask app instance
     """
+
+    # register converters
+    converters.register(app)
 
     @app.route('/')
     def index():
