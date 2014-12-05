@@ -30,6 +30,7 @@ class User(BaseModel):
     isActive = db.Column(db.Boolean, default=True)
 
     tokens = relationship("UserToken", backref='user')
+    templates = relationship("Template", backref='user')
 
 
     @property
