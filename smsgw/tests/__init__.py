@@ -7,7 +7,9 @@ from unittest import TestCase as UnitTestCase
 from flask.ext.testing import TestCase as FlaskTestCase
 
 from smsgw import factory
+from smsgw.models import User, UserToken
 from smsgw.extensions import db
+from smsgw.tests import datasets
 
 
 class SmsgwUnitTestCase(UnitTestCase):
@@ -32,6 +34,13 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         db.drop_all()
         db.create_all()
 
+        # import base datesets
+        self.user = User(**datasets.user.USER)
+        self.user.tokens = [UserToken(agent="Command-line")]
+        db.session.add(self.user)
+        db.session.commit()
+        db.session.refresh(self.user)
+
     def tearDown(self):
         super(SmsgwIntegrationTestCase, self).tearDown()
         db.session.remove()
@@ -41,6 +50,8 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         data = kwargs.get('data')
         if headers.get('content-type') == 'application/json' and data:
             kwargs['data'] = json.dumps(data)
+        if headers.get('Authorization') is None:
+            headers['Authorization'] = "Token {0}".format(self.user.tokens[0].token)
         kwargs['headers'] = headers
         return method(path=path, **kwargs)
 
