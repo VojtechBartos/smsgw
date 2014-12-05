@@ -20,8 +20,6 @@ gulp.task 'coffee', ->
     br.bundle()
         .pipe source 'bundle.js'
         .pipe gulp.dest './smsgw/static/build/'
-        
-
 
 ###
     Watching files
