@@ -8,7 +8,7 @@ from functools import update_wrapper
 from flask import request, abort
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from smsgw.extensions import db
-from smsgw.models import User, UserToken
+from smsgw.models import User, UserToken, Template
 
 
 def jsonschema_validate(payload=None, **options):
@@ -42,7 +42,8 @@ def auth(role=User.ROLE_USER):
     def decorator(fn):
 
         routing = {
-            'user': User
+            'user': User,
+            'template': Template
         }
 
         def unauthorized():
@@ -87,7 +88,8 @@ def auth(role=User.ROLE_USER):
             # TODO(vojta)
             updates = {}
             for key, value in kwargs.iteritems():
-                value = value.replace('@me', user.uuid)
+                if hasattr(value, 'replace'):
+                    value = value.replace('@me', user.uuid)
                 name = key.split('_')
                 if len(name) > 1:
                     route, field = name
