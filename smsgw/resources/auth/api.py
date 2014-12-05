@@ -46,11 +46,11 @@ class AuthResource(FlaskView):
         print request.headers
         if agent is not None:
             token = UserToken.query \
-                        .filter_by(user_id=user.id) \
+                        .filter_by(userId=user.id) \
                         .filter_by(agent=agent) \
                         .first()
         if token is None:
-            token = UserToken(user_id=user.id, agent=agent)
+            token = UserToken(userId=user.id, agent=agent)
             db.session.add(token)
             db.session.commit()
 
