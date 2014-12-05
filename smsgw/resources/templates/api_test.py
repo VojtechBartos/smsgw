@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+# http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
+
+from smsgw.tests import SmsgwIntegrationTestCase
+from smsgw.models import Template
+from smsgw.resources.templates import datasets
+from smsgw.extensions import db
+from smsgw.lib.utils import generate_uuid
+
+
+class TemplatesResourceTest(SmsgwIntegrationTestCase):
+    
+    GET_URN = '/api/1.0/users/@me/templates/'
+    POST_URN = '/api/1.0/users/@me/templates/'
+    DELETE_URN = '/api/1.0/users/@me/templates/{uuid}/'
+
+    def test_get_endpoint(self):
+        """ Testing user template GET endpoint """
+
+        # nothing in db
+        res = self.get(self.GET_URN)
+        self.assert200(res)
+        self.assertEqual(len(res.json['data']), 0)
+
+        # import template datasets to DB
+        templates = [Template(**item) for item in datasets.index.TEMPLATES]
+        db.session.add_all(templates)
+        db.session.commit()
+
+        # already something in DB
+        res = self.get(self.GET_URN)
+        self.assert200(res)
+        for index, item in enumerate(res.json['data']):
+            self.assertIsNotNone(item['uuid'])
+            self.assertIsNotNone(item['createdAt'])
+            self.assertEqual(item['label'], templates[index].label)
+            self.assertEqual(item['text'], templates[index].text)
+
+    def test_post_endpoint(self):
+        """ Testing user template POST endpoint """
+
+        # no label
+        res = self.post(self.POST_URN, data=datasets.post.INVALID_NOLABEL)
+        self.assert400(res)
+
+        # short label
+        res = self.post(self.POST_URN, data=datasets.post.INVALID_SHORTLABEL)
+        self.assert400(res)
+
+        # long label
+        res = self.post(self.POST_URN, data=datasets.post.INVALID_LONGLABEL)
+        self.assert400(res)
+
+        # no text
+        res = self.post(self.POST_URN, data=datasets.post.INVALID_NOTEXT)
+        self.assert400(res)
+
+        # short text
+        res = self.post(self.POST_URN, data=datasets.post.INVALID_SHORTTEXT)
+        self.assert400(res)
+
+        # success
+        res = self.post(self.POST_URN, data=datasets.post.VALID)
+        self.assert200(res)
+        self.assertIsNotNone(res.json['data']['uuid'])
+        self.assertEqual(res.json['data']['label'], datasets.post.VALID['label'])
+        self.assertEqual(res.json['data']['text'], datasets.post.VALID['text'])
+        self.assertIsNotNone(res.json['data']['createdAt'])
+        # check if its really in DB
+        templates = Template.query.filter_by(userId=self.user.id).all()
+        self.assertEqual(len(templates), 1)
+
+    def test_delete_endpoint(self):
+        """ Testing user template DELETE endpoint """
+
+        # not found
+        res = self.delete(self.DELETE_URN.format(uuid=generate_uuid()))
+        self.assert404(res)
+
+        # import datasets
+        templates = [Template(userId=self.user.id, **item) 
+                     for item in datasets.delete.TEMPLATES]
+        db.session.add_all(templates)
+        db.session.commit()
+
+        # success delete
+        res = self.delete(self.DELETE_URN.format(uuid=templates[0].uuid))
+        templates = Template.query.filter_by(userId=self.user.id).all()
+        self.assert200(res)
+        self.assertEqual(len(templates), 1)
+
+        # success delete
+        res = self.delete(self.DELETE_URN.format(uuid=templates[0].uuid))
+        templates = Template.query.filter_by(userId=self.user.id).all()
+        self.assert200(res)
+        self.assertEqual(len(templates), 0)
