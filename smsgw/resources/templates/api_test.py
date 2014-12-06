@@ -15,8 +15,8 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
     PUT_URN = '/api/1.0/users/@me/templates/{uuid}/'
     DELETE_URN = '/api/1.0/users/@me/templates/{uuid}/'
 
-    def test_get_endpoint(self):
-        """ Testing user template GET endpoint """
+    def test_index_endpoint(self):
+        """ Testing user template GET index endpoint """
 
         # nothing in db
         res = self.get(self.GET_URN)
