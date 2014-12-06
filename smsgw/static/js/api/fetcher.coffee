@@ -68,6 +68,6 @@ module.exports = {
     delete: (url, query = {}) ->
         token = @token
         new Promise (resolve, reject) ->
-            standartize request.delete(url), token, query
+            standartize request.del(url), token, query
                 .end handler resolve, reject
 }
