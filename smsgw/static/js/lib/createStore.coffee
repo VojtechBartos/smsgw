@@ -7,6 +7,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 EventEmitter = require('events').EventEmitter
 assign = require 'object-assign'
 EVENT_CHANGE = 'change'
+EVENT_ERROR = 'error'
 
 module.exports = (dispatcher, definition) ->
     # list of all handlers for dispatcher
@@ -15,14 +16,22 @@ module.exports = (dispatcher, definition) ->
     # shared API cross user stores
     store = assign({}, EventEmitter.prototype,
         emitChange: ->
-            console.log 'EMIT'
             @emit EVENT_CHANGE
+
+        emitError: (err) ->
+            @emit EVENT_CHANGE, err
 
         addChangeListener: (callback) ->
             @on EVENT_CHANGE, callback
 
         removeChangeListener: (callback) ->
             @removeChangeListener EVENT_CHANGE, callback
+
+        addErrorListener: (callback) ->
+            @on EVENT_ERROR, callback
+
+        removeErrorListener: (callback) ->
+            @removeChangeListener EVENT_ERROR, callback
 
         listenTo: (action, handler) ->
             handlers[action] = handler.bind @
