@@ -126,4 +126,11 @@ class TemplatesResource(FlaskView):
         db.session.delete(template)
         db.session.commit()
 
-        return response({}, status_code=200)
+        # payload
+        payload = {
+            'uuid': template.uuid,
+            'label': template.label,
+            'text': template.text,
+            'createdAt': template.createdAt.isoformat(sep=' ')
+        }
+        return response(payload, status_code=200)

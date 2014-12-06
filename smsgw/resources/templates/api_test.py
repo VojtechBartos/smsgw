@@ -137,3 +137,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         templates = Template.query.filter_by(userId=self.user.id).all()
         self.assert200(res)
         self.assertEqual(len(templates), 0)
+        self.assertIsNotNone(res.json['data']['uuid'])
+        self.assertIsNotNone(res.json['data']['label'])
+        self.assertIsNotNone(res.json['data']['text'])
+        self.assertIsNotNone(res.json['data']['createdAt'])
