@@ -35,11 +35,15 @@ handler = (resolve, reject) ->
         else
             error = new ApiError()
             error.message = res.error.message
-            if 'message' of body.meta
-                error.message = body.meta.message
             error.status = res.status
             error.url = res.req.url
-            error.data = body.data
+
+            if body
+                if 'data' of body
+                    error.data = body.data
+                if 'meta' of body and 'message' of body.meta
+                    error.message = body.meta.message
+        
             reject error
 
 module.exports = {
