@@ -10,8 +10,9 @@ from smsgw.lib.utils import generate_uuid
 
 class TemplatesResourceTest(SmsgwIntegrationTestCase):
     
-    GET_URN = '/api/1.0/users/@me/templates/'
+    INDEX_URN = '/api/1.0/users/@me/templates/'
     POST_URN = '/api/1.0/users/@me/templates/'
+    GET_URN = '/api/1.0/users/@me/templates/{uuid}/'
     PUT_URN = '/api/1.0/users/@me/templates/{uuid}/'
     DELETE_URN = '/api/1.0/users/@me/templates/{uuid}/'
 
@@ -19,7 +20,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         """ Testing user template GET index endpoint """
 
         # nothing in db
-        res = self.get(self.GET_URN)
+        res = self.get(self.INDEX_URN)
         self.assert200(res)
         self.assertEqual(len(res.json['data']), 0)
 
@@ -29,13 +30,36 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         db.session.commit()
 
         # already something in DB
-        res = self.get(self.GET_URN)
+        res = self.get(self.INDEX_URN)
         self.assert200(res)
         for index, item in enumerate(res.json['data']):
             self.assertIsNotNone(item['uuid'])
             self.assertIsNotNone(item['createdAt'])
             self.assertEqual(item['label'], templates[index].label)
             self.assertEqual(item['text'], templates[index].text)
+
+    def test_get_endpoint(self):
+        """ Testing user template GET get endpoint """
+
+        # not found 
+        res = self.get(self.GET_URN.format(uuid=generate_uuid()))
+        self.assert404(res)
+
+        # adding datesets to db
+        templates = [Template(userId=self.user.id, **item)
+                     for item in datasets.get.TEMPLATES]
+        db.session.add_all(templates)
+        db.session.commit()
+
+        # getting template
+        for template in templates:
+            res = self.get(self.GET_URN.format(uuid=template.uuid))
+            data = res.json['data']
+            self.assert200(res)
+            self.assertEqual(data['uuid'], template.uuid)
+            self.assertEqual(data['label'], template.label)
+            self.assertEqual(data['text'], template.text)
+            self.assertIsNotNone(data['createdAt'])
 
     def test_post_endpoint(self):
         """ Testing user template POST endpoint """

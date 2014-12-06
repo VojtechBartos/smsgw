@@ -41,6 +41,28 @@ class TemplatesResource(FlaskView):
 
         return response(payload, status_code=200)
 
+    @route('/users/<uuid:user_uuid>/templates/<uuid:template_uuid>/', 
+            methods=['GET'])
+    @decorators.auth()
+    def get(self, user, template, **kwargs):
+        """
+
+        """
+        # if requested user is not logged in, he needs to be 
+        # user with admin role or will be sent 403
+        if request.user.uuid != user.uuid:
+            if request.user.role is not User.ROLE_ADMIN:
+                raise ErrorResource(403)
+
+        # payload
+        payload = {
+            'uuid': template.uuid,
+            'label': template.label,
+            'text': template.text,
+            'createdAt': template.createdAt.isoformat(sep=' ')
+        }
+        return response(payload, status_code=200)
+
     @route('/users/<uuid:user_uuid>/templates/', methods=['POST'])
     @decorators.auth()
     @decorators.jsonschema_validate(payload=post.schema)
