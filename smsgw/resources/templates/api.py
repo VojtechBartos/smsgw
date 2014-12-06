@@ -7,7 +7,7 @@ from flask.ext.classy import FlaskView, route
 from smsgw.models import Template
 from smsgw.lib.utils import response
 from smsgw.resources import decorators
-from smsgw.resources.templates.schemas import post
+from smsgw.resources.templates.schemas import post, put
 from smsgw.resources.error.api import ErrorResource
 from smsgw.extensions import db
 
@@ -60,6 +60,44 @@ class TemplatesResource(FlaskView):
         template = Template(**data)
         template.userId = user.id
         db.session.add(template)
+        db.session.commit()
+
+        # create payload
+        payload = {
+            'uuid': template.uuid,
+            'label': template.label,
+            'text': template.text,
+            'createdAt': template.createdAt.isoformat(sep=' ')
+        }
+        return response(payload, status_code=201)
+
+    @route('/users/<uuid:user_uuid>/templates/<uuid:template_uuid>/', 
+            methods=['PUT'])
+    @decorators.auth()
+    @decorators.jsonschema_validate(payload=put.schema)
+    def put(self, user, template, **kwargs):
+        """
+
+        """
+        data = request.json
+
+        # if requested user is not logged in, he needs to be 
+        # user with admin role or will be sent 403
+        if request.user.uuid != user.uuid:
+            if request.user.role is not User.ROLE_ADMIN:
+                raise ErrorResource(403)
+        
+        try:
+            # find template to edit and update fields
+            template = Template.query.filter_by(userId=user.id).one()
+            template.update(data)
+
+        # TODO(vojta) just catching SQLAlchemy exceptions as not found
+        # and multiple items found
+        except Exception, e:
+            raise ErrorResource(404)
+
+        # save to db
         db.session.commit()
 
         # create payload

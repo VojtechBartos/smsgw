@@ -70,6 +70,49 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         templates = Template.query.filter_by(userId=self.user.id).all()
         self.assertEqual(len(templates), 1)
 
+    def test_put_endpoint(self):
+        """ Testing user template PUT endpoint """
+
+        # no found
+        res = self.put(self.PUT_URN.format(uuid=generate_uuid()))
+        self.assert404(res)
+
+        # insert dataset
+        template = Template(userId=self.user.id, **datasets.put.VALID)
+        db.session.add(template)
+        db.session.commit()
+
+        # short label
+        res = self.put(self.PUT_URN.format(uuid=template.uuid), 
+                       data=datasets.put.INVALID_SHORTLABEL)
+        self.assert400(res)
+
+        # long label
+        res = self.put(self.PUT_URN.format(uuid=template.uuid), 
+                       data=datasets.put.INVALID_LONGLABEL)
+        self.assert400(res)
+
+        # no text
+        res = self.put(self.PUT_URN.format(uuid=template.uuid), 
+                       data=datasets.put.INVALID_NOTEXT)
+        self.assert400(res)
+
+        # short text
+        res = self.put(self.PUT_URN.format(uuid=template.uuid), 
+                       data=datasets.put.INVALID_SHORTTEXT)
+        self.assert400(res)
+
+        # successfull update
+        res = self.put(self.PUT_URN.format(uuid=template.uuid),
+                       data=datasets.put.VALID_UPDATE)
+        data = res.json['data']
+        db.session.refresh(template)
+        self.assert200(res)
+        self.assertEqual(data['label'], datasets.put.VALID_UPDATE['label'])
+        self.assertEqual(data['text'], datasets.put.VALID_UPDATE['text'])
+        self.assertEqual(data['label'], template.label)
+        self.assertEqual(data['text'], template.text)
+
     def test_delete_endpoint(self):
         """ Testing user template DELETE endpoint """
 
