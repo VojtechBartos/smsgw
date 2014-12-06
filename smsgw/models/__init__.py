@@ -19,6 +19,11 @@ class BaseModel(AbstractConcreteBase, db.Model):
     def to_dict(self, properties):
         return {key: getattr(self, key) for key in properties}
 
+    def update(self, data):
+        for key in data:
+            if hasattr(self, key):
+                setattr(self, key, data[key])
+
 
 # list of models
 from smsgw.models.user import User
