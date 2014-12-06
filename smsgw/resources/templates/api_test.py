@@ -12,6 +12,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
     
     GET_URN = '/api/1.0/users/@me/templates/'
     POST_URN = '/api/1.0/users/@me/templates/'
+    PUT_URN = '/api/1.0/users/@me/templates/{uuid}/'
     DELETE_URN = '/api/1.0/users/@me/templates/{uuid}/'
 
     def test_get_endpoint(self):
@@ -61,7 +62,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
 
         # success
         res = self.post(self.POST_URN, data=datasets.post.VALID)
-        self.assert200(res)
+        self.assert201(res)
         self.assertIsNotNone(res.json['data']['uuid'])
         self.assertEqual(res.json['data']['label'], datasets.post.VALID['label'])
         self.assertEqual(res.json['data']['text'], datasets.post.VALID['text'])
