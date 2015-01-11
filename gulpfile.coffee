@@ -14,7 +14,7 @@ browserify = require 'browserify'
     Building coffee script files
 ###
 gulp.task 'coffee', ->
-    br = browserify './smsgw/static/js/app.coffee'
+    br = browserify './smsgw/static/src/app.coffee'
     br.transform 'debowerify', global: yes
     br.transform 'coffee-reactify'
     br.transform "envify"
@@ -26,7 +26,7 @@ gulp.task 'coffee', ->
     Watching files
 ###
 gulp.task 'watch', ->
-    gulp.watch 'smsgw/static/js/**/*.coffee', ['coffee']
+    gulp.watch 'smsgw/static/src/**/*.coffee', ['coffee']
 
 ###
     Default task
