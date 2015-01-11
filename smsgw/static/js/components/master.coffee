@@ -6,9 +6,9 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 React = require 'react'
+Router = require 'react-router'
+RouteHandler = Router.RouteHandler
 
-Messages = React.createClass
+module.exports = React.createClass
     render: ->
-        <div>Messages</div>
-
-module.exports = Messages
+        <RouteHandler />

@@ -12,8 +12,8 @@ React = require 'react'
 Router = require 'react-router'
 RouteHandler = Router.RouteHandler
 # components
-Header = require './Header.coffee'
-Spinner = require './helpers/Spinner.coffee'
+Header = require './pages/app/components/header.coffee'
+Spinner = require './components/spinner.coffee'
 # stores
 UserStore = require '../stores/UserStore.coffee'
 UserActions = require '../actions/UserActions.coffee'

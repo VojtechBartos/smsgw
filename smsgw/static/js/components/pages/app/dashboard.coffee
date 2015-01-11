@@ -7,7 +7,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Subheader = require './Subheader.coffee'
+Subheader = require './components/sub-header.coffee'
 
 Dashboard = React.createClass
     mixins : [ Router.Navigation ]

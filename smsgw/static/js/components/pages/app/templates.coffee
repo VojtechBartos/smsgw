@@ -7,10 +7,11 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Subheader = require '../Subheader.coffee'
-TemplateConstants = require '../../constants/TemplateConstants.coffee'
-TemplateActions = require '../../actions/TemplateActions.coffee'
-TemplateStore = require '../../stores/TemplateStore.coffee'
+TemplateConstants = require '../../../constants/TemplateConstants.coffee'
+TemplateActions = require '../../../actions/TemplateActions.coffee'
+TemplateStore = require '../../../stores/TemplateStore.coffee'
+# components
+Subheader = require './components/sub-header.coffee'
 
 
 TemplateTableHeader = React.createClass

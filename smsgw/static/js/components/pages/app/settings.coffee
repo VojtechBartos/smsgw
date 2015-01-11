@@ -5,14 +5,10 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-# react libs
 React = require 'react'
-Router = require 'react-router'
-RouteHandler = Router.RouteHandler
 
-# components
-Sign = React.createClass
+Apps = React.createClass
     render: ->
-        <RouteHandler />
+        <div>Settings</div>
 
-module.exports = Sign
+module.exports = Apps
