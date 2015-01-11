@@ -17,6 +17,7 @@ gulp.task 'coffee', ->
     br = browserify './smsgw/static/js/app.coffee'
     br.transform 'debowerify', global: yes
     br.transform 'coffee-reactify'
+    br.transform "envify"
     br.bundle()
         .pipe source 'bundle.js'
         .pipe gulp.dest './smsgw/static/build/'
