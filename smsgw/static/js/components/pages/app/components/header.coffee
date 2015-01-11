@@ -58,7 +58,7 @@ Header = React.createClass
                 </a>
                 <ul className={className}>
                     <li>vojta@sleepio.com</li>
-                    <li><a href="/settings/">Settings</a></li>
+                    <li><Link to="settings">Settings</Link></li>
                     <li><a onClick={@handleSignOut}>Sign out</a></li>
                 </ul>
             </div>

@@ -25,6 +25,7 @@ Applications = require './components/pages/app/applications.coffee'
 Templates = require './components/pages/app/templates.coffee'
 Messages = require './components/pages/app/messages.coffee'
 Contacts = require './components/pages/app/contacts.coffee'
+Settings = require './components/pages/app/settings.coffee'
 
 module.exports =
     <Route handler={Master} path="/">
@@ -38,5 +39,6 @@ module.exports =
             <Route name="templates" path="/templates" handler={Templates} />
             <Route name="messages" handler={Messages} />
             <Route name="contacts" handler={Contacts} />
+            <Route name="settings" handler={Settings} />
         </Route>
     </Route>
