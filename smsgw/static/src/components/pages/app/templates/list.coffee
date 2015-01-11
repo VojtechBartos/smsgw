@@ -52,7 +52,7 @@ TemplateTableItem = React.createClass
 Templates = React.createClass
       
     getInitialState: ->
-        templates: []
+        templates: TemplateStore.getAll()
 
     componentDidMount: ->
         TemplateStore.addChangeListener @handleResponse
