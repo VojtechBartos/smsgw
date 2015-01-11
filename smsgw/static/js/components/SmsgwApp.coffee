@@ -51,9 +51,7 @@ module.exports = React.createClass
                 <Header firstName={@state.user.firstName} 
                         lastName={@state.user.lastName} 
                         company={@state.user.company} />
-                <div id="subheader">
-                    Test
-                </div>
+                
                 <RouteHandler />
             </div>
 

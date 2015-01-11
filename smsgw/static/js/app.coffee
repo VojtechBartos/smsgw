@@ -21,10 +21,11 @@ SignUp = require './components/sign/SignUp.coffee'
 ResetPassword = require './components/sign/ResetPassword.coffee'
 Dashboard = require './components/Dashboard.coffee'
 Applications = require './components/Apps.coffee'
-Templates = require './components/Templates.coffee'
+Templates = require './components/templates/Templates.coffee'
+TemplateAdd = require './components/templates/TemplateAdd.coffee'
+TemplateEdit = require './components/templates/TemplateEdit.coffee'
 Messages = require './components/Messages.coffee'
 Contacts = require './components/Contacts.coffee'
-
 
 
 App = React.createClass
@@ -33,7 +34,7 @@ App = React.createClass
 
 routes =
     <Route handler={App} path="/">
-        <DefaultRoute handler={Dashboard}/>
+        <Redirect from="/" to="dashboard" />
         <Route path="/sign" handler={Sign}>
             <Route name="sign-in" path="in" handler={SignIn} />
             <Route name="sign-up" path="up" handler={SignUp} />
@@ -42,7 +43,9 @@ routes =
         <Route handler={SmsgwApp}>
             <Route name="dashboard" handler={Dashboard} />
             <Route name="applications" handler={Applications} />
-            <Route name="templates" handler={Templates} />
+            <Route name="templates" path="/templates" handler={Templates} />
+            <Route name="templates-add" path="/templates/add" handler={TemplateAdd} />
+            <Route name="templates-edit" path="/templates/:uuid" handler={TemplateEdit} />
             <Route name="messages" handler={Messages} />
             <Route name="contacts" handler={Contacts} />
         </Route>

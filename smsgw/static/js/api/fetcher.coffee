@@ -21,6 +21,9 @@ class ApiError extends Error
     @data = null
 
 standartize = (req, token = {}, query = {}) ->
+    console.log localStorage.getItem('token')
+    console.log '------'
+
     req = req
         .accept 'application/json'
         .type 'application/json'

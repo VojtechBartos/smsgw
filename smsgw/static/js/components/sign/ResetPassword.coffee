@@ -47,7 +47,6 @@ module.exports = React.createClass
         form = @refs.signInForm
         if form.isValid()
             @setState pending: yes
-            # UserActions.signIn form.getData()
 
     render: ->
         <div id="sign" className="resetPassword">
