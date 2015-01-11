@@ -52,8 +52,8 @@ button.ladda-button { background: #0088ff; }
 
 /* Header */
 header { display: block; padding: 5px 20px; border-bottom: 1px solid #e5e5e5; position: relative; }
-header #logo { float: left; width: 100px; font-size: 30px; }
-header ul#menu { float: left; width: auto; list-style: none; padding: 0; margin: 0; }
+header #logo { float: left; width: 100px; padding-top: 10px; font-size: 30px; }
+header ul#menu { float: left; width: auto; list-style: none; padding: 10px 0 0 0; margin: 0; }
 header ul#menu > li { display: inline-block; padding: 0; margin: 0; }
 header ul#menu > li > a { font-size: 30px; color: #0088ff; text-decoration: none; padding: 0 10px 0 10px }
 header ul#menu > li > a:hover { color: #054f90; }
@@ -97,3 +97,5 @@ header .user-menu > ul > li > a { padding: 10px 20px 10px 20px; margin: 0; }
 #subheader { display: block; padding: 10px 20px; background-color: #f5f5f5; border-bottom: 1px solid #e5e5e5; }
 
 
+/* Context */
+#context { display: block; padding: 15px 20px; }

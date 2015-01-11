@@ -13,11 +13,12 @@ localStorage = require 'localStorage'
 
 UserActions =
 
-    saveToken: (token) ->
+    token: localStorage.getItem 'token'
+    setToken: (token) ->
         localStorage.setItem 'token', token
 
     signUp: (data) ->
-        api.post endpoints.create(), data
+        api.post endpoints.create(), @token, data
             .then ({meta, data}) ->
                 Dispatcher.dispatch 
                     action: UserConstants.ACTION.SIGN.UP
@@ -30,7 +31,7 @@ UserActions =
                     error: err
 
     signIn: (data) ->
-        api.post endpoints.signIn(), data
+        api.post endpoints.signIn(), @token, data
             .then ({meta, data}) ->
                 Dispatcher.dispatch 
                     action: UserConstants.ACTION.SIGN.IN
@@ -49,7 +50,7 @@ UserActions =
 
     fetchMe: ->
         url = endpoints.get "@me"
-        api.get url
+        api.get url, @token
             .then ({meta, data}) ->
                 console.log UserConstants.ACTION.FETCH.ME
                 Dispatcher.dispatch 

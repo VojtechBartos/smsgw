@@ -9,7 +9,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-UserActions = require '../actions/UserActions.coffee'
+UserActions = require '../../../../actions/UserActions.coffee'
 
 
 Menu = React.createClass
@@ -58,7 +58,7 @@ Header = React.createClass
                 </a>
                 <ul className={className}>
                     <li>vojta@sleepio.com</li>
-                    <li><a href="/settings/">Settings</a></li>
+                    <li><Link to="settings">Settings</Link></li>
                     <li><a onClick={@handleSignOut}>Sign out</a></li>
                 </ul>
             </div>

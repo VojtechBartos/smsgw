@@ -7,16 +7,17 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-SignInForm = require './SignInForm.coffee'
 Dispatcher = require '../../dispatcher.coffee'
-FlashMessages = require '../helpers/FlashMessages.coffee'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
 UserConstants = require '../../constants/UserConstants.coffee'
+# components
+SignInForm = require './forms/sign-in-form.coffee'
+FlashMessages = require '../components/flash-messages.coffee'
 
 module.exports = React.createClass
 
-    mixins: [Router.Navigation]
+    mixins: [ Router.Navigation ]
 
     getInitialState: ->
         pending: no
@@ -29,7 +30,7 @@ module.exports = React.createClass
         messages = []
         if data.success
             # save token
-            UserActions.saveToken data.data.token
+            UserActions.setToken data.data.token
             # and redirect to dashboard
             @transitionTo '/'
         else

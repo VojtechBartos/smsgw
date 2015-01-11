@@ -21,4 +21,8 @@ module.exports =
         get: (uuid, user = "@me") -> "#{BASE}/users/#{user}/contacts/#{uuid}/"
         update: (uuid, user = "@me") -> @get uuid, user
         delete: (uuid, user = "@me") -> @get uuid, user
-
+    templates:
+        index: (user = "@me") -> "#{BASE}/users/#{user}/templates/"
+        create: (user = "@me") -> "#{BASE}/users/#{user}/templates/"
+        get: (uuid, user = "@me") -> "#{BASE}/users/#{user}/templates/#{uuid}/"
+        delete: (uuid, user = "@me") -> @get uuid, user

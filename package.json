@@ -1,6 +1,6 @@
 {
     "name": "sms-gateway",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "SMS gateway",
     "repository": {
         "type": "git",
@@ -11,31 +11,27 @@
     ],
     "dependencies": {
         "flux": "^2.0.0",
-        "react": "*",
-        "react-router": "*",
-        "react-ladda": "*",
-        "superagent": "*",
-        "localStorage": "*",
-        "bluebird": "*",
-        "object-assign": "*"
+        "react": "~0.12.2",
+        "react-router": "~0.11.6",
+        "react-ladda": "~2.0.0",
+        "superagent": "~0.21.0",
+        "localStorage": "~1.0.3",
+        "bluebird": "~2.6.2",
+        "object-assign": "~2.0.0"
     },
     "devDependencies": {
-        "browserify": "~4.2.2",
-        "reactify": "~0.14.0",
-        "uglify-js": "~2.4.15",
+        "coffee-script": "~1.8.0",
+        "browserify": "~8.1.0",
+        "debowerify": "~1.2.0",
+        "coffee-reactify": "~2.1.0",
         "watchify": "~0.10.2",
-        "coffee-reactify": "*",
-        "coffee-script": "~1.7.1",
+        "reactify": "~0.4.0",
+        "uglify-js": "~2.4.15",
         "envify": "~2.0.1",
         "gulp": "~3.8.0",
         "gulp-coffeelint": "^0.3.2",
-        "gulp-util": "*",
-        "vinyl-source-stream": "*"
-    },
-    "browserify": {
-        "transform": [
-            "reactify",
-            "envify"
-        ]
+        "gulp-util": "~3.0.2",
+        "gulp-watch": "~3.0.0",
+        "vinyl-source-stream": "~1.0.0"
     }
 }

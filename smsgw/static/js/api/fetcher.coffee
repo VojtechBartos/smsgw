@@ -20,7 +20,8 @@ class ApiError extends Error
     # data content from response body
     @data = null
 
-standartize = (req, token = {}, query = {}) ->
+standartize = (req, token = null, query = {}) ->
+
     req = req
         .accept 'application/json'
         .type 'application/json'
@@ -46,32 +47,27 @@ handler = (resolve, reject) ->
         
             reject error
 
-module.exports = {
-    token: localStorage.getItem('token'),
+module.exports = 
 
-    get: (url, query = {}) ->
-        token = @token
+    get: (url, token, query = {}) ->
         new Promise (resolve, reject) ->
             standartize request.get(url), token, query
                 .end handler resolve, reject
 
-    post: (url, data = {}, query = {}) ->
-        token = @token
+    post: (url, token, data = {}, query = {}) ->
         new Promise (resolve, reject) ->
             standartize request.post(url), token, query
                 .send data
                 .end handler resolve, reject
 
-    put: (url, data = {}, query = {}) ->
-        token = @token
+    put: (url, token, data = {}, query = {}) ->
         new Promise (resolve, reject) ->
             standartize request.put(url), token, query
                 .send data
                 .end handler resolve, reject
 
-    delete: (url, query = {}) ->
-        token = @token
+    delete: (url, token, query = {}) ->
         new Promise (resolve, reject) ->
             standartize request.del(url), token, query
                 .end handler resolve, reject
-}
+
