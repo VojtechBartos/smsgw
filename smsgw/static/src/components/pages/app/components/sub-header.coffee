@@ -24,7 +24,7 @@ module.exports = React.createClass
     render: ->
         links = []
         for link in @props.links
-            links.push <Router.Link to={link.to}>{link.label}</Router.Link>
+            links.push <Router.Link to={link.route}>{link.label}</Router.Link>
 
         back = null
         if @props.back
