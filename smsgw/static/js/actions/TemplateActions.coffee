@@ -9,13 +9,15 @@ TemplateConstants = require '../constants/TemplateConstants.coffee'
 api = require '../api/fetcher.coffee'
 endpoints = require('../api/endpoints.coffee').templates
 
+UserActions = require './UserActions.coffee'
+
 
 
 module.exports =
 
     fetchAll: ->
         url = endpoints.index()
-        api.get url
+        api.get url, UserActions.token
             .then ({meta, data}) ->
                 console.log TemplateConstants.ACTION.FETCH.ALL
                 Dispatcher.dispatch 
@@ -29,7 +31,7 @@ module.exports =
                     error: err
 
     get: (uuid) ->
-        api.get endpoints.get uuid
+        api.get endpoints.get uuid, UserActions.token
             .then ({meta, data}) ->
                 console.log TemplateConstants.ACTION.GET
                 Dispatcher.dispatch 
@@ -43,7 +45,7 @@ module.exports =
                     error: err
 
     add: (data) ->
-        api.post endpoints.create(), data
+        api.post endpoints.create(), UserActions.token, data
             .then ({meta, data}) ->
                 console.log TemplateConstants.ACTION.ADD
                 Dispatcher.dispatch 
@@ -58,7 +60,7 @@ module.exports =
 
     delete: (uuid) ->
         url = endpoints.delete(uuid)
-        api.delete url
+        api.delete url, UserActions.token
             .then ({meta, data}) ->
                 console.log TemplateConstants.ACTION.DELETE
                 Dispatcher.dispatch 
