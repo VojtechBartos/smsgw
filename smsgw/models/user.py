@@ -31,6 +31,7 @@ class User(BaseModel):
 
     tokens = relationship("UserToken", backref='user')
     templates = relationship("Template", backref='user')
+    contacts = relationship("Contact", backref='user', lazy='dynamic')
 
 
     @property

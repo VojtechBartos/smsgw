@@ -26,7 +26,6 @@ def response(payload, status_code=200, message='OK.'):
     }
     return jsonify(res), status_code
 
-
 def underscore_to_camelcase(value):
     """
     Transformation string from underscore to camelcase

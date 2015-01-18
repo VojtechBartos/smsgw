@@ -29,3 +29,4 @@ class BaseModel(AbstractConcreteBase, db.Model):
 from smsgw.models.user import User
 from smsgw.models.user_token import UserToken
 from smsgw.models.template import Template
+from smsgw.models.contact import Contact
