@@ -33,8 +33,8 @@ Settings = require './components/pages/app/settings.coffee'
 module.exports =
     <Route handler={Master} path="/">
         <Redirect from="/" to="dashboard" />
-        <Route name="sign-in" path="in" handler={SignIn} />
-        <Route name="sign-up" path="up" handler={SignUp} />
+        <Route name="sign-in" path="sign/in" handler={SignIn} />
+        <Route name="sign-up" path="sign/up" handler={SignUp} />
         <Route name="reset-password" path="reset-password" handler={ResetPassword} />
         <Route handler={App}>
             <Route name="dashboard" handler={Dashboard} />
