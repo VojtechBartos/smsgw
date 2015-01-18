@@ -4,7 +4,7 @@
 import os
 from flask import Flask
 from smsgw import resources
-from smsgw.extensions import db, bcrypt
+from smsgw.extensions import db, bcrypt, migrate
 from smsgw.config import environments
 
 
@@ -22,6 +22,7 @@ def create_app(name='smsgw', env=None):
     # extensions inicializatioon
     db.init_app(app)
     bcrypt.init_app(app)
+    migrate.init_app(app, db)
 
     # register resources
     resources.register(app)
