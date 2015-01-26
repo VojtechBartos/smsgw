@@ -8,13 +8,14 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 # react libs
 React = require 'react'
 Router = require 'react-router'
+Link = Router.Link
 
 module.exports = React.createClass
     
     mixins: [Router.Navigation]
 
     getDefaultProps: ->
-        back: false,
+        backTitle: false,
         links: []
 
     handleBackInHistory: (e) ->
@@ -26,12 +27,18 @@ module.exports = React.createClass
         for link in @props.links
             links.push <Router.Link to={link.route}>{link.label}</Router.Link>
 
-        back = null
-        if @props.back
-            back = <a href="#" onClick={@handleBackInHistory}>< Back</a>
+        backLink = null
+        if @props.backTitle
+            backLink = 
+                <a className="back" onClick={@handleBackInHistory}>
+                    <span className="chevron" />
+                    {@props.backTitle}
+                </a>
         
-
         <div id="subheader">
-            {back}
+            {backLink}
+            <div className="cleaner" />
+            {@props.children}
+            <div className="cleaner" />
             {links}
         </div>

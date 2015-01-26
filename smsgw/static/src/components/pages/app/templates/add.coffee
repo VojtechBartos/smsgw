@@ -48,11 +48,11 @@ module.exports = React.createClass
 
     render: ->
         <div>
-            <Subheader back={true} />
+            <Subheader backTitle="Templates">
+                <h1>Add template</h1>
+            </Subheader>
 
             <div id="context">
-                <h1>Add form</h1>
-
                 <FlashMessages messages={@state.flashMessages} />
 
                 <TemplateForm 

@@ -25,18 +25,30 @@ module.exports = React.createClass
 
     render: ->
         <form onSubmit={@props.onSubmit}>
-            <input type="text" 
-                   name="label" 
-                   ref="label" 
-                   placeholder="Label" 
-                   disabled={@props.disabled}
-                   defaultValue={@props.data.label}
-                   required />
-            <textarea name="text" 
-                      ref="text" 
-                      disabled={@props.disabled} 
-                      defaultValue={@props.data.text}
-                      required></textarea>
+            <div className="line">
+                <label>Label</label>
+                <input type="text" 
+                       name="label" 
+                       ref="label" 
+                       placeholder="Label" 
+                       disabled={@props.disabled}
+                       defaultValue={@props.data.label}
+                       className="span-3"
+                       required />
+            </div>
+            <div className="line">
+                <label>Text</label>
+                <textarea name="text" 
+                          ref="text" 
+                          disabled={@props.disabled} 
+                          defaultValue={@props.data.text}
+                          className="span-3"
+                          rows=10
+                          required></textarea>
+            </div>
+
+            <div className="cleaner" />
+
             <LaddaButton 
                 active={@props.pending}
                 style="expand-right">

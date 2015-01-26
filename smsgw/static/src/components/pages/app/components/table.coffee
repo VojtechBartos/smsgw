@@ -36,9 +36,11 @@ module.exports = React.createClass
 
             # fill in actions
             actions = []
-            for action in @props.actions
+            for action, index in @props.actions
                 onClick = @handleAction action, item
                 actions.push <a onClick={onClick}>{action.label}</a>
+                if index < @props.actions.length - 1
+                    actions.push ' | '
 
             fields.push <td>{actions}</td>
             items.push <tr>{fields}</tr>

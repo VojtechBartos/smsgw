@@ -22,7 +22,6 @@ module.exports = React.createClass
 
     getInitialState: ->
         pending: no
-        menu: [ route: 'template-add', label: 'Add template' ]
         templates: TemplateStore.getAll()
         table: 
             options: [
@@ -64,10 +63,11 @@ module.exports = React.createClass
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <div>
-            <Subheader links={@state.menu} />
-
             <div id="context">
-                <h1>Templates</h1>
+                <h1>
+                    Templates ({@state.templates.length}) 
+                    <Link to="template-add">Add</Link>
+                </h1>
                 <Table 
                     options={@state.table.options} 
                     items={@state.templates} 

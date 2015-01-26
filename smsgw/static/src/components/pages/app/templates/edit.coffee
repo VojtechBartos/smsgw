@@ -24,7 +24,8 @@ module.exports = React.createClass
         pending: no
         formPending: no
         flashMessages: []
-        template: TemplateStore.get @getParams().uuid
+        template: 
+            label: null
 
     componentDidMount: ->
         TemplateStore.addChangeListener @handleChange
@@ -63,11 +64,11 @@ module.exports = React.createClass
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <div>
-            <Subheader back={true} />
+            <Subheader backTitle="Templates">
+                <h1>{@state.template.label}</h1>
+            </Subheader>
 
             <div id="context">
-                <h1>Edit form</h1>
-
                 <FlashMessages messages={@state.flashMessages} />
 
                 <TemplateForm 

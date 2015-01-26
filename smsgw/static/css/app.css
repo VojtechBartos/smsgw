@@ -16,13 +16,17 @@ body {
 /* Utils */
 .cleaner { clear: both; }
 
+/* */
+.span-2 { width: 50%; }
+.span-3 { width: 33%; }
+.span-5 { width: 25%; }
 
 /* General */
 a { color: #0088ff; text-decoration: underline; }
-a:hover { text-decoration: none; }
+a:hover { text-decoration: none; color: #054f90; }
 
 /* Forms */
-input { padding: 15px; border: 1px solid #e5e5e5; border-radius: 0; }
+input, textarea { padding: 15px; border: 1px solid #e5e5e5; border-radius: 0; }
 button.ladda-button { background: #0088ff; }
 
 /* Flashes */
@@ -95,8 +99,43 @@ header .user-menu > ul.opened { display: block; z-index: 10; }
 header .user-menu > ul > li > a { padding: 10px 20px 10px 20px; margin: 0; }
 
 /* Subheader */
-#subheader { display: block; padding: 10px 20px; background-color: #f5f5f5; border-bottom: 1px solid #e5e5e5; }
+#subheader { display: block; padding: 20px 20px 0 20px; background-color: #f5f5f5; border-bottom: 1px solid #e5e5e5; }
+#subheader h1 { font-weight: normal; font-size: 26px; margin-top: 0; line-height: 24px; }
+#subheader a { position: relative; font-size: 18px; display: block; text-decoration: none; padding-bottom: 18px; }
+#subheader a.active { color: gray; border-bottom: 1px solid gray; }
+#subheader a.back { cursor: pointer; font-size: 14px; line-height: 15px; padding-left: 10px; }
+#subheader a.back .chevron {
+    position: absolute;
+    top: 3px;
+    left: 0;
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-top: 1px solid #0088ff;
+    border-right: 1px solid #0088ff;
+    border-width: 1px;
+    -ms-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
 
 
 /* Context */
 #context { display: block; padding: 15px 20px; }
+#context h1 { font-weight: normal; font-size: 23px; line-height: 24px; }
+#context a { text-decoration: none; position: relative; }
+
+/* Form */
+#context form label { font-weight: bold; margin-bottom: 5px; }
+#context form .line { float: left; width: 100%; margin-bottom: 15px; }
+#context form .line label { float: left; width: 100%; }
+
+/* Table */
+table { width: 100%; border: 0; border-spacing: 0; }
+table th { text-align: left; background: #f5f5f5; font-size: 16px; padding: 10px 15px 10px 15px; font-weight: normal; vertical-align: bottom; border-bottom: 1px solid #e5e5e5; }
+table td { text-align: left; padding: 10px 15px 10px 15px; border-bottom: 1px solid #e5e5e5; }
+table a { cursor: pointer; }
+
+
+
+
