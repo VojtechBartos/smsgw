@@ -7,8 +7,8 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 
-Contacts = React.createClass
+module.exports = React.createClass
     render: ->
-        <div>Contacts</div>
-
-module.exports = Contacts
+        <div>
+            Add contact
+        </div>

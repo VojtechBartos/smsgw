@@ -41,4 +41,5 @@ module.exports = React.createClass
             {@props.children}
             <div className="cleaner" />
             {links}
+            <div className="cleaner" />
         </div>

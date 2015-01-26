@@ -25,9 +25,13 @@ TemplatesList = require './components/pages/app/templates/list.coffee'
 TemplatesAdd = require './components/pages/app/templates/add.coffee'
 TemplatesEdit = require './components/pages/app/templates/edit.coffee'
 Messages = require './components/pages/app/messages.coffee'
-Contacts = require './components/pages/app/contacts.coffee'
+ContactsList = require './components/pages/app/contacts/list.coffee'
+ContactsAdd = require './components/pages/app/contacts/add.coffee'
+ContactsEdit = require './components/pages/app/contacts/edit.coffee'
 Settings = require './components/pages/app/settings.coffee'
 Wrapper = require './components/components/wrapper.coffee'
+# temp
+Tags = require './components/pages/app/tags.coffee'
 
 module.exports =
     <Route handler={Wrapper} path="/">
@@ -39,7 +43,12 @@ module.exports =
             <Route name="dashboard" handler={Dashboard} />
             <Route name="applications" handler={Applications} />
             <Route name="messages" handler={Messages} />
-            <Route name="contacts" handler={Contacts} />
+            <Route name="contacts" handler={Wrapper}>
+                <DefaultRoute handler={ContactsList} />
+                <Route name="contact-add" path="add" handler={ContactsAdd} />
+                <Route name="contact-edit" path=":uuid" handler={ContactsEdit} />
+                <Route name="tags" path="tags" handler={Tags} />
+            </Route>
             <Route name="settings" handler={Settings} />
             <Route name="templates" handler={Wrapper}>
                 <DefaultRoute handler={TemplatesList} />
