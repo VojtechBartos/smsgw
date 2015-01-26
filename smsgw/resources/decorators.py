@@ -107,6 +107,14 @@ def auth(role=User.ROLE_USER):
                             not_found()
             kwargs.update(updates)
 
+            # if requested user is not logged in, he needs to be 
+            # user with admin role or will be sent 403
+            requested_user = kwargs.get('user')
+            if requested_user is not None:
+                if request.user.uuid != requested_user.uuid:
+                    if request.user.role is not User.ROLE_ADMIN:
+                        forbidden()
+
             return fn(*args, **kwargs)
         return update_wrapper(wrapped_function, fn)
     return decorator

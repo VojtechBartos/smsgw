@@ -23,12 +23,6 @@ class ContactsResource(FlaskView):
         """
 
         """
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
-
         return response([contact.to_dict() 
                          for contact in user.contacts.all()])
 
@@ -39,10 +33,4 @@ class ContactsResource(FlaskView):
         """
 
         """
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
-
         return response(contact.to_dict())

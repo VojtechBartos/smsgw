@@ -23,12 +23,6 @@ class TemplatesResource(FlaskView):
         """
 
         """
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
-
         # load user templates 
         payload = []
         for template in user.templates:
@@ -48,20 +42,12 @@ class TemplatesResource(FlaskView):
         """
 
         """
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
-
-        # payload
-        payload = {
+        return response({
             'uuid': template.uuid,
             'label': template.label,
             'text': template.text,
             'createdAt': template.createdAt.isoformat(sep=' ')
-        }
-        return response(payload, status_code=200)
+        }, status_code=200)
 
     @route('/users/<uuid:user_uuid>/templates/', methods=['POST'])
     @decorators.auth()
@@ -72,12 +58,6 @@ class TemplatesResource(FlaskView):
         """
         data = request.json
 
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
-        
         # create and save template
         template = Template(**data)
         template.userId = user.id
@@ -102,34 +82,17 @@ class TemplatesResource(FlaskView):
 
         """
         data = request.json
-
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
         
-        try:
-            # find template to edit and update fields
-            template = Template.query.filter_by(userId=user.id).one()
-            template.update(data)
-
-        # TODO(vojta) just catching SQLAlchemy exceptions as not found
-        # and multiple items found
-        except Exception, e:
-            raise ErrorResource(404)
-
         # save to db
+        template.update(data)
         db.session.commit()
-
-        # create payload
-        payload = {
+ 
+        return response({
             'uuid': template.uuid,
             'label': template.label,
             'text': template.text,
             'createdAt': template.createdAt.isoformat(sep=' ')
-        }
-        return response(payload, status_code=200)
+        }, status_code=200)
 
     @route('/users/<uuid:user_uuid>/templates/<uuid:template_uuid>/',
             methods=['DELETE'])
@@ -137,22 +100,14 @@ class TemplatesResource(FlaskView):
     def delete(self, user, template, **kwargs):
         """
 
-        """
-        # if requested user is not logged in, he needs to be 
-        # user with admin role or will be sent 403
-        if request.user.uuid != user.uuid:
-            if request.user.role is not User.ROLE_ADMIN:
-                raise ErrorResource(403)
-        
+        """        
         # delete template
         db.session.delete(template)
         db.session.commit()
 
-        # payload
-        payload = {
+        return response({
             'uuid': template.uuid,
             'label': template.label,
             'text': template.text,
             'createdAt': template.createdAt.isoformat(sep=' ')
-        }
-        return response(payload, status_code=200)
+        }, status_code=200)
