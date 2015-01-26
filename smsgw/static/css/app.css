@@ -37,6 +37,7 @@ button.ladda-button { background: #0088ff; }
 /* Loading */
 
 #smsgw { position: relative; width: 100%; height: 100%; }
+#smsgw > div { position: relative; width: 100%; height: 100%; }
 
 /* Sign in/up and reset password */
 #sign { width: 300px; margin: 0 auto 0 auto; padding: 11% 0 0 0; } 

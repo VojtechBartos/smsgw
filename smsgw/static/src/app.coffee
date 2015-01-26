@@ -9,8 +9,7 @@ React = require 'react'
 Router = require 'react-router'
 Routes = require './routes.coffee'
 
-
 Router
     .create routes: Routes
     .run (Handler) ->
-        React.render <Handler />, document.getElementById "smsgw"    
+        React.render <Handler />, document.getElementById "smsgw"

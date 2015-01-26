@@ -13,7 +13,8 @@ Router = require 'react-router'
 RouteHandler = Router.RouteHandler
 # components
 Header = require './pages/app/components/header.coffee'
-Spinner = require './components/spinner.coffee'
+Wrapper = require './components/wrapper.coffee'
+Spinner = require './components/spinner.coffee' 
 # stores
 UserStore = require '../stores/UserStore.coffee'
 UserActions = require '../actions/UserActions.coffee'
@@ -24,7 +25,7 @@ module.exports = React.createClass
     mixins: [Router.Navigation]
 
     getInitialState: ->
-        throbber: yes
+        pending: yes
         user: 
             firstName: null
             lastName: null
@@ -38,21 +39,18 @@ module.exports = React.createClass
     handleFetchMe: (data) ->
         if data.success and @isMounted()
             @setState 
-                throbber: no
+                pending: no
                 user: data.data
-            @forceUpdate()
 
     handleSignOut: (e) ->
-        @transitionTo '/sign/in'
+        @transitionTo 'sign-in'
 
     render: ->
-        content = 
-            <div>
-                <Header firstName={@state.user.firstName} 
-                        lastName={@state.user.lastName} 
-                        company={@state.user.company} />
-                
-                <RouteHandler />
-            </div>
+        return <Spinner fullscreen={yes} /> if @state.pending
 
-        if @state.throbber then <Spinner fullscreen /> else content
+        <Wrapper>
+            <Header firstName={@state.user.firstName} 
+                    lastName={@state.user.lastName} 
+                    company={@state.user.company} />
+            <RouteHandler />
+        </Wrapper>
