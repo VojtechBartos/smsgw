@@ -4,32 +4,43 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-UserConstants = require '../constants/UserConstants.coffee'
+constants = require '../constants/UserConstants.coffee'
 createStore = require '../lib/createStore.coffee'
 Dispatcher = require '../dispatcher.coffee'
 
-_users = []
+_users = {}
+
+save = (data) ->
+    for item in data
+        _users[item.uuid] = item
 
 UserStore = createStore Dispatcher,
-    getAll: -> _users
-    get: (uuid) -> (user for user in _users when user.uuid is uuid)
-    getMe: ->
+    getAll: ->  (val for key, val of _users)
+    get: (uuid) -> _users[uuid]
+    me: ->
         me = null
-        for user in _users
-            me = user if '_me' of user            
+        for uuid, user of _users
+            if '@me' of user
+                me = user
+                break
         me
 
-UserStore.listenTo UserConstants.ACTION.SIGN.OUT, (data) ->
-    @emit UserConstants.EVENT.SIGN.OUT
+UserStore.listenTo constants.USER_SIGN_UP, (payload) ->
+    @emitChange payload.data
 
-UserStore.listenTo UserConstants.ACTION.SIGN.UP, (data) ->
-    @emit UserConstants.EVENT.SIGN.UP, data
+UserStore.listenTo constants.USER_SIGN_IN, (payload) ->
+    @emitChange payload.data
 
-UserStore.listenTo UserConstants.ACTION.SIGN.IN, (data) ->
-    @emit UserConstants.EVENT.SIGN.IN, data
+UserStore.listenTo constants.USER_FETCH_ME, (payload) ->
+    user = payload.data
+    user["@me"] = yes
 
-UserStore.listenTo UserConstants.ACTION.FETCH.ME, (data) ->
-    @emit UserConstants.EVENT.FETCH.ME, data
+    save [user]
+
+    @emitChange()
+
+UserStore.listenTo constants.USER_ERROR, (payload) ->
+    @emitError()
 
 
 module.exports = UserStore

@@ -21,32 +21,36 @@ module.exports = React.createClass
     mixins: [Router.Navigation]
 
     getInitialState: ->
-        pending: no
+        formPending: no
         flashMessages: []
 
     componentDidMount: ->
-        UserStore.on UserConstants.EVENT.SIGN.UP, @handleResponse
+        UserStore.addChangeListener @handleChange
+        UserStore.addErrorListener @handleError
 
-    handleResponse: (data) ->
-        messages = []
-        if data.success
-            @transitionTo '/sign/in'
-        else 
-            # show flash message
-            messages.push 
-                text: data.error.message
-                type: 'alert'
+    componentWillUnmount: ->
+        UserStore.removeChangeListener @handleChange
+        UserStore.removeErrorListener @handleError
+
+    handleChange: ->
+        @transitionTo '/sign/in'
 
         if @isMounted()
             @setState 
-                pending: no
-                flashMessages: messages
+                formPending: no
+                flashMessages: []
+
+    handleError: (err) ->
+        if @isMounted()
+            @setState 
+                formPending: no
+                flashMessages: [text: err.message, type: 'alert']
 
     handleSubmit: (e) ->
         e.preventDefault()
         form = @refs.signUpForm
         if form.isValid()
-            @setState pending: yes
+            @setState formPending: yes
             UserActions.signUp form.getData()
 
     render: ->
@@ -61,8 +65,8 @@ module.exports = React.createClass
             <SignUpForm 
                 ref="signUpForm" 
                 onSubmit={@handleSubmit}
-                pending={@state.pending}
-                disabled={@state.pending} />
+                pending={@state.formPending}
+                disabled={@state.formPending} />
             
             <div className="info">
                 Have an account already? <a href="#/sign/in">Sign in</a>.

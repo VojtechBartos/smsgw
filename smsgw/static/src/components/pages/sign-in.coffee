@@ -20,35 +20,43 @@ module.exports = React.createClass
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
-        pending: no
+        formPending: no
         flashMessages: []
 
     componentDidMount: ->
-        UserStore.on UserConstants.EVENT.SIGN.IN, @handleResponse
+        UserStore.addChangeListener @handleChange
+        UserStore.addErrorListener @handleError
 
-    handleResponse: (data) ->
-        messages = []
-        if data.success
-            # save token
-            UserActions.setToken data.data.token
+    componentWillUnmount: ->
+        UserStore.removeChangeListener @handleChange
+        UserStore.removeErrorListener @handleError
+
+    handleChange: (data) ->
+        # save token
+        UserActions.setToken data.token
+        
+        weak = @
+        setTimeout ->
             # and redirect to dashboard
-            @transitionTo '/'
-        else
-            # show flash message
-            messages.push 
-                text: data.error.message
-                type: 'alert'
+            weak.transitionTo 'dashboard'
 
+            if weak.isMounted()
+                weak.setState 
+                    formPending: no
+                    flashMessages: []
+        , 0
+
+    handleError: (err) ->
         if @isMounted()
             @setState 
-                pending: no
-                flashMessages: messages
+                formPending: no
+                flashMessages: [text: err.message, type: 'alert']
 
     handleSubmit: (e) ->
         e.preventDefault()
         form = @refs.signInForm
         if form.isValid()
-            @setState pending: yes
+            @setState formPending: yes
             UserActions.signIn form.getData()
 
     render: ->
@@ -63,8 +71,8 @@ module.exports = React.createClass
             <SignInForm 
                 ref="signInForm" 
                 onSubmit={@handleSubmit} 
-                pending={@state.pending}
-                disabled={@state.pending} />
+                pending={@state.formPending}
+                disabled={@state.formPending} />
 
             <div className="info">
                 Forgot your password? <a href="#/sign/reset-password">Reset Password</a>.<br />

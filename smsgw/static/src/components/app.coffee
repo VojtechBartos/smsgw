@@ -25,24 +25,31 @@ module.exports = React.createClass
     mixins: [Router.Navigation]
 
     getInitialState: ->
-        pending: yes
+        pending: no
         user: 
             firstName: null
             lastName: null
             company: null
 
     componentDidMount: ->
-        UserStore.on UserConstants.EVENT.SIGN.OUT, @handleSignOut
-        UserStore.on UserConstants.EVENT.FETCH.ME, @handleFetchMe
+        UserStore.addChangeListener @handleChange
+        UserStore.addErrorListener @handleSignOut
         UserActions.fetchMe()
+        
+        @setState pending: yes
 
-    handleFetchMe: (data) ->
-        if data.success and @isMounted()
+    componentWillUnmount: ->
+        UserStore.removeChangeListener @handleChange
+        UserStore.removeErrorListener @handleSignOut
+
+    handleChange: ->
+        if @isMounted()
             @setState 
                 pending: no
-                user: data.data
+                user: UserStore.me()
 
-    handleSignOut: (e) ->
+    handleSignOut:  ->
+        UserActions.token = null
         @transitionTo 'sign-in'
 
     render: ->
