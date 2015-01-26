@@ -15,8 +15,8 @@ module.exports = (dispatcher, definition) ->
 
     # shared API cross user stores
     store = assign({}, EventEmitter.prototype,
-        emitChange: ->
-            @emit EVENT_CHANGE
+        emitChange: (data = null) ->
+            @emit EVENT_CHANGE, data
 
         emitError: (err) ->
             @emit EVENT_ERROR, err
