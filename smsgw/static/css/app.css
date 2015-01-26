@@ -91,7 +91,7 @@ header .user-menu > ul {
     list-style: none;
     box-shadow: 0 0 5px #888888;
 }
-header .user-menu > ul.opened { display: block; }
+header .user-menu > ul.opened { display: block; z-index: 10; }
 header .user-menu > ul > li > a { padding: 10px 20px 10px 20px; margin: 0; }
 
 /* Subheader */
