@@ -43,7 +43,6 @@ class AuthResource(FlaskView):
         # create user token for user
         token = None
         agent = request.headers.get('User-Agent')
-        print request.headers
         if agent is not None:
             token = UserToken.query \
                         .filter_by(userId=user.id) \
@@ -55,8 +54,7 @@ class AuthResource(FlaskView):
             db.session.commit()
 
         # create payload response
-        payload = {
+        return response({
             'token': token.token,
             'email': user.email
-        }
-        return response(payload, status_code=200)
+        }, status_code=200)
