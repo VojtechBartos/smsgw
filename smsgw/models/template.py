@@ -15,5 +15,7 @@ class Template(BaseModel):
     uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False, 
                      default=generate_uuid)
     userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
-    label = db.Column(db.String(128), unique=True, nullable=False)
+    label = db.Column(db.String(128), nullable=False)
     text = db.Column(db.Text, nullable=False)
+
+# TODO(vojta) unique id label
