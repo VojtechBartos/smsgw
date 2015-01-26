@@ -4,6 +4,7 @@
 import traceback
 from jsonschema import ValidationError
 from smsgw.lib.utils import response
+from flask import current_app
 
 
 class ErrorResource(Exception):
@@ -35,3 +36,10 @@ class ErrorResource(Exception):
         def on_validation_error(error):
             message = error.schema.get('message') or error.message
             return response(None, status_code=400, message=message)
+
+        @app.errorhandler(Exception)
+        def on_unhandled_exception(error):
+            """ Error handler for unhandled exceptions """
+            current_app.logger.error(traceback.format_exc())            
+
+            return response(None, status_code=500)
