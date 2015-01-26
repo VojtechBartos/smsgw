@@ -17,7 +17,7 @@ module.exports = assign new flux.Dispatcher(),
                     action: action
                     success: yes
                     data: data
-            , 1000
+            , 500
         .error (err) ->
             action = action.split '_'
             action = "#{action[0]}_ERROR"
