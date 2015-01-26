@@ -19,19 +19,19 @@ module.exports = (dispatcher, definition) ->
             @emit EVENT_CHANGE
 
         emitError: (err) ->
-            @emit EVENT_CHANGE, err
+            @emit EVENT_ERROR, err
 
         addChangeListener: (callback) ->
             @on EVENT_CHANGE, callback
 
         removeChangeListener: (callback) ->
-            @removeChangeListener EVENT_CHANGE, callback
+            @removeListener EVENT_CHANGE, callback
 
         addErrorListener: (callback) ->
             @on EVENT_ERROR, callback
 
         removeErrorListener: (callback) ->
-            @removeChangeListener EVENT_ERROR, callback
+            @removeListener EVENT_ERROR, callback
 
         listenTo: (action, handler) ->
             handlers[action] = handler.bind @
@@ -41,7 +41,10 @@ module.exports = (dispatcher, definition) ->
     # register dispatcher
     dispatcher.register (payload) ->
         if payload.action of handlers
-            handlers[payload.action](payload)
+            if 'success' of payload and payload.success is no
+                store.emitError payload.error
+            else
+                handlers[payload.action](payload)            
 
     # prepared store to user
     store
