@@ -4,48 +4,41 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-TemplateConstants = require '../constants/TemplateConstants.coffee'
+constants = require '../constants/TemplateConstants.coffee'
 createStore = require '../lib/createStore.coffee'
 Dispatcher = require '../dispatcher.coffee'
 
-_templates = []
+_templates = {}
+
+save = (data) ->
+    for item in data
+        _templates[item.uuid] = item
 
 TemplateStore = createStore Dispatcher,
-    getAll: -> _templates
-    get: (uuid) ->
-        item = null
-        for template in _templates
-            if template.uuid == uuid
-                item = template
-                break
-        item
-            
-TemplateStore.listenTo TemplateConstants.ACTION.FETCH.ALL, (payload) ->
-    if payload.success
-        _templates = payload.data
-        @emitChange()
-    else 
-        @emitError payload.error
+    getAll: -> (val for key, val of _templates)
+    get: (uuid) -> _templates[uuid]        
 
-TemplateStore.listenTo TemplateConstants.ACTION.GET, (payload) ->
-    if payload.success
-        _templates.push payload.data
-        @emitChange()
-    else 
-        @emitError payload.error
+TemplateStore.listenTo constants.TEMPLATE_FETCH_ALL, (payload) ->
+    save payload.data
+    @emitChange()
 
-TemplateStore.listenTo TemplateConstants.ACTION.ADD, (payload) ->
-    if payload.success
-        _templates.push payload.data
-        @emitChange()
-    else
-        @emitError payload.error
+TemplateStore.listenTo constants.TEMPLATE_FETCH, (payload) ->
+    save [payload.data]
+    @emitChange()
 
-TemplateStore.listenTo TemplateConstants.ACTION.DELETE, (payload) ->
-    if payload.success
-        _templates = _templates.filter (item) -> item.uuid != payload.data.uuid
-        @emitChange()
-    else
-        @emitError payload.error
+TemplateStore.listenTo constants.TEMPLATE_CREATE, (payload) ->
+    save [payload.data]
+    @emitChange()
+
+TemplateStore.listenTo constants.TEMPLATE_UPDATE, (payload) ->
+    save [payload.data]
+    @emitChange()
+
+TemplateStore.listenTo constants.TEMPLATE_DELETE, (payload) ->
+    delete _templates[payload.data.uuid]
+    @emitChange()
+
+TemplateStore.listenTo constants.TEMPLATE_ERROR, (payload) ->
+    @emitError payload.error
 
 module.exports = TemplateStore

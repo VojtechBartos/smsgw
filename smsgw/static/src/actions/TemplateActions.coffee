@@ -5,71 +5,43 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 Dispatcher = require '../dispatcher.coffee'
-TemplateConstants = require '../constants/TemplateConstants.coffee'
-api = require '../api/fetcher.coffee'
-endpoints = require('../api/endpoints.coffee').templates
-
 UserActions = require './UserActions.coffee'
-
-
+constants = require '../constants/TemplateConstants.coffee'
+endpoints = require('../api/endpoints.coffee').templates
+api = require '../api/index.coffee'
 
 module.exports =
 
     fetchAll: ->
         url = endpoints.index()
-        api.get url, UserActions.token
-            .then ({meta, data}) ->
-                console.log TemplateConstants.ACTION.FETCH.ALL
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.FETCH.ALL
-                    success: yes
-                    data: data
-            .error (err) ->
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.ERROR
-                    success: no
-                    error: err
+        req = api.fetch 'GET', url, token: UserActions.token
 
-    get: (uuid) ->
-        api.get endpoints.get uuid, UserActions.token
-            .then ({meta, data}) ->
-                console.log TemplateConstants.ACTION.GET
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.GET
-                    success: yes
-                    data: data
-            .error (err) ->
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.GET
-                    success: no
-                    error: err
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_FETCH_ALL
 
-    add: (data) ->
-        api.post endpoints.create(), UserActions.token, data
-            .then ({meta, data}) ->
-                console.log TemplateConstants.ACTION.ADD
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.ADD
-                    success: yes
-                    data: data
-            .error (err) ->
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.ERROR
-                    success: no
-                    error: err
+    fetch: (uuid) ->
+        url = endpoints.get uuid
+        req = api.fetch 'GET', url, token: UserActions.token
+
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_FETCH
+
+    create: (data) ->
+        url = endpoints.create()
+        req = api.fetch 'POST', url, 
+            token: UserActions.token        
+            data: data
+
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_CREATE
+
+    update: (uuid, data) ->
+        url = endpoints.update uuid
+        req = api.fetch 'PUT', url,
+            token: UserActions.token        
+            data: data
+
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_UPDATE
 
     delete: (uuid) ->
-        url = endpoints.delete(uuid)
-        api.delete url, UserActions.token
-            .then ({meta, data}) ->
-                console.log TemplateConstants.ACTION.DELETE
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.DELETE
-                    success: yes
-                    data: data
-            .error (err) ->
-                Dispatcher.dispatch 
-                    action: TemplateConstants.ACTION.ERROR
-                    success: no
-                    error: err
+        url = endpoints.delete uuid
+        req = api.fetch 'DELETE', url, token: UserActions.token
 
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_DELETE

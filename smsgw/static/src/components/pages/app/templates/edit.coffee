@@ -12,8 +12,9 @@ TemplateActions = require '../../../../actions/TemplateActions.coffee'
 TemplateStore = require '../../../../stores/TemplateStore.coffee'
 # components
 TemplateForm = require './form.coffee'
+FlashMessages = require '../../../components/flash-messages.coffee'
 Subheader = require '../components/sub-header.coffee'
-
+Spinner = require '../../../components/spinner.coffee'
 
 module.exports = React.createClass
     
@@ -21,39 +22,60 @@ module.exports = React.createClass
 
     getInitialState: ->
         pending: no
+        formPending: no
+        flashMessages: []
         template: TemplateStore.get @getParams().uuid
 
     componentDidMount: ->
         TemplateStore.addChangeListener @handleChange
         TemplateStore.addErrorListener @handleError
 
-        if @state.template is null
-            TemplateActions.get @getParams().uuid
+        TemplateActions.fetch @getParams().uuid
+        @setState pending: yes
 
-    handleChange: ->
-        @setState
-            template: TemplateStore.get @getParams().uuid
+    componentWillUnmount: ->
+        TemplateStore.removeChangeListener @handleChange
+        TemplateStore.removeErrorListener @handleError
+
+    handleChange: (data) ->
+        if @isMounted()
+            @setState
+                pending: no
+                formPending: no
+                template: TemplateStore.get @getParams().uuid
+                flashMessages: []
 
     handleError: (err) ->
-        console.log err
+        if @isMounted()
+            @setState
+                pending: no
+                formPending: no
+                flashMessages: [text: err.message, type: 'alert']
 
     handleSubmit: (e) ->
         e.preventDefault()
-        console.log 'SUBMIT'
-        # form = @refs.templateForm
-        # if form.isValid()
-        #     TemplateActions.add form.getData()
+        form = @refs.templateForm
+        if form.isValid()
+            @setState formPending: yes
+            TemplateActions.update @state.template.uuid, form.getData()
 
     render: ->
+        return <Spinner fullscreen={yes} /> if @state.pending
+
         <div>
             <Subheader back={true} />
 
             <div id="context">
                 <h1>Edit form</h1>
 
-                <TemplateForm onSubmit={@handleSubmit} 
-                              ref="templateForm"
-                              pending={@state.pending}
-                              disabled={@state.pending} />
+                <FlashMessages messages={@state.flashMessages} />
+
+                <TemplateForm 
+                    onSubmit={@handleSubmit} 
+                    ref="templateForm"
+                    pending={@state.formPending}
+                    disabled={@state.formPending} 
+                    submitTitle="Edit"
+                    data={@state.template} />
             </div>
         </div>

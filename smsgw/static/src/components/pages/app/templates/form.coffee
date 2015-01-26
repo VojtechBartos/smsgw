@@ -14,6 +14,7 @@ module.exports = React.createClass
         disabled: no
         pending: no
         submitTitle: 'Create'
+        data: {}
 
     isValid: ->
         yes
@@ -28,11 +29,13 @@ module.exports = React.createClass
                    name="label" 
                    ref="label" 
                    placeholder="Label" 
-                   disabled={@props.disabled} 
+                   disabled={@props.disabled}
+                   defaultValue={@props.data.label}
                    required />
             <textarea name="text" 
                       ref="text" 
                       disabled={@props.disabled} 
+                      defaultValue={@props.data.text}
                       required></textarea>
             <LaddaButton 
                 active={@props.pending}

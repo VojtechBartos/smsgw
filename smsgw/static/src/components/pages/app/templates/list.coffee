@@ -13,80 +13,64 @@ TemplateActions = require '../../../../actions/TemplateActions.coffee'
 TemplateStore = require '../../../../stores/TemplateStore.coffee'
 # components
 Subheader = require './../components/sub-header.coffee'
+Table = require './../components/table.coffee'
+Spinner = require '../../../components/spinner.coffee'
 
-
-TemplateTableHeader = React.createClass
-
-    render: ->
-        <tr>
-            <td>Label</td>
-            <td>Content</td>
-            <td>Created at</td>
-        </tr>
-
-
-TemplateTableItem = React.createClass
-
-    getDefaultProps: ->
-        uuid: null,
-        label: null,
-        text: "",
-        createdAt: null
-
-    handleDelete: (e) ->
-        e.preventDefault()
-        TemplateActions.delete(@props.uuid)
-
-    render: ->
-        <tr>
-            <td>{@props.label}</td>
-            <td>{@props.text}</td>
-            <td>{@props.createdAt}</td>
-            <td>
-                <Link to="template-edit" params={{uuid: @props.uuid}}>Edit</Link>
-                <a href="#" onClick={@handleDelete}>Delete</a>
-            </td>
-        </tr>
-
-
-Templates = React.createClass
+module.exports = React.createClass
       
+    mixins: [ Router.Navigation ]
+
     getInitialState: ->
+        pending: no
+        menu: [ route: 'template-add', label: 'Add template' ]
         templates: TemplateStore.getAll()
+        table: 
+            options: [
+                label: "Label", key: "label"
+            ,
+                label: "Text", key: "text"
+            ,
+                label: "Created", key: "createdAt"
+            ]
+            actions: [
+                label: 'Edit', handler: @handleEditAction
+            ,
+                label: 'Delete', handler: @handleDeleteAction
+            ]
 
     componentDidMount: ->
-        TemplateStore.addChangeListener @handleResponse
+        TemplateStore.addChangeListener @handleChange
         TemplateActions.fetchAll()
 
-    handleResponse: (data) ->
+        @setState pending: yes
+
+    componentWillUnmount: ->
+        TemplateStore.removeChangeListener @handleChange
+
+    handleChange: (data) ->
         if @isMounted()
             @setState
+                pending: no
                 templates: TemplateStore.getAll()
 
-    render: ->
-        menu = [
-            route: 'template-add'
-            label: 'Add template'
-        ]
+    handleEditAction: (template) ->
+        @transitionTo 'template-edit', uuid: template.uuid
 
-        items = []
-        for template in @state.templates
-            items.push <TemplateTableItem uuid={template.uuid} 
-                                          label={template.label} 
-                                          text={template.text} 
-                                          createdAt={template.createdAt} />
-        
+    handleDeleteAction: (template) ->
+        @setState pending: yes
+        TemplateActions.delete template.uuid
+
+    render: ->
+        return <Spinner fullscreen={yes} /> if @state.pending
 
         <div>
-            <Subheader links={menu} />
+            <Subheader links={@state.menu} />
 
             <div id="context">
                 <h1>Templates</h1>
-                <table>
-                    <TemplateTableHeader />
-                    {items}
-                </table>
+                <Table 
+                    options={@state.table.options} 
+                    items={@state.templates} 
+                    actions={@state.table.actions} />
             </div>
         </div>
-
-module.exports = Templates

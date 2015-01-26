@@ -4,11 +4,12 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-module.exports = 
-    ACTION:
-        FETCH: 
-            ALL: 'TEMPLATE_ACTION_FETCH_ALL'
-        DELETE: 'TEMPLATE_ACTION_DELETE'
-        ERROR: 'TEMPLATE_ACTION_ERROR'
-    EVENT:
-        ERROR: 'TEMPLATE_EVENT_ERROR'
+keyMirror = require 'keymirror'
+
+module.exports = keyMirror
+    TEMPLATE_FETCH_ALL: null
+    TEMPLATE_FETCH: null
+    TEMPLATE_CREATE: null
+    TEMPLATE_UPDATE: null
+    TEMPLATE_DELETE: null
+    TEMPLATE_ERROR: null

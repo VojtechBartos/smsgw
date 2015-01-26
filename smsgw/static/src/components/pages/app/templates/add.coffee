@@ -12,6 +12,7 @@ TemplateActions = require '../../../../actions/TemplateActions.coffee'
 TemplateStore = require '../../../../stores/TemplateStore.coffee'
 # components
 TemplateForm = require './form.coffee'
+FlashMessages = require '../../../components/flash-messages.coffee'
 Subheader = require '../components/sub-header.coffee'
 
 module.exports = React.createClass
@@ -19,24 +20,31 @@ module.exports = React.createClass
     mixins: [Router.Navigation]
 
     getInitialState: ->
-        pending: no
+        formPending: no
+        flashMessages: []
 
     componentDidMount: ->
         TemplateStore.addChangeListener @handleChange
         TemplateStore.addErrorListener @handleError
 
+    componentWillUnmount: ->
+        TemplateStore.removeChangeListener @handleChange
+        TemplateStore.removeErrorListener @handleError
+
     handleChange: ->
-        @transitionTo '/templates'
+        @transitionTo 'templates'
 
     handleError: (err) ->
-        console.log err
+        if @isMounted()
+            @setState
+                flashMessages: [text: err.message, type: 'alert']
 
     handleSubmit: (e) ->
         e.preventDefault()
-        console.log 'SUBMIT'
         form = @refs.templateForm
         if form.isValid()
-            TemplateActions.add form.getData()
+            @setState formPending: yes
+            TemplateActions.create form.getData()
 
     render: ->
         <div>
@@ -45,9 +53,12 @@ module.exports = React.createClass
             <div id="context">
                 <h1>Add form</h1>
 
-                <TemplateForm onSubmit={@handleSubmit} 
-                              ref="templateForm"
-                              pending={@state.pending}
-                              disabled={@state.pending} />
+                <FlashMessages messages={@state.flashMessages} />
+
+                <TemplateForm 
+                    onSubmit={@handleSubmit} 
+                    ref="templateForm"
+                    pending={@state.formPending}
+                    disabled={@state.formPending} />
             </div>
         </div>
