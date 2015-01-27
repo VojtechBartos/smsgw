@@ -15,15 +15,14 @@ from smsgw.extensions import db
 class TemplatesResource(FlaskView):
     """ Templates endpoints """
 
-    route_base = '/'
+    route_base = '/users/<uuid:user_uuid>/templates/'
 
-    @route('/users/<uuid:user_uuid>/templates/', methods=['GET'])
     @decorators.auth()
-    def index(self, user, **kwargs):
+    def index(self, **kwargs):
         """
-
+        Getting list of user's templates
         """
-        # load user templates 
+        user = kwargs.get('user')
         payload = []
         for template in user.templates:
             payload.append({
@@ -33,33 +32,32 @@ class TemplatesResource(FlaskView):
                 'createdAt': template.createdAt.isoformat(sep=' ')
             })
 
-        return response(payload, status_code=200)
+        return response(payload)
 
-    @route('/users/<uuid:user_uuid>/templates/<uuid:template_uuid>/', 
-            methods=['GET'])
+    @route('/<uuid:template_uuid>/')
     @decorators.auth()
-    def get(self, user, template, **kwargs):
+    def get(self, **kwargs):
         """
-
+        Get user template
         """
+        template = kwargs.get('template')
         return response({
             'uuid': template.uuid,
             'label': template.label,
             'text': template.text,
             'createdAt': template.createdAt.isoformat(sep=' ')
-        }, status_code=200)
+        })
 
-    @route('/users/<uuid:user_uuid>/templates/', methods=['POST'])
     @decorators.auth()
     @decorators.jsonschema_validate(payload=post.schema)
-    def post(self, user, **kwargs):
+    def post(self, **kwargs):
         """
-
+        Creating new user template
         """
-        data = request.json
+        user = kwargs.get('user')
 
         # create and save template
-        template = Template(**data)
+        template = Template(**request.json)
         template.userId = user.id
         db.session.add(template)
         db.session.commit()
@@ -73,18 +71,15 @@ class TemplatesResource(FlaskView):
         }
         return response(payload, status_code=201)
 
-    @route('/users/<uuid:user_uuid>/templates/<uuid:template_uuid>/', 
-            methods=['PUT'])
+    @route('/<uuid:template_uuid>/', methods=['PUT'])
     @decorators.auth()
     @decorators.jsonschema_validate(payload=put.schema)
-    def put(self, user, template, **kwargs):
+    def put(self, **kwargs):
         """
-
+        Updateing existing template
         """
-        data = request.json
-        
-        # save to db
-        template.update(data)
+        template = kwargs.get('template')
+        template.update(request.json)
         db.session.commit()
  
         return response({
@@ -92,16 +87,16 @@ class TemplatesResource(FlaskView):
             'label': template.label,
             'text': template.text,
             'createdAt': template.createdAt.isoformat(sep=' ')
-        }, status_code=200)
+        })
 
-    @route('/users/<uuid:user_uuid>/templates/<uuid:template_uuid>/',
-            methods=['DELETE'])
+    @route('/<uuid:template_uuid>/', methods=['DELETE'])
     @decorators.auth()
-    def delete(self, user, template, **kwargs):
+    def delete(self, **kwargs):
         """
-
+        Delete template
         """        
         # delete template
+        template = kwargs.get('template')
         db.session.delete(template)
         db.session.commit()
 
@@ -110,4 +105,4 @@ class TemplatesResource(FlaskView):
             'label': template.label,
             'text': template.text,
             'createdAt': template.createdAt.isoformat(sep=' ')
-        }, status_code=200)
+        })
