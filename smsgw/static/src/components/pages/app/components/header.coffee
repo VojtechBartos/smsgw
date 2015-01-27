@@ -19,7 +19,7 @@ Menu = React.createClass
             <li><Link to="applications">applications</Link></li>
             <li><Link to="messages">messages</Link></li>
             <li><Link to="templates">templates</Link></li>
-            <li><Link to="contacts">contacts</Link></li>
+            <li><Link to="directory">directory</Link></li>
         </ul>
 
 Header = React.createClass

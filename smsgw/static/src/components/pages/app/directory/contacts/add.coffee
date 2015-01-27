@@ -7,13 +7,13 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Dispatcher = require '../../../../dispatcher.coffee'
-TemplateActions = require '../../../../actions/TemplateActions.coffee'
-TemplateStore = require '../../../../stores/TemplateStore.coffee'
+Dispatcher = require '../../../../../dispatcher.coffee'
+ContactActions = require '../../../../../actions/ContactActions.coffee'
+ContactStore = require '../../../../../stores/ContactStore.coffee'
 # components
-TemplateForm = require './form.coffee'
-FlashMessages = require '../../../components/flash-messages.coffee'
-Subheader = require '../components/sub-header.coffee'
+ContactForm = require './form.coffee'
+FlashMessages = require '../../../../components/flash-messages.coffee'
+Subheader = require '../../components/sub-header.coffee'
 
 module.exports = React.createClass
     
@@ -24,15 +24,15 @@ module.exports = React.createClass
         flashMessages: []
 
     componentDidMount: ->
-        TemplateStore.addChangeListener @handleChange
-        TemplateStore.addErrorListener @handleError
+        ContactStore.addChangeListener @handleChange
+        ContactStore.addErrorListener @handleError
 
     componentWillUnmount: ->
-        TemplateStore.removeChangeListener @handleChange
-        TemplateStore.removeErrorListener @handleError
+        ContactStore.removeChangeListener @handleChange
+        ContactStore.removeErrorListener @handleError
 
     handleChange: ->
-        @transitionTo 'templates'
+        @transitionTo 'contacts'
 
     handleError: (err) ->
         if @isMounted()
@@ -42,23 +42,23 @@ module.exports = React.createClass
 
     handleSubmit: (e) ->
         e.preventDefault()
-        form = @refs.templateForm
+        form = @refs.contactForm
         if form.isValid()
             @setState formPending: yes
-            TemplateActions.create form.getData()
+            ContactActions.create form.getData()
 
     render: ->
         <div>
-            <Subheader backTitle="Templates">
-                <h1>Add template</h1>
+            <Subheader backTitle="Contacts">
+                <h1>Add contact</h1>
             </Subheader>
 
             <div id="context">
                 <FlashMessages messages={@state.flashMessages} />
 
-                <TemplateForm 
+                <ContactForm 
                     onSubmit={@handleSubmit} 
-                    ref="templateForm"
+                    ref="contactForm"
                     pending={@state.formPending}
                     disabled={@state.formPending} />
             </div>

@@ -10,4 +10,38 @@ constants = require '../constants/ContactConstants.coffee'
 endpoints = require('../api/endpoints.coffee').contacts
 api = require '../api/index.coffee'
 
-module.exports = {}
+module.exports = 
+
+    fetchAll: ->
+        url = endpoints.index()
+        req = api.fetch 'GET', url, token: UserActions.token
+
+        Dispatcher.dispatchRequest req, constants.CONTACT_FETCH_ALL
+
+    fetch: (uuid) ->
+        url = endpoints.get uuid
+        req = api.fetch 'GET', url, token: UserActions.token
+
+        Dispatcher.dispatchRequest req, constants.CONTACT_FETCH
+
+    create: (data) ->
+        url = endpoints.create()
+        req = api.fetch 'POST', url, 
+            token: UserActions.token        
+            data: data
+
+        Dispatcher.dispatchRequest req, constants.CONTACT_CREATE
+
+    update: (uuid, data) ->
+        url = endpoints.update uuid
+        req = api.fetch 'PUT', url,
+            token: UserActions.token        
+            data: data
+
+        Dispatcher.dispatchRequest req, constants.CONTACT_UPDATE
+
+    delete: (uuid) ->
+        url = endpoints.delete uuid
+        req = api.fetch 'DELETE', url, token: UserActions.token
+
+        Dispatcher.dispatchRequest req, constants.CONTACT_DELETE

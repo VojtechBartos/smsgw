@@ -25,17 +25,18 @@ TemplatesList = require './components/pages/app/templates/list.coffee'
 TemplatesAdd = require './components/pages/app/templates/add.coffee'
 TemplatesEdit = require './components/pages/app/templates/edit.coffee'
 Messages = require './components/pages/app/messages.coffee'
-ContactsList = require './components/pages/app/contacts/list.coffee'
-ContactsAdd = require './components/pages/app/contacts/add.coffee'
-ContactsEdit = require './components/pages/app/contacts/edit.coffee'
 Settings = require './components/pages/app/settings.coffee'
 Wrapper = require './components/components/wrapper.coffee'
-# temp
-Tags = require './components/pages/app/tags.coffee'
+DirectoryWrapper = require './components/pages/app/directory/wrapper.coffee'
+ContactsList = require './components/pages/app/directory/contacts/list.coffee'
+ContactsAdd = require './components/pages/app/directory/contacts/add.coffee'
+ContactsEdit = require './components/pages/app/directory/contacts/edit.coffee'
+TagsList = require './components/pages/app/directory/tags/list.coffee'
 
 module.exports =
     <Route handler={Wrapper} path="/">
         <Redirect from="/" to="dashboard" />
+        <Redirect from="directory" to="contacts" />
         <Route name="sign-in" path="sign/in" handler={SignIn} />
         <Route name="sign-up" path="sign/up" handler={SignUp} />
         <Route name="reset-password" path="reset-password" handler={ResetPassword} />
@@ -43,11 +44,13 @@ module.exports =
             <Route name="dashboard" handler={Dashboard} />
             <Route name="applications" handler={Applications} />
             <Route name="messages" handler={Messages} />
-            <Route name="contacts" handler={Wrapper}>
-                <DefaultRoute handler={ContactsList} />
-                <Route name="contact-add" path="add" handler={ContactsAdd} />
-                <Route name="contact-edit" path=":uuid" handler={ContactsEdit} />
-                <Route name="tags" path="tags" handler={Tags} />
+            <Route name="directory" handler={Wrapper}>
+                <Route handler={DirectoryWrapper}>
+                    <Route name="contacts" path="contacts" handler={ContactsList} />
+                    <Route name="tags" path="tags" handler={TagsList} />
+                </Route>
+                <Route name="contact-add" path="contacts/add" handler={ContactsAdd} />
+                <Route name="contact-edit" path="contacts/:uuid" handler={ContactsEdit} />
             </Route>
             <Route name="settings" handler={Settings} />
             <Route name="templates" handler={Wrapper}>

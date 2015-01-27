@@ -8,7 +8,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 # components
-Subheader = require './components/sub-header.coffee'
+Subheader = require './../../components/sub-header.coffee'
 
 module.exports = React.createClass
     
@@ -24,10 +24,9 @@ module.exports = React.createClass
 
     render: ->
         <div>
-            <Subheader links={@state.menu} />
             <div id="context">
                 <h1>
-                    Tags ({@state.contacts.length})
+                    Tags 
                 </h1>
             </div>
         </div>
