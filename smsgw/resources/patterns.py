@@ -8,3 +8,4 @@ UUID = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-" \
        "[0-9a-fA-F]{12}|\@me"
 UNIX_TIMESTAMP = "[0-9]+"
 TIMEZONE_CODE = "^(([a-zA-Z]+)(\/[a-zA-Z\-\_]+){1,2})|GMT|UTC$"
+PHONE_NUMBER = "^\+([0-9]{12})$"
