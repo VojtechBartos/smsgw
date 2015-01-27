@@ -25,7 +25,7 @@ schema = {
             "maxLength": 16
         },
         "email": {
-            "type": "string",
+            "type": ["string", "null"],
             "pattern": patterns.EMAIL
         },
         "phoneNumber": {
@@ -33,8 +33,16 @@ schema = {
             "pattern": patterns.PHONE_NUMBER
         },
         "note": {
-            "type": "string",
+            "type": ["string", "null"],
             "maxLength": 255
+        },
+        "tags": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 23
+            }
         }
     }
 }

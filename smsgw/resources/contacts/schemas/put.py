@@ -35,6 +35,14 @@ schema = {
         "note": {
             "type": ["string", "null"],
             "maxLength": 255
+        },
+        "tags": {
+            "type": ["array", "null"],
+            "items": {
+                "type": "string",
+                "minLength": 2,
+                "maxLength": 23
+            }
         }
     }
 }

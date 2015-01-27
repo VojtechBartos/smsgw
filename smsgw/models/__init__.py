@@ -24,11 +24,22 @@ class BaseModel(AbstractConcreteBase, db.Model):
             if hasattr(self, key):
                 setattr(self, key, data[key])
 
+    @classmethod
+    def get_or_create(cls, _latest=True, **kwargs):
+        """
+        Get or create row in DB
+        """
+        instance = cls.query.filter_by(**kwargs).first()
+        if instance is None:
+            instance = cls(**kwargs)
+            db.session.add(instance)
+        return instance
+
 
 # list of models
-from smsgw.models.relations import contactTags
 from smsgw.models.user import User
 from smsgw.models.user_token import UserToken
 from smsgw.models.template import Template
-from smsgw.models.contact import Contact
 from smsgw.models.tag import Tag
+from smsgw.models.contact import Contact
+from smsgw.models.relations import contactTags

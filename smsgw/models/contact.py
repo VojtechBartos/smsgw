@@ -3,9 +3,9 @@
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
-from smsgw.models import BaseModel, relations
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
+from smsgw.models import BaseModel, Tag, relations
 
 
 class Contact(BaseModel):
@@ -22,9 +22,35 @@ class Contact(BaseModel):
     email = db.Column(db.String(128))
     note = db.Column(db.String(255))
 
-    tags = db.relationship("Tag", secondary=relations.contactTags,
-                           backref="contacts", lazy="dynamic")
+    _tags = db.relationship("Tag", secondary=relations.contactTags,
+                            backref="contacts", lazy="dynamic")
 
+    @property
+    def tags(self):
+        """
+        Return list of the tags
+        :return: {list}
+        """
+        return [tag.label for tag in self._tags.all()]
+
+    @tags.setter
+    def tags(self, items):
+        """
+        Saves list of tags
+        :param items: {list} list of tags
+        """
+        if items is None:
+            items = []
+
+        tags = []
+        for label in items:
+            tag = Tag(label=label)
+            tag = Tag.get_or_create(reference=tag.label)
+            tag.label = label
+            tags.append(tag)
+
+        self._tags = tags
+    
     def to_dict(self, properties=None):
         dict = {
             'id': self.id,
@@ -34,6 +60,7 @@ class Contact(BaseModel):
             'phoneNumber': self.phoneNumber,
             'email': self.email,
             'note': self.note,
+            'tags': self.tags,
             'createdAt': self.createdAt.isoformat(sep=' ')
         }
 
