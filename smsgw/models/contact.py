@@ -3,7 +3,7 @@
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, relations
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
 
@@ -22,6 +22,8 @@ class Contact(BaseModel):
     email = db.Column(db.String(128))
     note = db.Column(db.String(255))
 
+    tags = db.relationship("Tag", secondary=relations.contactTags,
+                           backref="contacts", lazy="dynamic")
 
     def to_dict(self, properties=None):
         dict = {
