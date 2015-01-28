@@ -18,7 +18,7 @@ class Application(BaseModel):
                      default=generate_uuid)
     label = db.Column(db.String(32), nullable=False)
     token = db.Column(db.String(32), unique=True, nullable=False)
-    prefix = db.Column(db.String(5))
+    prefix = db.Column(db.String(5), unique=True)
     callbackUrl = db.Column(db.String(128))
     note = db.Column(db.String(255))
 
@@ -27,7 +27,28 @@ class Application(BaseModel):
         """ 
         Create token on inicialization
         """
-        if kwargs.get('token') is None:
-            kwargs['token'] = os.urandom(32).encode('hex')
-
         super(Application, self).__init__(**kwargs)
+        # generate token
+        self.regenerate_token()
+
+    def regenerate_token(self):
+        """
+        Regenerate token for API access
+        """
+        self.token = os.urandom(16).encode('hex')
+
+    def to_dict(self, properties=None):
+        dict = {
+            'id': self.id,
+            'uuid': self.uuid,
+            'label': self.label,
+            'token': self.token,
+            'prefix': self.prefix,
+            'callbackUrl': self.callbackUrl,
+            'note': self.note
+        }
+
+        if properties is None:
+            properties = dict.keys()
+
+        return {key: dict.get(key) for key in properties}

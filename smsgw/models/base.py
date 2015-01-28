@@ -16,7 +16,7 @@ class BaseModel(AbstractConcreteBase, db.Model):
     updatedAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, 
                           onupdate=datetime.utcnow)
 
-    def to_dict(self, properties):
+    def to_dict(self, properties=None):
         return {key: getattr(self, key) for key in properties}
 
     def update(self, data):

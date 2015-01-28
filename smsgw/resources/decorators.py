@@ -8,7 +8,7 @@ from functools import update_wrapper
 from flask import request, abort
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from smsgw.extensions import db
-from smsgw.models import User, UserToken, Template, Contact, Tag
+from smsgw.models import User, UserToken, Template, Contact, Tag, Application
 
 
 def jsonschema_validate(payload=None, **options):
@@ -45,7 +45,8 @@ def auth(role=User.ROLE_USER):
             'user': User,
             'template': Template,
             'contact': Contact,
-            'tag': Tag
+            'tag': Tag,
+            'application': Application
         }
 
         def unauthorized():

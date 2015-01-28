@@ -9,3 +9,4 @@ UUID = "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-" \
 UNIX_TIMESTAMP = "[0-9]+"
 TIMEZONE_CODE = "^(([a-zA-Z]+)(\/[a-zA-Z\-\_]+){1,2})|GMT|UTC$"
 PHONE_NUMBER = "^\+([0-9]{12})$"
+URL = "http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+"
