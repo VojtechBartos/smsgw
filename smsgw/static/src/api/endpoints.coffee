@@ -33,3 +33,10 @@ module.exports =
         get: (uuid, user = "@me") -> "#{BASE}/users/#{user}/tags/#{uuid}/"
         update: (uuid, user = "@me") -> @get uuid, user
         delete: (uuid, user = "@me") -> @get uuid, user
+    applications:
+        index: (user = "@me") -> "#{BASE}/users/#{user}/applications/"
+        create: (user = "@me") -> "#{BASE}/users/#{user}/applications/"
+        get: (uuid, user = "@me") -> "#{BASE}/users/#{user}/applications/#{uuid}/"
+        regenerate: (uuid, user = "@me") -> "#{BASE}/users/#{user}/applications/#{uuid}/regenerate/"
+        update: (uuid, user = "@me") -> @get uuid, user
+        delete: (uuid, user = "@me") -> @get uuid, user

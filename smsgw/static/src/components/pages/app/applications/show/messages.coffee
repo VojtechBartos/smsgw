@@ -10,4 +10,6 @@ React = require 'react'
 
 module.exports = React.createClass
     render: ->
-        <div>messsages</div>
+        <div id="context">
+            messages
+        </div>

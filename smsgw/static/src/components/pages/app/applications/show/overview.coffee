@@ -10,4 +10,6 @@ React = require 'react'
 
 module.exports = React.createClass
     render: ->
-        <div>overview</div>
+        <div id="context">
+            d3.js graph place
+        </div>

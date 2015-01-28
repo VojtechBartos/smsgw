@@ -7,8 +7,8 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 
-Apps = React.createClass
+module.exports = React.createClass
     render: ->
-        <div>Messages</div>
-
-module.exports = Apps
+        <div id="context">
+            messages
+        </div>

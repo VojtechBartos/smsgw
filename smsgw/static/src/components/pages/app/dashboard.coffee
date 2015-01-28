@@ -6,20 +6,9 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 React = require 'react'
-Router = require 'react-router'
-Subheader = require './components/sub-header.coffee'
 
-Dashboard = React.createClass
-    mixins : [ Router.Navigation ]
-
+module.exports = React.createClass
     render: ->
-        <div onClick={@handleClick}>
-            <Subheader />
-            Dashboard
+        <div id="context">
+            d3.js graph place
         </div>
-
-    handleClick: ->
-        @transitionTo '/sign/in'
-
-
-module.exports = Dashboard

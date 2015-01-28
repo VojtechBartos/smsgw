@@ -18,6 +18,6 @@ module.exports = React.createClass
             width: '100%'
 
         content = @props.children
-        content = <RouteHandler /> if not content?
+        content = <RouteHandler {...this.props} /> if not content?
 
         <div style={style}>{content}</div>

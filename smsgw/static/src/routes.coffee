@@ -21,6 +21,7 @@ SignUp = require './components/pages/sign-up.coffee'
 ResetPassword = require './components/pages/reset-password.coffee'
 Dashboard = require './components/pages/app/dashboard.coffee'
 ApplicationsList = require './components/pages/app/applications/list.coffee'
+ApplicationsAdd = require './components/pages/app/applications/add.coffee'
 ApplicationsShowWrapper = require './components/pages/app/applications/wrapper.coffee'
 ApplicationsShowSettings = require './components/pages/app/applications/show/settings.coffee'
 ApplicationsShowOverview = require './components/pages/app/applications/show/overview.coffee'
@@ -52,9 +53,10 @@ module.exports =
             <Route name="dashboard" handler={Dashboard} />
             <Route name="applications" handler={Wrapper}>
                 <DefaultRoute handler={ApplicationsList} />
+                <Route name="application-add" path="add" handler={ApplicationsAdd} />
                 <Route name="application" path=":uuid" handler={ApplicationsShowWrapper}>
                     <Route name="application-overview" path="overview" handler={ApplicationsShowOverview} />
-                    <Route name="application-settings" path="settings" handler={ApplicationsShowMessages} />
+                    <Route name="application-settings" path="settings" handler={ApplicationsShowSettings} />
                     <Route name="application-messages" path="messages" handler={ApplicationsShowMessages} />
                 </Route>
             </Route>
