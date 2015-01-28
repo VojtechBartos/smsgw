@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
-from flask import request, current_app
+from flask import request
 from flask.ext.classy import FlaskView, route
 
 from sqlalchemy.exc import IntegrityError
@@ -58,9 +58,7 @@ class TagsResource(FlaskView):
             db.session.commit()
         except IntegrityError, e:
             db.session.rollback()
-            raise ErrorResource(409,
-                    message="Tag '{0}' is already exists." \
-                                .format(tag.label))
+            raise ErrorResource(409, message="Tag is already exists.")
 
         return response(tag.to_dict(), status_code=201)
 
@@ -78,9 +76,7 @@ class TagsResource(FlaskView):
             db.session.commit()
         except IntegrityError, e:
             db.session.rollback()
-            raise ErrorResource(409,
-                    message="Tag '{0}' is already exists." \
-                                .format(request.json['label']))
+            raise ErrorResource(409, message="Tag is already exists.")
  
         return response(tag.to_dict())
 
