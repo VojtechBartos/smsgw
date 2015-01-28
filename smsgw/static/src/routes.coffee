@@ -44,7 +44,6 @@ module.exports =
     <Route handler={Wrapper} path="/">
         <Redirect from="/" to="dashboard" />
         <Redirect from="directory" to="contacts" />
-        <Redirect from="application" to="application-overview" />
 
         <Route name="sign-in" path="sign/in" handler={SignIn} />
         <Route name="sign-up" path="sign/up" handler={SignUp} />
