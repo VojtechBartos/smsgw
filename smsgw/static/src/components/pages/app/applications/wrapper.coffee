@@ -31,8 +31,12 @@ module.exports = React.createClass
             route: 'application-settings'
             params: @getParams()
         ,
-            label: 'Messages'
-            route: 'application-messages'   
+            label: 'Sent messages'
+            route: 'application-sent-messages'   
+            params: @getParams()
+        ,
+            label: 'Received messages'
+            route: 'application-received-messages'   
             params: @getParams()
         ]
 

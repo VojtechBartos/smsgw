@@ -11,5 +11,5 @@ React = require 'react'
 module.exports = React.createClass
     render: ->
         <div id="context">
-            messages
+            sent messages
         </div>

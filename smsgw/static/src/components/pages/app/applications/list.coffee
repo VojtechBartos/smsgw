@@ -32,7 +32,7 @@ module.exports = React.createClass
                 label: "Note", key: "note"
             ]
             actions: [
-                label: 'Edit', handler: @handleEditAction
+                label: 'Show', handler: @handleShowAction
             ,
                 label: 'Delete', handler: @handleDeleteAction
             ]
@@ -50,7 +50,7 @@ module.exports = React.createClass
                 pending: no
                 applications: ApplicationStore.getAll()
 
-    handleEditAction: (app) ->
+    handleShowAction: (app) ->
         @transitionTo 'application-overview', uuid: app.uuid
 
     handleDeleteAction: (app) ->

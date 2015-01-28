@@ -25,7 +25,8 @@ ApplicationsAdd = require './components/pages/app/applications/add.coffee'
 ApplicationsShowWrapper = require './components/pages/app/applications/wrapper.coffee'
 ApplicationsShowSettings = require './components/pages/app/applications/show/settings.coffee'
 ApplicationsShowOverview = require './components/pages/app/applications/show/overview.coffee'
-ApplicationsShowMessages = require './components/pages/app/applications/show/messages.coffee'
+ApplicationsShowSentMessages = require './components/pages/app/applications/show/sent-messages.coffee'
+ApplicationsShowReceivedMessages = require './components/pages/app/applications/show/received-messages.coffee'
 TemplatesList = require './components/pages/app/templates/list.coffee'
 TemplatesAdd = require './components/pages/app/templates/add.coffee'
 TemplatesEdit = require './components/pages/app/templates/edit.coffee'
@@ -56,7 +57,8 @@ module.exports =
                 <Route name="application" path=":uuid" handler={ApplicationsShowWrapper}>
                     <Route name="application-overview" path="overview" handler={ApplicationsShowOverview} />
                     <Route name="application-settings" path="settings" handler={ApplicationsShowSettings} />
-                    <Route name="application-messages" path="messages" handler={ApplicationsShowMessages} />
+                    <Route name="application-sent-messages" path="sent-messages" handler={ApplicationsShowSentMessages} />
+                    <Route name="application-received-messages" path="received-messages" handler={ApplicationsShowReceivedMessages} />
                 </Route>
             </Route>
             <Route name="messages" handler={Messages} />
