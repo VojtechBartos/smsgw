@@ -4,6 +4,7 @@
 from slugify import slugify
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
+from sqlalchemy.schema import Index
 from smsgw.models import BaseModel
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
@@ -17,17 +18,26 @@ class Tag(BaseModel):
     uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False, 
                      default=generate_uuid)
     reference = db.Column(db.String(32), nullable=False)
-    label = db.Column(db.String(32), nullable=False)
+    _label = db.Column("label", db.String(32), nullable=False)
     note = db.Column(db.String(255))
 
 
-    def __init__(self, **kwargs):
-        # if reference doesn't exists, slugify it from text
-        label = kwargs.get('label')
-        if label is not None:
-            kwargs['reference'] = kwargs.get('reference', 
-                                             slugify(label, to_lower=True))
-        super(Tag, self).__init__(**kwargs)
+    @property
+    def label(self):
+        """
+        Getting label
+        :return: {str} label
+        """
+        return self._label
+
+    @label.setter
+    def label(self, value):
+        """
+        Setter for label which automatically set reference
+        :param value: {str} label
+        """
+        self._label = value
+        self.reference = slugify(value, to_lower=True)
 
     def to_dict(self, properties=None):
         dict = {
@@ -43,3 +53,6 @@ class Tag(BaseModel):
             properties = dict.keys()
 
         return {key: dict.get(key) for key in properties}
+
+
+Index(Tag.userId, Tag.reference, unique=True)
