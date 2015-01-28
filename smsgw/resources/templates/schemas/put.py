@@ -15,7 +15,8 @@ schema = {
         },
         "text": {            
             "type": "string",
-            "minLength": 8
+            "minLength": 8,
+            "maxLanegth": 255
         }
     }
 }
