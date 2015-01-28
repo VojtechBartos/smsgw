@@ -44,4 +44,3 @@ class AuthResourceTest(SmsgwIntegrationTestCase):
         # not active
         res = self.post(self.LOGIN_URN, data=datasets.login.NOT_ACTIVE)
         self.assert403(res)
-

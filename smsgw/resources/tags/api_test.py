@@ -169,5 +169,3 @@ class TagsResourceTest(SmsgwIntegrationTestCase):
         self.assertEqual(data['reference'], tag.reference)
         self.assertEqual(data['note'], tag.note)
         self.assertEqual(len(Tag.query.filter_by(userId=self.user.id).all()), 0)
-
-
