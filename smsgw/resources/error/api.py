@@ -3,7 +3,9 @@
 
 import traceback
 from jsonschema import ValidationError
+from sqlalchemy.exc import IntegrityError
 from smsgw.lib.utils import response
+from smsgw.extensions import db
 from flask import current_app
 
 
@@ -31,6 +33,16 @@ class ErrorResource(Exception):
         def on_error_resource(error):
             """ Error handler for ErrorResource exception """
             return response(None, error.status_code, error.message)
+
+        @app.errorhandler(IntegrityError)
+        def on_sql_alchemy_error(error):
+            """ Error handler for sqlalchemy IntegrityError exception """
+            # do rollback
+            db.session.rollback()
+            # log it
+            current_app.logger.error(traceback.format_exc()) 
+
+            return response(None, status_code=500)
 
         @app.errorhandler(ValidationError)
         def on_validation_error(error):
