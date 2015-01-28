@@ -20,7 +20,11 @@ SignIn = require './components/pages/sign-in.coffee'
 SignUp = require './components/pages/sign-up.coffee'
 ResetPassword = require './components/pages/reset-password.coffee'
 Dashboard = require './components/pages/app/dashboard.coffee'
-Applications = require './components/pages/app/applications.coffee'
+ApplicationsList = require './components/pages/app/applications/list.coffee'
+ApplicationsShowWrapper = require './components/pages/app/applications/wrapper.coffee'
+ApplicationsShowSettings = require './components/pages/app/applications/show/settings.coffee'
+ApplicationsShowOverview = require './components/pages/app/applications/show/overview.coffee'
+ApplicationsShowMessages = require './components/pages/app/applications/show/messages.coffee'
 TemplatesList = require './components/pages/app/templates/list.coffee'
 TemplatesAdd = require './components/pages/app/templates/add.coffee'
 TemplatesEdit = require './components/pages/app/templates/edit.coffee'
@@ -32,17 +36,28 @@ ContactsList = require './components/pages/app/directory/contacts/list.coffee'
 ContactsAdd = require './components/pages/app/directory/contacts/add.coffee'
 ContactsEdit = require './components/pages/app/directory/contacts/edit.coffee'
 TagsList = require './components/pages/app/directory/tags/list.coffee'
+TagsAdd = require './components/pages/app/directory/tags/add.coffee'
+TagsEdit = require './components/pages/app/directory/tags/edit.coffee'
 
 module.exports =
     <Route handler={Wrapper} path="/">
         <Redirect from="/" to="dashboard" />
         <Redirect from="directory" to="contacts" />
+        <Redirect from="application" to="application-overview" />
+
         <Route name="sign-in" path="sign/in" handler={SignIn} />
         <Route name="sign-up" path="sign/up" handler={SignUp} />
         <Route name="reset-password" path="reset-password" handler={ResetPassword} />
         <Route handler={App}>
             <Route name="dashboard" handler={Dashboard} />
-            <Route name="applications" handler={Applications} />
+            <Route name="applications" handler={Wrapper}>
+                <DefaultRoute handler={ApplicationsList} />
+                <Route name="application" path=":uuid" handler={ApplicationsShowWrapper}>
+                    <Route name="application-overview" path="overview" handler={ApplicationsShowOverview} />
+                    <Route name="application-settings" path="settings" handler={ApplicationsShowMessages} />
+                    <Route name="application-messages" path="messages" handler={ApplicationsShowMessages} />
+                </Route>
+            </Route>
             <Route name="messages" handler={Messages} />
             <Route name="directory" handler={Wrapper}>
                 <Route handler={DirectoryWrapper}>
@@ -51,6 +66,8 @@ module.exports =
                 </Route>
                 <Route name="contact-add" path="contacts/add" handler={ContactsAdd} />
                 <Route name="contact-edit" path="contacts/:uuid" handler={ContactsEdit} />
+                <Route name="tag-add" path="tags/add" handler={TagsAdd} />
+                <Route name="tag-edit" path="tags/:uuid" handler={TagsEdit} />
             </Route>
             <Route name="settings" handler={Settings} />
             <Route name="templates" handler={Wrapper}>

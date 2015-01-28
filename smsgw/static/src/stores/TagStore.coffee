@@ -23,4 +23,28 @@ TagStore.listenTo constants.TAG_SEARCH, (payload) ->
     _tags = payload.data
     @emitChange()
 
+TagStore.listenTo constants.TAG_FETCH_ALL, (payload) ->
+    _tags = []
+    save payload.data
+    @emitChange()
+
+TagStore.listenTo constants.TAG_FETCH, (payload) ->
+    save [payload.data]
+    @emitChange()
+
+TagStore.listenTo constants.TAG_CREATE, (payload) ->
+    save [payload.data]
+    @emitChange()
+
+TagStore.listenTo constants.TAG_UPDATE, (payload) ->
+    save [payload.data]
+    @emitChange()
+
+TagStore.listenTo constants.TAG_DELETE, (payload) ->
+    delete _tags[payload.data.uuid]
+    @emitChange()
+
+TagStore.listenTo constants.TAG_ERROR, (payload) ->
+    @emitError payload.error
+
 module.exports = TagStore

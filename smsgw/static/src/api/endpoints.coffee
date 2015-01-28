@@ -29,3 +29,7 @@ module.exports =
         delete: (uuid, user = "@me") -> @get uuid, user
     tags:
         index: (user = "@me") -> "#{BASE}/users/#{user}/tags/"
+        create: (user = "@me") -> "#{BASE}/users/#{user}/tags/"
+        get: (uuid, user = "@me") -> "#{BASE}/users/#{user}/tags/#{uuid}/"
+        update: (uuid, user = "@me") -> @get uuid, user
+        delete: (uuid, user = "@me") -> @get uuid, user

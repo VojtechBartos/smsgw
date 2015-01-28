@@ -12,20 +12,24 @@ Link = Router.Link
 
 module.exports = React.createClass
     
-    mixins: [Router.Navigation]
+    mixins: [ Router.Navigation ]
 
     getDefaultProps: ->
         backTitle: false,
+        backRoute: null,
         links: []
 
     handleBackInHistory: (e) ->
         e.preventDefault()
-        window.history.back()
+        if @props.backRoute
+            @transitionTo @props.backRoute
+        else
+            window.history.back()
 
     render: ->
         links = []
         for link in @props.links
-            links.push <Router.Link to={link.route}>{link.label}</Router.Link>
+            links.push <Router.Link to={link.route} params={link.params}>{link.label}</Router.Link>
 
         backLink = null
         if @props.backTitle

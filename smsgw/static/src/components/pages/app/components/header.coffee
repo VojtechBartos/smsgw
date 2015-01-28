@@ -15,11 +15,11 @@ UserActions = require '../../../../actions/UserActions.coffee'
 Menu = React.createClass
     render: ->
         <ul id="menu">  
-            <li><Link to="dashboard">dashboard</Link></li>
-            <li><Link to="applications">applications</Link></li>
-            <li><Link to="messages">messages</Link></li>
-            <li><Link to="templates">templates</Link></li>
-            <li><Link to="directory">directory</Link></li>
+            <li key="dashboard"><Link to="dashboard">dashboard</Link></li>
+            <li key="applications"><Link to="applications">applications</Link></li>
+            <li key="messages"><Link to="messages">messages</Link></li>
+            <li key="templates"><Link to="templates">templates</Link></li>
+            <li key="directory"><Link to="directory">directory</Link></li>
         </ul>
 
 Header = React.createClass
@@ -57,9 +57,9 @@ Header = React.createClass
                     <div className="chevron" />
                 </a>
                 <ul className={className}>
-                    <li>vojta@sleepio.com</li>
-                    <li><Link to="settings">Settings</Link></li>
-                    <li><a onClick={@handleSignOut}>Sign out</a></li>
+                    <li key="email">vojta@sleepio.com</li>
+                    <li key="settings"><Link to="settings">Settings</Link></li>
+                    <li key="sign-out"><a onClick={@handleSignOut}>Sign out</a></li>
                 </ul>
             </div>
             <div className="cleaner"/>

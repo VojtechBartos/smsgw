@@ -6,9 +6,8 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 React = require 'react'
+# components
 
-Apps = React.createClass
+module.exports = React.createClass
     render: ->
-        <div>Apps</div>
-
-module.exports = Apps
+        <div>settings</div>

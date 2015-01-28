@@ -49,7 +49,7 @@ module.exports = React.createClass
 
     handleOnSelect: (tag) ->
         tags = @state.tags.selected
-        tags.push tag.label if not _.some tags, tag.label
+        tags.push tag.label if not _.indexOf tags, tag.label
             
         @setState 
             tags: 

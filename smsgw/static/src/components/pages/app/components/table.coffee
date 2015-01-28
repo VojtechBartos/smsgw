@@ -32,7 +32,7 @@ module.exports = React.createClass
             # fill in basic fileds
             fields = []
             for option in @props.options
-                fields.push <td>{item[option.key]}</td>
+                fields.push <td key={option.key}>{item[option.key]}</td>
 
             # fill in actions
             actions = []
@@ -42,7 +42,7 @@ module.exports = React.createClass
                 if index < @props.actions.length - 1
                     actions.push ' | '
 
-            fields.push <td>{actions}</td>
+            fields.push <td key="actions">{actions}</td>
             items.push <tr>{fields}</tr>
 
         <table>
