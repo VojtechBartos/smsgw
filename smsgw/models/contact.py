@@ -44,8 +44,8 @@ class Contact(BaseModel):
 
         tags = []
         for label in items:
-            tag = Tag(label=label)
-            tag = Tag.get_or_create(reference=tag.label)
+            dummy = Tag(label=label)
+            tag = Tag.get_or_create(reference=dummy.label)
             tag.label = label
             tags.append(tag)
 
