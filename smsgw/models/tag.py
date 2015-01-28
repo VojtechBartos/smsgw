@@ -18,6 +18,7 @@ class Tag(BaseModel):
                      default=generate_uuid)
     reference = db.Column(db.String(32), nullable=False)
     label = db.Column(db.String(32), nullable=False)
+    note = db.Column(db.String(255))
 
 
     def __init__(self, **kwargs):
@@ -33,7 +34,9 @@ class Tag(BaseModel):
             'id': self.id,
             'uuid': self.uuid,
             'reference': self.reference,
-            'label': self.label
+            'label': self.label,
+            'note': self.note,
+            'numberOfContacts': len(self.contacts) # TODO(vojta) lazy dynamic
         }
 
         if properties is None:
