@@ -5,16 +5,38 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 EventEmitter = require('events').EventEmitter
-assign = require 'object-assign'
+_ = require 'lodash'
+
 EVENT_CHANGE = 'change'
 EVENT_ERROR = 'error'
 
-module.exports = (dispatcher, definition) ->
+module.exports = (dispatcher, definition = {}) ->
     # list of all handlers for dispatcher
     handlers = {}
 
     # shared API cross user stores
-    store = assign({}, EventEmitter.prototype,
+    store = _.assign {}, EventEmitter.prototype,
+        _store: []
+
+        getAll: -> @_store
+
+        get: (value, attr = 'uuid') ->
+            result = _.find @_store, (i) -> i[attr] == value
+            result || null
+
+        update: (rows, attr = 'uuid') ->
+            for row in rows
+                index = _.findKey @_store, (i) -> i[attr] == row[attr]
+                if index?
+                    @_store[index] = _.assign @_store[index], row
+                else
+                    @_store.push row
+
+        delete: (value, attr = 'uuid') ->
+            index = _.findKey @_store, (i) -> i[attr] == value
+            delete @_store[index]
+
+
         emitChange: (data = null) ->
             @emit EVENT_CHANGE, data
 
@@ -33,10 +55,14 @@ module.exports = (dispatcher, definition) ->
         removeErrorListener: (callback) ->
             @removeListener EVENT_ERROR, callback
 
-        listenTo: (action, handler) ->
-            handlers[action] = handler.bind @
+        listenTo: (actions, handler) ->
+            if _.isArray actions
+                for action in actions
+                    handler[action] = handler.bind @
+            else
+                handlers[actions] = handler.bind @
 
-    , definition)
+    , definition
 
     # register dispatcher
     dispatcher.register (payload) ->
