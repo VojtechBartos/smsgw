@@ -2,6 +2,7 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 import os
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 from smsgw.models import BaseModel
 from smsgw.extensions import db

@@ -33,6 +33,7 @@ class User(BaseModel):
     templates = relationship("Template", backref='user')
     contacts = relationship("Contact", backref='user', lazy='dynamic')
     tags = relationship("Tag", backref='user', lazy='dynamic')
+    applications = relationship("Application", backref='user', lazy='dynamic')
 
 
     @property
