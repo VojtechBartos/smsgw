@@ -7,41 +7,22 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 constants = require '../constants/TagConstants.coffee'
 createStore = require '../lib/createStore.coffee'
 Dispatcher = require '../dispatcher.coffee'
-
-_tags = {}
-
-save = (data) ->
-    for item in data
-        _tags[item.uuid] = item
-
-TagStore = createStore Dispatcher,
-    getAll: -> (val for key, val of _tags)
-    get: (uuid) -> 
-        _tags[uuid]        
-
-TagStore.listenTo constants.TAG_SEARCH, (payload) ->
-    _tags = payload.data
-    @emitChange()
+TagStore = createStore Dispatcher
 
 TagStore.listenTo constants.TAG_FETCH_ALL, (payload) ->
-    _tags = []
-    save payload.data
+    @update payload.data
     @emitChange()
 
-TagStore.listenTo constants.TAG_FETCH, (payload) ->
-    save [payload.data]
-    @emitChange()
-
-TagStore.listenTo constants.TAG_CREATE, (payload) ->
-    save [payload.data]
+TagStore.listenTo constants.TAG_SEARCH, (payload) ->
+    @_store = payload.data
     @emitChange()
 
 TagStore.listenTo constants.TAG_UPDATE, (payload) ->
-    save [payload.data]
+    @update [payload.data]
     @emitChange()
 
 TagStore.listenTo constants.TAG_DELETE, (payload) ->
-    delete _tags[payload.data.uuid]
+    @delete payload.data.uuid
     @emitChange()
 
 TagStore.listenTo constants.TAG_ERROR, (payload) ->
