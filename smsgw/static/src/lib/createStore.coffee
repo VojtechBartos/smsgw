@@ -34,8 +34,7 @@ module.exports = (dispatcher, definition = {}) ->
 
         delete: (value, attr = 'uuid') ->
             index = _.findKey @_store, (i) -> i[attr] == value
-            delete @_store[index]
-
+            @_store.splice index, 1
 
         emitChange: (data = null) ->
             @emit EVENT_CHANGE, data
