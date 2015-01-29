@@ -22,7 +22,7 @@ module.exports =
         url = endpoints.get uuid
         req = api.fetch 'GET', url, token: UserActions.token
 
-        Dispatcher.dispatchRequest req, constants.TEMPLATE_FETCH
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_UPDATE
 
     create: (data) ->
         url = endpoints.create()
@@ -30,7 +30,7 @@ module.exports =
             token: UserActions.token        
             data: data
 
-        Dispatcher.dispatchRequest req, constants.TEMPLATE_CREATE
+        Dispatcher.dispatchRequest req, constants.TEMPLATE_UPDATE
 
     update: (uuid, data) ->
         url = endpoints.update uuid
