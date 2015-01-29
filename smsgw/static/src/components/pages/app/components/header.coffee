@@ -11,43 +11,42 @@ Router = require 'react-router'
 Link = Router.Link
 UserActions = require '../../../../actions/UserActions.coffee'
 
-
-Menu = React.createClass
-    render: ->
-        <ul id="menu">  
-            <li key="dashboard"><Link to="dashboard">dashboard</Link></li>
-            <li key="applications"><Link to="applications">applications</Link></li>
-            <li key="messages"><Link to="messages">messages</Link></li>
-            <li key="templates"><Link to="templates">templates</Link></li>
-            <li key="directory"><Link to="directory">directory</Link></li>
-        </ul>
-
-Header = React.createClass
+module.exports = React.createClass
     
     mixins: [Router.Navigation]
 
     getInitialState: ->
-        userMenuOpened: no
+        userMenu: no
+
+    componentDidMount: ->
+        document.body.addEventListener 'click', @handleClickOnSide
+
+    componentWillUnmount: ->
+        document.body.removeEventListener 'click', @handleClickOnSide
 
     handleSignOut: ->
         UserActions.signOut()
-        @transitionTo '/sign/in'
+        @transitionTo 'sign-in'
 
     handleUserMenu: (e) ->
         e.preventDefault()
-        @setState
-            userMenuOpened: !@state.userMenuOpened
-        @forceUpdate
+        @setState userMenu: !@state.userMenu
+
+    handleClickOnSide: ->
+        @setState userMenu: no if @state.userMenu
 
     render: ->
-        if @state.userMenuOpened
-            className = 'opened'
-        else 
-            className = ''
+        className = if @state.userMenu then 'opened' else null
         
         <header>
             <div id="logo"><strong>sms</strong>gw</div>
-            <Menu />
+            <ul id="menu">  
+                <li key="dashboard"><Link to="dashboard">dashboard</Link></li>
+                <li key="applications"><Link to="applications">applications</Link></li>
+                <li key="messages"><Link to="messages">messages</Link></li>
+                <li key="templates"><Link to="templates">templates</Link></li>
+                <li key="directory"><Link to="directory">directory</Link></li>
+            </ul>
             <div className="user-menu">
                 <a onClick={@handleUserMenu}>
                     <div className="info">
@@ -64,5 +63,3 @@ Header = React.createClass
             </div>
             <div className="cleaner"/>
         </header>
-
-module.exports = Header
