@@ -5,11 +5,11 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 
 from smsgw.lib.utils import generate_uuid
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, DateMixin
 from smsgw.extensions import db
 
 
-class UserToken(BaseModel):
+class UserToken(BaseModel, DateMixin):
     """ User token model """
 
     token = db.Column(mysql.CHAR(64), nullable=False, 

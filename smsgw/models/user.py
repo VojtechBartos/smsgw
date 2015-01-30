@@ -5,12 +5,12 @@ from sqlalchemy.dialects import mysql
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, DateMixin
 from smsgw.lib.utils import generate_uuid
 from smsgw.extensions import bcrypt, db
 
 
-class User(BaseModel):
+class User(BaseModel, DateMixin):
     """ User model """
 
     ROLE_ADMIN = 'admin'
@@ -77,3 +77,21 @@ class User(BaseModel):
                 .with_entities(cls.id) \
                 .filter_by(email=email) \
                 .first()
+
+    def to_dict(self, properties=None):
+        dict = {
+            'id': self.id,
+            'uuid': self.uuid,
+            'email': self.email,
+            'firstName': self.firstName,
+            'lastName': self.lastName,
+            'company': self.company,
+            'role': self.role,
+            'isActive': self.isActive,
+            'createdAt': self.createdAt.isoformat(sep=' ')
+        }
+
+        if properties is None:
+            properties = dict.keys()
+
+        return {key: dict.get(key) for key in properties}

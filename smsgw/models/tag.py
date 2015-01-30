@@ -5,12 +5,12 @@ from slugify import slugify
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 from sqlalchemy.schema import Index
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, DateMixin
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
 
 
-class Tag(BaseModel):
+class Tag(BaseModel, DateMixin):
     """ Tag model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)

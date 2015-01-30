@@ -11,11 +11,6 @@ class BaseModel(AbstractConcreteBase, db.Model):
     
     __table_args__ = {'mysql_engine': 'InnoDB', 'mysql_charset': 'utf8'}
 
-    createdAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, 
-                          server_default=text('CURRENT_TIMESTAMP'))
-    updatedAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, 
-                          onupdate=datetime.utcnow)
-
     def to_dict(self, properties=None):
         return {key: getattr(self, key) for key in properties}
 
@@ -34,3 +29,12 @@ class BaseModel(AbstractConcreteBase, db.Model):
             instance = cls(**kwargs)
             db.session.add(instance)
         return instance
+
+
+class DateMixin(object):
+
+    createdAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, 
+                          server_default=text('CURRENT_TIMESTAMP'))
+
+    updatedAt = db.Column(db.TIMESTAMP, default=datetime.utcnow, 
+                          onupdate=datetime.utcnow)

@@ -5,10 +5,10 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
-from smsgw.models import BaseModel, Tag, relations
+from smsgw.models import BaseModel, Tag, relations, DateMixin
 
 
-class Contact(BaseModel):
+class Contact(BaseModel, DateMixin):
     """ Contact model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)

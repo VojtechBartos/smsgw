@@ -4,12 +4,12 @@
 import os
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, DateMixin
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
 
 
-class Application(BaseModel):
+class Application(BaseModel, DateMixin):
     """ Application model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
