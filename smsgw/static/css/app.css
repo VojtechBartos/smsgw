@@ -17,10 +17,7 @@ body {
 .cleaner { clear: both; }
 
 /* General */
-.span-1 { width: 100%; box-sizing: border-box; }
-.span-2 { width: 50%; box-sizing: border-box; }
-.span-3 { width: 33%; box-sizing: border-box; }
-.span-5 { width: 25%; box-sizing: border-box; }
+.margin-top-25 { margin-top: 25px; }
 
 .left { float: left; }
 .right { float: right; }
@@ -32,17 +29,19 @@ a { color: #0088ff; text-decoration: underline; cursor: pointer; }
 a:hover { text-decoration: none; color: #054f90; }
 
 /* Forms */
-input, textarea { padding: 15px; border: 1px solid #e5e5e5; border-radius: 0; }
+input, input.form-control, 
+textarea, textarea.form-control { border: 1px solid #e5e5e5; border-radius: 0; }
 button.ladda-button { background: #0088ff; }
+
+/* Table */
+table.table { width: 100%; border: 0; border-spacing: 0; }
+table.table a { cursor: pointer; }
+table.table > thead > tr > th{ text-align: left; background: #f5f5f5; font-size: 16px; padding: 10px 15px 10px 15px; font-weight: normal; vertical-align: bottom; border-bottom: 1px solid #e5e5e5; }
+table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; }
 
 /* Flashes */
 
-.flashes { }
-.flashes > div { display: block; position: relative; padding: 15px; margin: 10px 0 0 0; font-weight: bold; overflow: hidden; }
-/*.flashes > div:first-child { margin-top: 0px; }*/
-.flashes > div.alert { background: #ffecce; border: 1px solid #e9c59b; color: #e8302c; }
-.flashes > div.success { background: #edfbd8; border: 1px solid #bfde84; color: #508631;  }
-.flashes > div.info { background: #ecf9ff; border: 1px solid #bbdbe0; color: #0888c3;  }
+.flashes .alert { border-radius: 0; }
 
 /* Loading */
 
@@ -51,62 +50,31 @@ button.ladda-button { background: #0088ff; }
 
 /* Sign in/up and reset password */
 #sign { width: 300px; margin: 0 auto 0 auto; padding: 11% 0 0 0; } 
-#sign h1 { float: left; margin: 0; padding: 0; font-size: 40px; font-weight: normal; color: #000000; }
-#sign h2 { float: right; margin: 0; padding: 0; font-size: 40px; font-weight: normal; color: #0088ff; }
-#sign form input { width: 268px; margin: 10px 0 0 0; }
-#sign form input:first-child { margin-top: 25px; }
-#sign form button { width: 300px; margin: 10px 0 0 0; }
+#sign h1 { float: left; margin: 0 0 15px 0; padding: 0; font-size: 40px; font-weight: normal; color: #000000; }
+#sign h2 { float: right; margin: 0 0 15px 0; padding: 0; font-size: 40px; font-weight: normal; color: #0088ff;  }
+#sign.resetPassword h2 { font-size: 28px; padding-top: 10px; }
 #sign > .info { margin-top: 15px; width: 100%; line-height: 150%; }
-#sign.resetPassword h2 { font-size: 28px; padding-top: 3px; }
-#sign.resetPassword form input:first-child { margin: 0; }
+
 
 
 /* Header */
-header { display: block; padding: 5px 20px; border-bottom: 1px solid #e5e5e5; position: relative; }
-header #logo { float: left; width: 100px; padding-top: 10px; font-size: 30px; }
-header ul#menu { float: left; width: auto; list-style: none; padding: 10px 0 0 0; margin: 0; }
-header ul#menu > li { display: inline-block; padding: 0; margin: 0; }
-header ul#menu > li > a { font-size: 30px; color: #0088ff; text-decoration: none; padding: 0 10px 0 10px }
-header ul#menu > li > a:hover { color: #054f90; }
-header ul#menu > li > a.active { color: #054f90; }
-header .user-menu { float: right;  width: auto; padding: 0; }
-header .user-menu > a { position: relative; text-decoration: none; color: #000000; }
-header .user-menu > a > .info { float: left; text-align: right; padding-right: 15px; }
-header .user-menu > a > .info > .name { font-size: 18px; color: #0088ff; }
-header .user-menu > a:hover > .info > .name { color: #054f90; }
-header .user-menu > a > .info > .company { font-size: 14px; text-transform: uppercase; }
-header .user-menu > a > .chevron {
-    position: absolute;
-    top: 5px;
-    right: 0;
-    display: block;
-    width: 7px;
-    height: 7px;
-    border-top: 1px solid #0088ff;
-    border-right: 1px solid #0088ff;
-    border-width: 1px;
-    -ms-transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-    transform: rotate(135deg);
-}
-header .user-menu > a:hover > .chevron { border-color: #054f90 }
-header .user-menu > ul { 
-    display: none;
-    position: absolute; 
-    top: 50px; 
-    right: 20px; 
-    padding: 0;
-    margin: 0;
-    background: white; 
-    list-style: none;
-    box-shadow: 0 0 5px #888888;
-}
-header .user-menu > ul.opened { display: block; z-index: 10; }
-header .user-menu > ul > li > a { padding: 10px 20px 10px 20px; margin: 0; }
+
+.navbar {  margin-bottom: 0; background: #ffffff; border-bottom: 1px solid #e5e5e5; }
+.navbar a.navbar-brand { width: 100px; font-size: 30px; color: #000000; text-decoration: none; margin-right: 10px; }
+.navbar-nav > li { display: inline-block; padding: 0; margin: 0; }
+.navbar-nav > li > a { font-size: 30px; color: #0088ff; text-decoration: none; padding: 15px 10px; }
+.navbar-nav > li > a:hover { color: #054f90; background: #ffffff; }
+.navbar-nav > li > a.active { color: #054f90; background: #ffffff; }
+.navbar-nav.navbar-right > li.dropdown > a { position: relative; padding: 5px 15px 0 0; margin: 0; background: #ffffff; }
+.navbar-nav.navbar-right > li.dropdown.open > a { background: #ffffff; }
+.navbar-nav.navbar-right > li.dropdown > a .caret { top: -10px; }
+.navbar-nav.navbar-right > li.dropdown > a .info { float: left; padding-right: 6px; }
+.navbar-nav.navbar-right > li.dropdown > a .info .name { font-size: 18px; color: #0088ff; }
+.navbar-nav.navbar-right > li.dropdown > a .info .company { font-size: 14px; text-transform: uppercase; color: #000000;  }
 
 /* Subheader */
 #subheader { display: block; padding: 20px 20px 0 20px; background-color: #f5f5f5; border-bottom: 1px solid #e5e5e5; }
-#subheader h1 { font-weight: normal; font-size: 26px; margin-top: 0; line-height: 24px; }
+#subheader h1 { font-weight: normal; font-size: 26px; margin: 0 0 12px 0; line-height: 24px; }
 #subheader h2 { font-weight: normal; font-size: 18px; margin-top: 0; }
 #subheader h3 { font-weight: normal; font-size: 15px; margin-top: 0; margin-bottom: 0; }
 #subheader h3 .small { font-size: 14px; }
@@ -129,8 +97,8 @@ header .user-menu > ul > li > a { padding: 10px 20px 10px 20px; margin: 0; }
 }
 
 /* Context */
-#context { display: block; padding: 15px 20px; }
-#context h1 { font-weight: normal; font-size: 23px; line-height: 24px; }
+#context { display: block; padding: 20px; }
+#context h1 { font-weight: normal; font-size: 23px; line-height: 24px; margin: 10px 0 25px 0; }
 #context a { text-decoration: none; position: relative; }
 
 /* Tags */
@@ -140,18 +108,3 @@ header .user-menu > ul > li > a { padding: 10px 20px 10px 20px; margin: 0; }
 #context .tags .autocomplete .throbber { float: right; width: 32px; height: 32px; margin-top: 5px; background: url('/images/throbber.gif') no-repeat; } 
 #context .tags .autocomplete ul.options { position: absolute; top: 47px; max-height: 300px; width: 212px; z-index: 10; padding: 0; margin: 0; background: #ffffff; list-style: none; border: 1px solid #e5e5e5; border-top: 0; }
 #context .tags .autocomplete ul.options li { float: left; width: 202px; margin: 0; padding: 5px; cursor: pointer; border-bottom: 1px solid #e5e5e5; }
-
-/* Form */
-#context form label { font-weight: bold; margin-bottom: 5px; }
-#context form .line { float: left; width: 100%; padding: 0; margin-bottom: 15px; }
-#context form .line label { float: left; width: 100%; }
-
-/* Table */
-table { width: 100%; border: 0; border-spacing: 0; }
-table th { text-align: left; background: #f5f5f5; font-size: 16px; padding: 10px 15px 10px 15px; font-weight: normal; vertical-align: bottom; border-bottom: 1px solid #e5e5e5; }
-table td { text-align: left; padding: 10px 15px 10px 15px; border-bottom: 1px solid #e5e5e5; }
-table a { cursor: pointer; }
-
-
-
-

@@ -6,18 +6,20 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 React = require 'react'
+# components
+Boostrap = require 'react-bootstrap'
+Alert = Boostrap.Alert
 
 module.exports = React.createClass
 
-    render: ->
-        messages = []
-        if 'messages' of @props
-            messages = @props.messages
+    getDefaultProps: ->
+        messages: []
 
+    render: ->
         <div className="flashes">
-            {messages.map (message, index) ->
-                <div key={index} className={message.type}>
+            {@props.messages.map (message, index) ->
+                <Alert bsStyle={message.type}>
                     {message.text}
-                </div>
+                </Alert>
             }
         </div>
