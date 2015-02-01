@@ -81,8 +81,12 @@ def auth(role=User.ROLE_USER):
             except (NoResultFound, MultipleResultsFound):
                 unauthorized()
 
+            # user inactive
+            if not user.isActive:
+                unauthorized()
+
             # checking role
-            if not user.is_admin() and user.role != role and user.isActive:
+            if not user.is_admin() and user.role != role:
                 forbidden()
 
             # saving user instance to request
@@ -114,7 +118,7 @@ def auth(role=User.ROLE_USER):
             requested_user = kwargs.get('user')
             if requested_user is not None:
                 if request.user.uuid != requested_user.uuid:
-                    if request.user.role is not User.ROLE_ADMIN:
+                    if request.user.role != User.ROLE_ADMIN:
                         forbidden()
 
             return fn(*args, **kwargs)
