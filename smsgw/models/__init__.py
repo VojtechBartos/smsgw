@@ -14,7 +14,5 @@ from smsgw.models.inbox import Inbox
 from smsgw.models.outbox import Outbox
 from smsgw.models.outbox_multipart import OutboxMultipart
 from smsgw.models.phone import Phone
-from smsgw.models.phonebook import PhoneBook
-from smsgw.models.phonebook_group import PhoneBookGroup
 from smsgw.models.sentitem import SentItem
 from smsgw.models.relations import contactTags

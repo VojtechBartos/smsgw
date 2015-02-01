@@ -7,19 +7,19 @@ from sqlalchemy.schema import Index
 from smsgw.extensions import db
 from smsgw.models import BaseModel
 
+
 class OutboxMultipart(BaseModel):
-    """ PhoneBookGroup model """
+    """ Outbox multipart model """
 
     __tablename__ = "outbox_multipart"
 
-    id = db.Column('ID', mysql.INTEGER(unsigned=True), primary_key=True)
-    text = db.Column('Text', mysql.TEXT)
-    klass = db.Column('Class', mysql.INTEGER, server_default='-1')
-    udh = db.Column('UDH', mysql.TEXT)
-    textDecoded = db.Column('TextDecoded', mysql.TEXT)
-    coding = db.Column('Coding', 
-                        db.Enum('Default_No_Compression','Unicode_No_Compression',
-                                '8bit','Default_Compression','Unicode_Compression'), 
+    id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
+    sequencePosition = db.Column(mysql.INTEGER(11), primary_key=True)
+
+    coding = db.Column(db.Enum('Default_No_Compression','Unicode_No_Compression',
+                               '8bit','Default_Compression','Unicode_Compression'), 
                         server_default='Default_No_Compression', nullable=False)
-    sequencePosition = db.Column('SequencePosition', mysql.INTEGER,
-                                 server_default='1', primary_key=True)
+    text = db.Column(mysql.TEXT)
+    textEncoded = db.Column(mysql.TEXT)
+    udh = db.Column(mysql.TEXT)
+    klass = db.Column('class', mysql.INTEGER, server_default='-1')

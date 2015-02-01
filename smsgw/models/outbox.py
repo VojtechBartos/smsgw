@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from sqlalchemy.dialects import mysql
+from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
@@ -13,40 +14,42 @@ from smsgw.models import BaseModel
 class Outbox(BaseModel):
     """ Outbox model """
 
-    id = db.Column('ID', mysql.INTEGER(10, unsigned=True), primary_key=True)
-    text = db.Column('Text', mysql.TEXT)
-    udh = db.Column('UDH', mysql.TEXT)
-    klass = db.Column('Class', mysql.INTEGER, server_default='-1')
-    textDecoded = db.Column('TextDecoded', mysql.TEXT, nullable=False)
-    creatorId = db.Column('CreatorID', mysql.TEXT, nullable=False)
-    senderId = db.Column('SenderID', db.String(255))
-    destinationNumber = db.Column('DestinationNumber', db.String(20), 
-                                  nullable=False, server_default='')
-    coding = db.Column('Coding', 
-                        db.Enum('Default_No_Compression','Unicode_No_Compression',
-                                '8bit','Default_Compression','Unicode_Compression'), 
+    id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
+    userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
+    applicationId = db.Column(mysql.INTEGER(10, unsigned=True), 
+                              ForeignKey('application.id'))
+
+    creator = db.Column(mysql.TEXT, nullable=False)
+    phone = db.Column(db.String(255))
+
+    destinationNumber = db.Column(db.String(20), nullable=False)
+
+    coding = db.Column(db.Enum('Default_No_Compression','Unicode_No_Compression',
+                               '8bit','Default_Compression','Unicode_Compression'), 
                         server_default='Default_No_Compression', nullable=False)
-    multipart = db.Column('MultiPart', db.Enum("false", "true"), 
-                          server_default='false')
-    relativeValidity = db.Column('RelativeValidity', mysql.INTEGER, 
-                                 server_default='-1')
-    deliveryReport = db.Column('DeliveryReport', db.Enum("default", "yes", "no"), 
-                               server_default='default')
+    text = db.Column(mysql.TEXT, nullable=False)
+    textEncoded = db.Column(mysql.TEXT)
+    multipart = db.Column(db.Enum("false", "true"), server_default='false')
+    udh = db.Column(mysql.TEXT)
+    klass = db.Column('class', mysql.INTEGER, server_default='-1')
 
-    sendingDateTime = db.Column('SendingDateTime', db.TIMESTAMP, 
-                                server_default='0000-00-00 00:00:00')
-    sendBefore = db.Column('SendBefore', db.TIME, nullable=False,
-                            server_default='23:59:59')
-    sendAfter = db.Column('SendAfter', db.TIME, nullable=False,
-                           server_default='00:00:00')
-    sendingTimeout = db.Column('SendingTimeOut', db.TIMESTAMP, 
-                                server_default='0000-00-00 00:00:00')
+    deliveryReport = db.Column(db.Enum("default", "yes", "no"), server_default='default')
+    relativeValidity = db.Column(mysql.INTEGER, server_default='-1')
 
-    createdAt = db.Column('InsertIntoDB', db.TIMESTAMP, 
-                          server_default='0000-00-00 00:00:00')
-    updatedat = db.Column('UpdatedInDB', db.TIMESTAMP, 
-                          server_default=dbtext('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'))
+    send = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    sendTimeout = db.Column(db.TIMESTAMP, default=datetime.utcnow)
+    sendBefore = db.Column(db.TIME, nullable=False, server_default='23:59:59')
+    sendAfter = db.Column(db.TIME, nullable=False, server_default='00:00:00')
+
+    created = db.Column(
+        db.TIMESTAMP, default=datetime.utcnow, 
+        server_default=dbtext('CURRENT_TIMESTAMP')
+    )
+    updated = db.Column(
+        db.TIMESTAMP, default=datetime.utcnow, 
+        onupdate=datetime.utcnow
+    )
 
 
-Index('outbox_date', Outbox.sendingDateTime, Outbox.sendingTimeout)
-Index('outbox_sender', Outbox.senderId)
+Index('outbox_date', Outbox.send, Outbox.sendTimeout)
+Index('outbox_phone', Outbox.phone)

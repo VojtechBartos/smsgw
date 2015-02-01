@@ -10,7 +10,7 @@ from smsgw.models import BaseModel
 class Gammu(BaseModel):
     """ Gammu model """
 
-    id = db.Column('ID', mysql.INTEGER(10), primary_key=True)
+    id = db.Column(mysql.INTEGER(10), primary_key=True)
     version = db.Column('Version', mysql.INTEGER, nullable=False,
                         server_default='0')
     info = db.Column('Info', mysql.TEXT, nullable=False)
