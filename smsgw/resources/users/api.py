@@ -3,13 +3,15 @@
 
 from datetime import datetime, timedelta
 
-from flask import request, current_app
+from flask import request
 from flask.ext.classy import FlaskView, route
+
+from sqlalchemy.exc import IntegrityError
 
 from smsgw.models import User
 from smsgw.lib.utils import response
 from smsgw.resources import decorators
-from smsgw.resources.users.schemas import post
+from smsgw.resources.users.schemas import post, put
 from smsgw.resources.error.api import ErrorResource
 from smsgw.extensions import db
 
@@ -22,44 +24,60 @@ class UsersResource(FlaskView):
     @decorators.auth(User.ROLE_ADMIN)
     def index(self, **kwargs):
         """
+        Getting list of all users, only with admin privileges
         """
-        # find all users
-        users = User.query.all()
-
-        # send payload
-        res_keys = ["uuid", "email", "firstName", "lastName", "company"]
-        payload = [user.to_dict(res_keys) for user in users]
-        return response(payload)
+        return response([user.to_dict() for user in User.query.all()])
 
     @route('/<uuid:user_uuid>/', methods=['GET'])
     @decorators.auth()
     def get(self, user, **kwargs):
         """
+        Getting user by uuid
         """
-        # send payload
-        res_keys = ["uuid", "email", "firstName", "lastName", "company"]
-        payload = user.to_dict(properties=res_keys)
-        return response(payload)
+        return response(user.to_dict())
 
     @decorators.jsonschema_validate(payload=post.schema)
     def post(self):
         """
+        Creating new user
         """
         data = request.json
 
         # check existence of user by email
         if User.is_exists_by_email(data['email']):
-            raise ErrorResource(
-                409, 
-                message="Email '{0}' is already exits.".format(data['email'])
-            )
+            raise ErrorResource(409, message="Email already exits.")
 
         # create user
         user = User(**data)
         db.session.add(user)
         db.session.commit()
 
-        # send payload
-        res_keys = ["uuid", "email", "firstName", "lastName", "company"]
-        payload = user.to_dict(properties=res_keys)
-        return response(payload, status_code=201)
+        return response(user.to_dict(), status_code=201)
+
+    @route('/<uuid:user_uuid>/', methods=['PUT'])
+    @decorators.auth()
+    @decorators.jsonschema_validate(payload=put.schema)
+    def put(self, user, **kwargs):
+        """
+        Updating exiting user
+        """
+        try:
+            # save to db
+            user.update(request.json)
+            db.session.commit()
+        except IntegrityError, e:
+            db.session.rollback()
+            raise ErrorResource(409, message="Email already exits.")
+ 
+        return response(tag.to_dict())
+
+    @route('/<uuid:user_uuid>/', methods=['DELETE'])
+    @decorators.auth(User.ROLE_ADMIN)
+    def delete(self, user, **kwargs):
+        """
+        Delete user
+        """        
+        db.session.delete(user)
+        db.session.commit()
+
+        return response(user.to_dict())
