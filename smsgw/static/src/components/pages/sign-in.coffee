@@ -7,6 +7,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
+Link = Router.Link
 Dispatcher = require '../../dispatcher.coffee'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
@@ -50,7 +51,7 @@ module.exports = React.createClass
         if @isMounted()
             @setState 
                 formPending: no
-                flashMessages: [text: err.message, type: 'alert']
+                flashMessages: [text: err.message, type: 'danger']
 
     handleSubmit: (e) ->
         e.preventDefault()
@@ -75,7 +76,7 @@ module.exports = React.createClass
                 disabled={@state.formPending} />
 
             <div className="info">
-                Forgot your password? <a href="#/sign/reset-password">Reset Password</a>.<br />
+                Forgot your password? <Link to="reset-password">Reset Password</Link>.<br />
                 Don't have an account? <a href="#/sign/up">Sign up</a> for free.
             </div>
         </div>

@@ -25,15 +25,18 @@ module.exports = React.createClass
 
     render: ->
         <form onSubmit={@props.onSubmit}>
-            <input type="email" 
-                   name="email" 
-                   ref="email" 
-                   placeholder="E-mail"
-                   disabled={@props.disabled}
-                   required />
+            <div className="form-group">
+                <input type="email" 
+                       name="email" 
+                       ref="email" 
+                       className="form-control"
+                       placeholder="E-mail"
+                       disabled={@props.disabled}
+                       required />
+            </div>
             <LaddaButton 
                 active={@props.pending}
                 style="expand-right">
-                <button>Sign in</button>
+                <button>Reset password</button>
             </LaddaButton>
         </form>

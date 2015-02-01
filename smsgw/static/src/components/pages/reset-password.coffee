@@ -13,7 +13,7 @@ UserActions = require '../../actions/UserActions.coffee'
 UserConstants = require '../../constants/UserConstants.coffee'
 # components
 FlashMessages = require '../components/flash-messages.coffee'
-ResetPasswordForm = require './forms/reset-password.coffee'
+ResetPasswordForm = require './forms/reset-password-form.coffee'
 
 
 module.exports = React.createClass
@@ -25,28 +25,13 @@ module.exports = React.createClass
         flashMessages: []
 
     componentDidMount: ->
-        # UserStore.on UserConstants.EVENT.SIGN.IN, @handleResponse
 
-    handleResponse: (data) ->
-        # messages = []
-        # if data.success
-        #     # save token
-        #     UserActions.saveToken data.data.token
-        #     # and redirect to dashboard
-        #     @transitionTo '/'
-        # else
-        #     # show flash message
-        #     messages.push 
-        #         text: data.error.message
-        #         type: 'alert'
-
-        # @setState 
-        #     pending: no
-        #     flashMessages: messages
+    handleResponse: ->
+        
 
     handleSubmit: (e) ->
         e.preventDefault()
-        form = @refs.signInForm
+        form = @refs.resetPasswordForm
         if form.isValid()
             @setState pending: yes
 

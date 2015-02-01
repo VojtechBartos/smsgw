@@ -22,11 +22,45 @@ module.exports = React.createClass
 
     render: ->
         <form onSubmit={@props.onSubmit}>
-            <input type="email" name="email" ref="email" placeholder="E-mail" required />
-            <input type="password" name="password" ref="password" placeholder="Password" required />
-            <input type="text" name="firstName" ref="firstName" placeholder="First name" required />
-            <input type="text" name="lastName" ref="lastName" placeholder="Last name" required />
-            <input type="text" name="company" ref="company" placeholder="Company" />
+            <div className="form-group">
+                <input type="email" 
+                       name="email" 
+                       ref="email" 
+                       className="form-control"
+                       placeholder="E-mail" 
+                       required />
+            </div>
+            <div className="form-group">
+                <input type="password" 
+                       name="password" 
+                       ref="password" 
+                       className="form-control"
+                       placeholder="Password" 
+                       required />
+            </div>
+            <div className="form-group">
+                <input type="text" 
+                       name="firstName" 
+                       ref="firstName" 
+                       className="form-control"
+                       placeholder="First name" 
+                       required />
+            </div>
+            <div className="form-group">
+                <input type="text" 
+                       name="lastName"
+                       ref="lastName" 
+                       className="form-control"
+                       placeholder="Last name" 
+                       required />
+            </div>
+            <div className="form-group">
+                <input type="text" 
+                       name="company" 
+                       ref="company" 
+                       className="form-control"
+                       placeholder="Company" />
+            </div>
             <LaddaButton 
                 active={@props.pending}
                 style="expand-right">
