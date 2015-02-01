@@ -37,3 +37,37 @@ module.exports =
         req = api.fetch 'GET', url, token: @token
 
         Dispatcher.dispatchRequest req, constants.USER_FETCH_ME
+
+    fetchAll: ->
+        url = endpoints.index()
+        req = api.fetch 'GET', url, token: @token
+
+        Dispatcher.dispatchRequest req, constants.USER_FETCH_ALL
+
+    fetch: (uuid) ->
+        url = endpoints.get uuid
+        req = api.fetch 'GET', url, token: @token
+
+        Dispatcher.dispatchRequest req, constants.USER_UPDATE
+
+    create: (data) ->
+        url = endpoints.create()
+        req = api.fetch 'POST', url, 
+            token: @token        
+            data: data
+
+        Dispatcher.dispatchRequest req, constants.USER_UPDATE
+
+    update: (uuid, data) ->
+        url = endpoints.update uuid
+        req = api.fetch 'PUT', url,
+            token: @token        
+            data: data
+
+        Dispatcher.dispatchRequest req, constants.USER_UPDATE
+
+    delete: (uuid) ->
+        url = endpoints.delete uuid
+        req = api.fetch 'DELETE', url, token: @token
+
+        Dispatcher.dispatchRequest req, constants.USER_DELETE

@@ -22,6 +22,18 @@ UserStore.listenTo constants.USER_FETCH_ME, (payload) ->
     @update [payload.data]
     @emitChange()
 
+UserStore.listenTo constants.USER_FETCH_ALL, (payload) ->
+    @update payload.data
+    @emitChange()
+
+UserStore.listenTo constants.USER_UPDATE, (payload) ->
+    @update [payload.data]
+    @emitChange()
+
+UserStore.listenTo constants.USER_DELETE, (payload) ->
+    @delete payload.data.uuid
+    @emitChange()
+
 UserStore.listenTo constants.USER_ERROR, (payload) ->
     @emitError payload.error
 

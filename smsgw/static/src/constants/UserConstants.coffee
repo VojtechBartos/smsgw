@@ -10,4 +10,7 @@ module.exports = keyMirror
     USER_SIGN_UP: null
     USER_SIGN_IN: null
     USER_FETCH_ME: null
+    USER_FETCH_ALL: null
+    USER_UPDATE: null
+    USER_DELETE: null
     USER_ERROR: null
