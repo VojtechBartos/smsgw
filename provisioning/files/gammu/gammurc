@@ -1,0 +1,67 @@
+[gammu]
+
+device = /dev/ttyUSB4
+connection = at
+
+[smsd]
+
+phoneid = tmobile-huawei
+PIN = 1234
+
+service = sql
+driver = native_mysql
+user = smsgw
+password = smsgw
+pc = 192.168.50.20
+database = smsgw
+
+deliveryreport = yes
+
+logfile = /home/vagrant/.smsdlog
+debuglevel = 2
+
+[sql]
+
+; 
+; phone
+; 
+
+insert_phone = INSERT INTO `phone` (`netCode`, `netName`, `imei`, `hostname`, `send`, `receive`, `updated`, `timeout`, `client`, `battery`, `signal`) VALUES (%O, %M, %I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
+delete_phone = DELETE FROM `phone` WHERE `imei` = %I
+update_sent = UPDATE `phone` SET `sent` = `sent` + 1 WHERE `imei` = %I
+update_received = UPDATE `phone` SET `received` = `received` + 1 WHERE `imei` = %I
+refresh_phone_status = UPDATE `phone` SET `timeout` = (NOW() + INTERVAL 10 SECOND) + 0, `battery` = %1, `signal` = %2, `netCode` = %O, `netName` = %M WHERE `imei` = %I
+
+; 
+; inbox
+;
+
+save_inbox_sms_insert = INSERT INTO inbox (`received`, `textEncoded`, `senderNumber`, `coding`, `smscNumber`, `udh`, `class`, `text`, `recipient`, `updated`) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, NOW())
+
+; 
+; outbox
+;
+
+refresh_send_status = UPDATE outbox SET sendTimeout = (NOW() + INTERVAL 60 SECOND) + 0 WHERE id = %1 AND (sendTimeout < NOW() OR sendTimeout IS NULL)
+
+save_inbox_sms_select = SELECT id, status, send, delivery, smscNumber FROM sentitems WHERE delivery IS NULL AND phone = %P AND tpmr = %t AND destinationNumber = %R
+
+find_outbox_sms_id = SELECT id, created, send, phone FROM outbox WHERE send < NOW() AND sendTimeout <  NOW() AND sendBefore >= CURTIME() AND sendAfter <= CURTIME() AND ( phone is NULL OR phone = '' OR phone = %P ) ORDER BY created ASC LIMIT %1
+
+create_outbox = INSERT INTO outbox (creator, phone, deliveryReport, multipart, InsertIntoDB, textEncoded, destinationNumber, relativeValidity, coding, udh, class, text) VALUES (%1, %P, %2, %3, NOW(), %E, %R, %V, %c, %u, %x, %T)
+create_outbox_multipart = INSERT INTO outbox_multipart (sequencePosition, textEncoded, coding, udh, class, text, id) VALUES (%4, %E, %c, %u, %x, %T, %5)
+
+delete_outbox = DELETE FROM outbox WHERE id=%1
+delete_outbox_multipart = DELETE FROM outbox_multipart WHERE id=%1
+
+find_outbox_body = SELECT textEncoded, coding, udh, class, text, id, destinationNumber, multipart, relativeValidity, deliveryReport, creator FROM outbox WHERE id=%1
+find_outbox_multipart = SELECT textEncoded, coding, udh, class, text, id, sequencePosition FROM outbox_multipart WHERE id=%1 AND sequencePosition=%2
+
+; 
+; sent items
+;
+
+add_sent_info = INSERT INTO sentitems (creator, sequencePosition, status, send, smscNumber, tpmr, phone, textEncoded, destinationNumber, coding, udh, class, text, created, relativeValidity, userId, applicationId) SELECT %A, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V, userId, applicationId FROM outbox WHERE id = %1
+
+save_inbox_sms_update = UPDATE sentitems SET status = %1, statusError = %e WHERE id = %2 AND tpmr = %t
+save_inbox_sms_update_delivered = UPDATE sentitems SET delivery = %C, status = %1, statusError = %e WHERE id = %2 AND tpmr = %t
