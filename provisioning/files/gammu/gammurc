@@ -61,7 +61,7 @@ find_outbox_multipart = SELECT textEncoded, coding, udh, class, text, id, sequen
 ; sent items
 ;
 
-add_sent_info = INSERT INTO sentitems (creator, sequencePosition, status, send, smscNumber, tpmr, phone, textEncoded, destinationNumber, coding, udh, class, text, created, relativeValidity, userId, applicationId) SELECT %A, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V, userId, applicationId FROM outbox WHERE id = %1
+add_sent_info = INSERT INTO sentitems (creator, sequencePosition, status, send, smscNumber, tpmr, phone, textEncoded, destinationNumber, coding, udh, class, text, created, relativeValidity, userId, applicationId, updated) SELECT %A, %2, %3, NOW(), %F, %4, %P, %E, %R, %c, %u, %x, %T, %5, %V, userId, applicationId, NOW() FROM outbox WHERE id = %1
 
 save_inbox_sms_update = UPDATE sentitems SET status = %1, statusError = %e WHERE id = %2 AND tpmr = %t
 save_inbox_sms_update_delivered = UPDATE sentitems SET delivery = %C, status = %1, statusError = %e WHERE id = %2 AND tpmr = %t
