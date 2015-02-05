@@ -4,10 +4,6 @@
 from smsgw.tasks import celery
 
 
-class TaskInvalidArgumentException(Exception):
-    pass
-
-
 class BaseTask(celery.Task):
     """
     Custom BaseTask for better handling routing keys from subclass
