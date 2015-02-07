@@ -38,7 +38,7 @@ def create_celery_app(app=None):
     app = app or create_app()
     celery = Celery(__name__, broker=app.config['CELERY_BROKER_URL'])
     celery.conf.update(app.config)
-    
+
     class ContextTask(celery.Task):
         abstract = True
         def __call__(self, *args, **kwargs):
