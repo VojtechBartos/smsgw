@@ -7,7 +7,7 @@ python:
   - 2.7
 
 env:
-  - SMSGW_CI=1
+  - SMSGW_ENV=ci
 
 install: "pip install -r requirements.txt"
 
