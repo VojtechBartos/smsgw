@@ -26,7 +26,7 @@ def register(app):
         params = {
             'title': "SMS gateway"
         }
-        
+
         return render_template('index.html', **params)
 
     # API resources registration
@@ -37,7 +37,7 @@ def register(app):
         module = "{0}.{1}.api".format(__name__, resource)
         class_name = "{0}Resource".format(underscore_to_camelcase(resource))
         try:
-            class_ref = getattr(__import__(module, fromlist=[class_name]), 
+            class_ref = getattr(__import__(module, fromlist=[class_name]),
                         class_name)
             class_ref.register(app, route_prefix='api/1.0')
         except ImportError, e:

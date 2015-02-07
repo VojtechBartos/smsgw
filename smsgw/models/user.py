@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
+from pytz import timezone, utc
+
 from sqlalchemy.dialects import mysql
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from smsgw.models import BaseModel, DateMixin
@@ -17,7 +19,7 @@ class User(BaseModel, DateMixin):
     ROLE_USER = 'user'
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
-    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False, 
+    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False,
                      default=generate_uuid)
     email = db.Column(db.String(128), unique=True, nullable=False,
                       server_default="")
@@ -25,7 +27,8 @@ class User(BaseModel, DateMixin):
     firstName = db.Column(db.String(16))
     lastName = db.Column(db.String(16))
     company = db.Column(db.String(32))
-    role = db.Column('role', db.Enum("user", "admin"), default='user', 
+    _timeZoneCode = db.Column("timeZoneCode", db.String(100))
+    role = db.Column('role', db.Enum("user", "admin"), default='user',
                      nullable=False)
     isActive = db.Column(db.Boolean, default=True)
 
@@ -34,6 +37,7 @@ class User(BaseModel, DateMixin):
     contacts = relationship("Contact", backref='user', lazy='dynamic')
     tags = relationship("Tag", backref='user', lazy='dynamic')
     applications = relationship("Application", backref='user', lazy='dynamic')
+    outbox = relationship("Outbox", backref='user', lazy='dynamic')
 
 
     @property
@@ -52,13 +56,30 @@ class User(BaseModel, DateMixin):
         """
         self._password = bcrypt.generate_password_hash(password, 12)
 
+    @property
+    def timeZoneCode(self):
+        """
+        Get user timezone code
+        :return: {str} Region/Location
+        """
+        return self._timeZoneCode if self._timeZoneCode is not None else "UTC"
+
+    @timeZoneCode.setter
+    def timeZoneCode(self, value):
+        """
+        Set user timezone code
+        :param value: {str} Region/Location
+        :raise: {UnknownTimeZoneError} when timezone code is invalid
+        """
+        self._timeZoneCode = timezone(value).zone
+
     def compare_password(self, password):
         """
         Comparing bcrypt hash with specified password
         :param password: {str} password
         :retur: {bool}
         """
-        return bcrypt.check_password_hash(self.password.encode('utf8'), 
+        return bcrypt.check_password_hash(self.password.encode('utf8'),
                                           password)
 
     def is_admin(self):

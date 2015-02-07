@@ -3,6 +3,7 @@
 
 import os
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
 from sqlalchemy.dialects import mysql
 from smsgw.models import BaseModel, DateMixin
 from smsgw.extensions import db
@@ -21,6 +22,8 @@ class Application(BaseModel, DateMixin):
     prefix = db.Column(db.String(5), unique=True)
     callbackUrl = db.Column(db.String(128))
     note = db.Column(db.String(255))
+
+    outbox = relationship("Outbox", backref='application', lazy='dynamic')
 
 
     def __init__(self, **kwargs):

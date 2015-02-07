@@ -39,3 +39,7 @@ class Inbox(BaseModel):
         db.TIMESTAMP, default=datetime.utcnow, 
         onupdate=datetime.utcnow
     )
+
+    contact = db.relationship('Contact',
+                              primaryjoin="Contact.phoneNumber==Inbox.senderNumber",
+                              foreign_keys=[senderNumber])

@@ -13,7 +13,6 @@ class CallbackTask(BaseTask):
 
     def run(self, url, message, contact, attempt=1, **kwargs):
         """
-        
         """
 
         task = None
@@ -23,10 +22,10 @@ class CallbackTask(BaseTask):
             'message': message,
             'contact': contact
         }
-        
+
         try:
             # make request to 3rd party url
-            r = requests.post(url, data=json.dumps(payload), 
+            r = requests.post(url, data=json.dumps(payload),
                               headers=headers, timeout=30)
 
             # saving status code for task return
@@ -45,7 +44,7 @@ class CallbackTask(BaseTask):
                     },
                     'eta': datetime.utcnow() + timedelta(seconds=delay)
                 })
-                
+
         return {
             'callback': {
                 'url': url,

@@ -11,7 +11,7 @@ from smsgw.tasks.callback import CallbackTask
 class ReceiveHookCommand(Command):
     """ Receive hook for gammu """
 
-    def run(self, **kwargs):        
+    def run(self, **kwargs):
         # getting all text messages which they have not been processed
         inbox = Inbox.query.filter_by(processed=False).all()
         for message in inbox:
@@ -20,7 +20,7 @@ class ReceiveHookCommand(Command):
             prefix = m.group(1)
             if prefix is None:
                 # if prefix does not found we can continue
-                # nothing to parse 
+                # nothing to parse
                 message.processed = True
                 continue
 

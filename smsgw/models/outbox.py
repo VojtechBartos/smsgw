@@ -41,6 +41,10 @@ class Outbox(BaseModel):
     sendBefore = db.Column(db.TIME, nullable=False, server_default='23:59:59')
     sendAfter = db.Column(db.TIME, nullable=False, server_default='00:00:00')
 
+    contact = db.relationship('Contact',
+                              primaryjoin="Contact.phoneNumber==Outbox.destinationNumber",
+                              foreign_keys=[destinationNumber])
+
     created = db.Column(
         db.TIMESTAMP, default=datetime.utcnow, 
         server_default=dbtext('CURRENT_TIMESTAMP')
@@ -49,6 +53,27 @@ class Outbox(BaseModel):
         db.TIMESTAMP, default=datetime.utcnow, 
         onupdate=datetime.utcnow
     )
+
+
+    def to_dict(self, properties=None):
+        dict = {
+            'id': self.id,
+            'destinationNumber': self.destinationNumber,
+            'contact': self.contact.to_dict() if self.contact else None,
+            'application': self.application.to_dict() if self.application \
+                                                      else None,
+            'text': self.text,
+            'send': self.send.isoformat(sep=' ') if self.send else None,
+            'created': self.created.isoformat(sep=' ') if self.created \
+                                                       else None,
+            'updated': self.updated.isoformat(sep=' ') if self.updated \
+                                                       else None
+        }
+
+        if properties is None:
+            properties = dict.keys()
+
+        return {key: dict.get(key) for key in properties}
 
 
 Index('outbox_date', Outbox.send, Outbox.sendTimeout)
