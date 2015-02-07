@@ -18,24 +18,24 @@
         "react-bootstrap": "~0.13.3",
         "superagent": "~0.21.0",
         "localStorage": "~1.0.3",
-        "bluebird": "~2.6.2",
+        "bluebird": "~2.9.6",
         "object-assign": "~2.0.0",
-        "lodash": "~3.0.0",
+        "lodash": "~3.1.0",
         "moment": "~2.9.0"
     },
     "devDependencies": {
-        "coffee-script": "~1.8.0",
+        "coffee-script": "~1.9.0",
         "browserify": "~8.1.0",
         "debowerify": "~1.2.0",
         "coffee-reactify": "~2.1.0",
-        "watchify": "~2.2.1",
+        "watchify": "~2.3.0",
         "reactify": "~0.17.1",
         "uglify-js": "~2.4.15",
         "envify": "~3.2.0",
         "gulp": "~3.8.0",
         "gulp-coffeelint": "^0.4.0",
         "gulp-util": "~3.0.2",
-        "gulp-watch": "~3.0.0",
+        "gulp-watch": "~4.1.0",
         "vinyl-source-stream": "~1.0.0"
     }
 }
