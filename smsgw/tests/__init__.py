@@ -17,19 +17,18 @@ class SmsgwUnitTestCase(UnitTestCase):
 
 
 class SmsgwIntegrationTestCase(FlaskTestCase):
-    
+
     def create_app(self):
-        ci = os.environ.get('SMSGW_CI', '0')
-        env = 'ci' if ci == '1' else 'test'
-        return factory.create_app(name="smsgw_testing", env=env)
+        return factory.create_app(name="smsgw_testing",
+                                  env=os.environ.get('SMSGW_ENV'))
 
     def setUp(self):
         super(SmsgwIntegrationTestCase, self).setUp()
         # flask instance
         self.app = self.create_app()
 
-        # prepare DB. first dump DB afterwards re-create it, 
-        # because if tests are gonna fail in DB will stay latest 
+        # prepare DB. first dump DB afterwards re-create it,
+        # because if tests are gonna fail in DB will stay latest
         # state
         db.drop_all()
         db.create_all()

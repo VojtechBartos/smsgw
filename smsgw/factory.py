@@ -16,7 +16,6 @@ def create_app(name='smsgw', env=None):
     """
     if env is None:
         env = os.environ.get('SMSGW_ENV') or 'development'
-    os.environ['SMSGW_ENV'] = env
 
     # flask app inicialization
     app = Flask(name, static_url_path='')
