@@ -40,3 +40,8 @@ module.exports =
         regenerate: (uuid, user = "@me") -> "#{BASE}/users/#{user}/applications/#{uuid}/regenerate/"
         update: (uuid, user = "@me") -> @get uuid, user
         delete: (uuid, user = "@me") -> @get uuid, user
+    outbox:
+        index: (user = "@me") -> "#{BASE}/users/#{user}/outbox/"
+        get: (uuid, user = "@me") -> "#{BASE}/users/#{user}/outbox/#{uuid}/"
+        update: (uuid, user = "@me") -> @get uuid, user
+        delete: (uuid, user = "@me") -> @get uuid, user
