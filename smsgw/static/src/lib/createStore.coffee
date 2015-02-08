@@ -8,6 +8,7 @@ EventEmitter = require('events').EventEmitter
 _ = require 'lodash'
 
 EVENT_CHANGE = 'change'
+EVENT_RESPONSE = 'response'
 EVENT_ERROR = 'error'
 
 module.exports = (dispatcher, definition = {}) ->
@@ -18,7 +19,7 @@ module.exports = (dispatcher, definition = {}) ->
     store = _.assign {}, EventEmitter.prototype,
         _store: []
 
-        getAll: (sortBy = 'created', asc = yes) -> 
+        getAll: (sortBy = 'created', asc = yes) ->
             _.sortBy @_store, sortBy
 
         get: (value, attr = 'uuid') ->
@@ -43,6 +44,9 @@ module.exports = (dispatcher, definition = {}) ->
         emitError: (err) ->
             @emit EVENT_ERROR, err
 
+        emitResponse: (meta, data) ->
+            @emit EVENT_RESPONSE, { meta: meta, data: data }
+
         addChangeListener: (callback) ->
             @on EVENT_CHANGE, callback
 
@@ -54,6 +58,12 @@ module.exports = (dispatcher, definition = {}) ->
 
         removeErrorListener: (callback) ->
             @removeListener EVENT_ERROR, callback
+
+        addResponseListener: (callback) ->
+            @on EVENT_RESPONSE, callback
+
+        removeResponseListener: (callback) ->
+            @removeListener EVENT_RESPONSE, callback
 
         listenTo: (actions, handler) ->
             if _.isArray actions
@@ -70,7 +80,7 @@ module.exports = (dispatcher, definition = {}) ->
             if 'success' of payload and payload.success is no
                 store.emitError payload.error
             else
-                handlers[payload.action](payload)            
+                handlers[payload.action](payload)
 
     # prepared store to user
     store
