@@ -27,7 +27,8 @@ class User(BaseModel, DateMixin):
     firstName = db.Column(db.String(16))
     lastName = db.Column(db.String(16))
     company = db.Column(db.String(32))
-    _timeZoneCode = db.Column("timeZoneCode", db.String(100))
+    _timeZoneCode = db.Column("timeZoneCode", db.String(100),
+                              default='Europe/Prague')
     role = db.Column('role', db.Enum("user", "admin"), default='user',
                      nullable=False)
     isActive = db.Column(db.Boolean, default=True)
@@ -54,7 +55,8 @@ class User(BaseModel, DateMixin):
         Set user password as bcrypt hash
         :param password: {str}
         """
-        self._password = bcrypt.generate_password_hash(password, 12)
+        if password is not None:
+            self._password = bcrypt.generate_password_hash(password, 12)
 
     @property
     def timeZoneCode(self):
