@@ -34,6 +34,9 @@ UserStore.listenTo constants.USER_DELETE, (payload) ->
     @delete payload.data.uuid
     @emitChange()
 
+UserStore.listenTo constants.USER_RESET_PASSWORD, (payload) ->
+    @emitResponse payload.meta, payload.data
+
 UserStore.listenTo constants.USER_ERROR, (payload) ->
     @emitError payload.error
 

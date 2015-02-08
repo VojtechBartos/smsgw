@@ -66,6 +66,12 @@ module.exports =
 
         Dispatcher.dispatchRequest req, constants.USER_UPDATE
 
+    resetPassword: (data) ->
+        url = endpoints.resetPassword()
+        req = api.fetch 'POST', url, data: data
+
+        Dispatcher.dispatchRequest req, constants.USER_RESET_PASSWORD
+
     delete: (uuid) ->
         url = endpoints.delete uuid
         req = api.fetch 'DELETE', url, token: @token

@@ -23,6 +23,7 @@ class ApiError extends Error
 
 module.exports =
     fetch: (method, url, options) ->
+        options = {} if not options?
         req = null
         switch method
             when 'POST'
@@ -33,12 +34,14 @@ module.exports =
                 req = request.put
             when 'DELETE'
                 req = request.del
-        
+
         new Promise (resolve, reject) ->
             req = req(url)
                     .accept 'application/json'
                     .type 'application/json'
-            if options.token?
+
+            if 'token' of options and options.token?
+                console.log 'HERE'
                 req = req.set "Authorization", "Token #{options.token}"
             req = req.send options.data if options.data?
             req = req.query options.query if options.query?
@@ -57,5 +60,5 @@ module.exports =
                             error.data = body.data
                         if 'meta' of body and 'message' of body.meta
                             error.message = body.meta.message
-                
+
                     reject error

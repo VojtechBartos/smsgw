@@ -16,7 +16,7 @@ FlashMessages = require '../../../components/flash-messages.coffee'
 Subheader = require '../components/sub-header.coffee'
 
 module.exports = React.createClass
-    
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->

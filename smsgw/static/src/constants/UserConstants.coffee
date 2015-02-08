@@ -13,4 +13,5 @@ module.exports = keyMirror
     USER_FETCH_ALL: null
     USER_UPDATE: null
     USER_DELETE: null
+    USER_RESET_PASSWORD: null
     USER_ERROR: null
