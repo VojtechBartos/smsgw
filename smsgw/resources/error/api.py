@@ -21,7 +21,11 @@ class ErrorResource(Exception):
     @staticmethod
     def register(app, **kwargs):
 
-        @app.errorhandler(404)
+        @app.errorhandler(400)
+        def on_bad_requests(error):
+            return response(None, status_code=400, message=error.message)
+
+        @app.errorhandler(401)
         def on_unauthorized(error):
             return response(None, status_code=401, message="Unauthorized.")
 
@@ -40,7 +44,7 @@ class ErrorResource(Exception):
             # do rollback
             db.session.rollback()
             # log it
-            current_app.logger.error(traceback.format_exc()) 
+            current_app.logger.error(traceback.format_exc())
 
             return response(None, status_code=500)
 
@@ -52,6 +56,6 @@ class ErrorResource(Exception):
         @app.errorhandler(Exception)
         def on_unhandled_exception(error):
             """ Error handler for unhandled exceptions """
-            current_app.logger.error(traceback.format_exc())            
+            current_app.logger.error(traceback.format_exc())
 
             return response(None, status_code=500)
