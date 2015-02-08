@@ -16,6 +16,7 @@ module.exports = assign new flux.Dispatcher(),
                 self.dispatch
                     action: action
                     success: yes
+                    meta: meta
                     data: data
             , 500
         .error (err) ->
