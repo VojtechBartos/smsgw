@@ -21,7 +21,7 @@ module.exports = React.createClass
     getInitialState: ->
         pending: yes
         applications: []
-        table: 
+        table:
             options: [
                 label: "Label", key: "label"
             ,

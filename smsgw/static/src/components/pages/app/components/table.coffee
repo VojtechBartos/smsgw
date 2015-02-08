@@ -5,7 +5,11 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
+_ = require 'lodash'
 React = require 'react'
+Boostrap = require 'react-bootstrap'
+Label = Boostrap.Label
+Table = Boostrap.Table
 
 module.exports = React.createClass
 
@@ -32,7 +36,20 @@ module.exports = React.createClass
             # fill in basic fileds
             fields = []
             for option in @props.options
-                fields.push <td key={option.key}>{item[option.key]}</td>
+                value = item[option.key]
+                content = null
+                if _.isBoolean value
+                    value = if value then 'yes' else 'no'
+                    style = if value then 'success' else 'danger'
+                    content = <Label bsStyle={style}>{value}</Label>
+                else if _.isArray value
+                    content = []
+                    for i in value
+                        content.push <Label bsStyle="info">{i}</Label>
+                else
+                    content = value
+
+                fields.push <td key={option.key}>{content}</td>
 
             # fill in actions
             actions = []
@@ -45,9 +62,13 @@ module.exports = React.createClass
             fields.push <td key="actions">{actions}</td>
             items.push <tr>{fields}</tr>
 
-        <table>
+        <Table responsive>
+            <thead>
+                <tr>
+                    {header}
+                </tr>
+            </thead>
             <tbody>
-                <tr>{header}</tr>
                 {items}
             </tbody>
-        </table>
+        </Table>

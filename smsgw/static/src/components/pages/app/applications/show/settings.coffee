@@ -34,7 +34,7 @@ module.exports = React.createClass
         if @isMounted()
             @setState
                 formPending: no
-                flashMessages: [text: err.message, type: 'alert']
+                flashMessages: [text: err.message, type: 'danger']
 
     handleSubmit: (e) ->
         e.preventDefault()

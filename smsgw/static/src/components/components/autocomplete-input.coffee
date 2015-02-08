@@ -41,6 +41,7 @@ module.exports = React.createClass
             <input 
                 type="text" 
                 ref='text' 
+                className="form-control"
                 onChange={@handleOnChange} />
             <div className={throbber.join ' '} />
             <div className="cleaner" />

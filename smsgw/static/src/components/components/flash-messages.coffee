@@ -15,6 +15,7 @@ module.exports = React.createClass
     getDefaultProps: ->
         messages: []
 
+
     render: ->
         <div className="flashes">
             {@props.messages.map (message, index) ->
