@@ -15,7 +15,7 @@ class Tag(BaseModel, DateMixin):
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
     userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
-    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False, 
+    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False,
                      default=generate_uuid)
     reference = db.Column(db.String(32), nullable=False)
     _label = db.Column("label", db.String(32), nullable=False)
@@ -55,4 +55,4 @@ class Tag(BaseModel, DateMixin):
         return {key: dict.get(key) for key in properties}
 
 
-Index(Tag.userId, Tag.reference, unique=True)
+Index('tag_userId_reference', Tag.userId, Tag.reference, unique=True)
