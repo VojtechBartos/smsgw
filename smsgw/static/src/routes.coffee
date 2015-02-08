@@ -20,6 +20,15 @@ SignIn = require './components/pages/sign-in.coffee'
 SignUp = require './components/pages/sign-up.coffee'
 ResetPassword = require './components/pages/reset-password.coffee'
 Dashboard = require './components/pages/app/dashboard.coffee'
+Messages = require './components/pages/app/messages.coffee'
+Settings = require './components/pages/app/settings.coffee'
+Wrapper = require './components/components/wrapper.coffee'
+# messages
+MessagesWrapper = require './components/pages/app/messages/wrapper.coffee'
+MessagesSent = require './components/pages/app/messages/sent.coffee'
+MessagesOutbox = require './components/pages/app/messages/outbox.coffee'
+MessagesCompose = require './components/pages/app/messages/compose.coffee'
+# applications
 ApplicationsList = require './components/pages/app/applications/list.coffee'
 ApplicationsAdd = require './components/pages/app/applications/add.coffee'
 ApplicationsShowWrapper = require './components/pages/app/applications/wrapper.coffee'
@@ -27,24 +36,28 @@ ApplicationsShowSettings = require './components/pages/app/applications/show/set
 ApplicationsShowOverview = require './components/pages/app/applications/show/overview.coffee'
 ApplicationsShowSentMessages = require './components/pages/app/applications/show/sent-messages.coffee'
 ApplicationsShowReceivedMessages = require './components/pages/app/applications/show/received-messages.coffee'
+# templates
 TemplatesList = require './components/pages/app/templates/list.coffee'
 TemplatesAdd = require './components/pages/app/templates/add.coffee'
 TemplatesEdit = require './components/pages/app/templates/edit.coffee'
-Messages = require './components/pages/app/messages.coffee'
-Settings = require './components/pages/app/settings.coffee'
-Wrapper = require './components/components/wrapper.coffee'
+# contacts
 DirectoryWrapper = require './components/pages/app/directory/wrapper.coffee'
 ContactsList = require './components/pages/app/directory/contacts/list.coffee'
 ContactsAdd = require './components/pages/app/directory/contacts/add.coffee'
 ContactsEdit = require './components/pages/app/directory/contacts/edit.coffee'
+# tags
 TagsList = require './components/pages/app/directory/tags/list.coffee'
 TagsAdd = require './components/pages/app/directory/tags/add.coffee'
 TagsEdit = require './components/pages/app/directory/tags/edit.coffee'
+# users
+AdminWrapper = require './components/pages/app/admin-wrapper.coffee'
+UsersList = require './components/pages/app/users/list.coffee'
 
 module.exports =
     <Route handler={Wrapper} path="/">
         <Redirect from="/" to="dashboard" />
         <Redirect from="directory" to="contacts" />
+        <Redirect from="messages" to="messages-outbox" />
 
         <Route name="sign-in" path="sign/in" handler={SignIn} />
         <Route name="sign-up" path="sign/up" handler={SignUp} />
@@ -61,7 +74,11 @@ module.exports =
                     <Route name="application-received-messages" path="received-messages" handler={ApplicationsShowReceivedMessages} />
                 </Route>
             </Route>
-            <Route name="messages" handler={Messages} />
+            <Route name="messages" handler={MessagesWrapper}>
+                <Route name="messages-sent" path="sent" handler={MessagesSent} />
+                <Route name="messages-outbox" path="outbox" handler={MessagesOutbox} />
+                <Route name="compose" path="compose" handler={MessagesCompose} />
+            </Route>
             <Route name="directory" handler={Wrapper}>
                 <Route handler={DirectoryWrapper}>
                     <Route name="contacts" path="contacts" handler={ContactsList} />
@@ -77,6 +94,9 @@ module.exports =
                 <DefaultRoute handler={TemplatesList} />
                 <Route name="template-add" path="add" handler={TemplatesAdd} />
                 <Route name="template-edit" path=":uuid" handler={TemplatesEdit} />
+            </Route>
+            <Route name="users" handler={AdminWrapper}>
+                <DefaultRoute handler={UsersList} />
             </Route>
         </Route>
     </Route>
