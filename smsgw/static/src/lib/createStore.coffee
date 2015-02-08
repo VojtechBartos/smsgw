@@ -18,7 +18,8 @@ module.exports = (dispatcher, definition = {}) ->
     store = _.assign {}, EventEmitter.prototype,
         _store: []
 
-        getAll: -> @_store
+        getAll: (sortBy = 'created', asc = yes) -> 
+            _.sortBy @_store, sortBy
 
         get: (value, attr = 'uuid') ->
             result = _.find @_store, (i) -> i[attr] == value
