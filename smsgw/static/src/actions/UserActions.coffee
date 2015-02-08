@@ -52,8 +52,8 @@ module.exports =
 
     create: (data) ->
         url = endpoints.create()
-        req = api.fetch 'POST', url, 
-            token: @token        
+        req = api.fetch 'POST', url,
+            token: @token
             data: data
 
         Dispatcher.dispatchRequest req, constants.USER_UPDATE
@@ -61,7 +61,7 @@ module.exports =
     update: (uuid, data) ->
         url = endpoints.update uuid
         req = api.fetch 'PUT', url,
-            token: @token        
+            token: @token
             data: data
 
         Dispatcher.dispatchRequest req, constants.USER_UPDATE

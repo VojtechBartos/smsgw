@@ -28,7 +28,9 @@ module.exports = React.createClass
                 label: "First name", key: "firstName"
             ,
                 label: "Phone number", key: "phoneNumber"
-            ,   
+            ,  
+                label: "Tags", key: "tags"
+            ,  
                 label: "Created", key: "createdAt"
             ]
             actions: [
@@ -47,10 +49,9 @@ module.exports = React.createClass
         ContactStore.removeChangeListener @handleChange
 
     handleChange: ->
-        if @isMounted()
-            @setState
-                pending: no
-                contacts: ContactStore.getAll()
+        @setState
+            pending: no
+            contacts: ContactStore.getAll 'lastName'
 
     handleEditAction: (contact) ->
         @transitionTo 'contact-edit', uuid: contact.uuid

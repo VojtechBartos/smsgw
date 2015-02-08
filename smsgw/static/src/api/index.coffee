@@ -10,7 +10,7 @@ localStorage = require 'localStorage'
 
 class ApiError extends Error
     # bad request url
-    @url = null 
+    @url = null
     # request method
     @method = null
     # request response code
@@ -21,7 +21,7 @@ class ApiError extends Error
     @data = null
 
 
-module.exports = 
+module.exports =
     fetch: (method, url, options) ->
         req = null
         switch method
@@ -38,8 +38,8 @@ module.exports =
             req = req(url)
                     .accept 'application/json'
                     .type 'application/json'
-            if options.token?                    
-                req = req.set "Authorization", "Token #{options.token}" 
+            if options.token?
+                req = req.set "Authorization", "Token #{options.token}"
             req = req.send options.data if options.data?
             req = req.query options.query if options.query?
             req.end (res) ->

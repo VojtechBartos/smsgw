@@ -10,7 +10,7 @@ constants = require '../constants/ApplicationConstants.coffee'
 endpoints = require('../api/endpoints.coffee').applications
 api = require '../api/index.coffee'
 
-module.exports = 
+module.exports =
 
     fetchAll: ->
         url = endpoints.index()
@@ -26,8 +26,8 @@ module.exports =
 
     create: (data) ->
         url = endpoints.create()
-        req = api.fetch 'POST', url, 
-            token: UserActions.token        
+        req = api.fetch 'POST', url,
+            token: UserActions.token
             data: data
 
         Dispatcher.dispatchRequest req, constants.APPLICATION_UPDATE
@@ -35,7 +35,7 @@ module.exports =
     update: (uuid, data) ->
         url = endpoints.update uuid
         req = api.fetch 'PUT', url,
-            token: UserActions.token        
+            token: UserActions.token
             data: data
 
         Dispatcher.dispatchRequest req, constants.APPLICATION_UPDATE
