@@ -14,50 +14,47 @@ RouteHandler = Router.RouteHandler
 # components
 Header = require './pages/app/components/header.coffee'
 Wrapper = require './components/wrapper.coffee'
-Spinner = require './components/spinner.coffee' 
+Spinner = require './components/spinner.coffee'
 # stores
 UserStore = require '../stores/UserStore.coffee'
 UserActions = require '../actions/UserActions.coffee'
 UserConstants = require '../constants/UserConstants.coffee'
 
 module.exports = React.createClass
-   
+
     mixins: [Router.Navigation]
 
     getInitialState: ->
-        pending: no
-        user: 
-            firstName: null
-            lastName: null
-            company: null
+        pending: yes
+        user: UserStore.me()
 
     componentDidMount: ->
         UserStore.addChangeListener @handleChange
-        UserStore.addErrorListener @handleSignOut
+        UserStore.addErrorListener @handleError
         UserActions.fetchMe()
-        
-        @setState pending: yes
 
     componentWillUnmount: ->
         UserStore.removeChangeListener @handleChange
-        UserStore.removeErrorListener @handleSignOut
+        UserStore.removeErrorListener @handleError
 
     handleChange: ->
-        if @isMounted()
-            @setState 
-                pending: no
-                user: UserStore.me()
+        @setState
+            pending: no
+            user: UserStore.me()
 
-    handleSignOut:  ->
-        UserActions.token = null
-        @transitionTo 'sign-in'
+    handleError: (err) ->
+        switch err.status
+            when 401
+                UserActions.signOut()
+                @transitionTo 'sign-in'
+
+            when 403
+                @transitionTo 'dashboard'
 
     render: ->
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <Wrapper>
-            <Header firstName={@state.user.firstName} 
-                    lastName={@state.user.lastName} 
-                    company={@state.user.company} />
+            <Header user={@state.user} />
             <RouteHandler />
         </Wrapper>
