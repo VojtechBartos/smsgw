@@ -32,8 +32,6 @@ class MailTask(BaseTask):
         msg.recipients = to
         msg.body = body
 
-        print body
-
         # send mail
         mail.send(msg)
 
