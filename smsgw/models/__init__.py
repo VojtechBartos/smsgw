@@ -5,6 +5,7 @@ from smsgw.models.base import BaseModel, DateMixin
 from smsgw.models.application import Application
 from smsgw.models.user import User
 from smsgw.models.user_token import UserToken
+from smsgw.models.user_forgot_password import UserForgotPassword
 from smsgw.models.template import Template
 from smsgw.models.tag import Tag
 from smsgw.models.contact import Contact
