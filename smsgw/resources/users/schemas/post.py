@@ -6,15 +6,12 @@ schema = {
     "type": "object",
     "method": "POST",
     "required": ["email", "password", "firstName", "lastName"],
-    "additionalProperties": False, 
+    "additionalProperties": False,
     "properties": {
         "email": {
             "type": "string",
             "format": "email",
             "maxLength": 128
-        },
-        "password": {
-            "type": "string",
         },
         "firstName": {
             "type": "string",
@@ -27,6 +24,9 @@ schema = {
         "company": {
             "type": "string",
             "maxLength": 16
+        },
+        "password": {
+            "type": "string"
         }
     }
 }

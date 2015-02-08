@@ -5,8 +5,8 @@ schema = {
     "description": "Schema for the user PUT endpoint",
     "type": "object",
     "method": "PUT",
-    "required": ["email", "password", "firstName", "lastName"],
-    "additionalProperties": False, 
+    "required": ["email", "firstName", "lastName"],
+    "additionalProperties": False,
     "properties": {
         "email": {
             "type": "string",
@@ -25,8 +25,11 @@ schema = {
             "maxLength": 16
         },
         "company": {
-            "type": "string",
+            "type": ["string", "null"],
             "maxLength": 16
+        },
+        "password": {
+            "type": ["string", "null"]
         }
     }
 }

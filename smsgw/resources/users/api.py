@@ -68,15 +68,15 @@ class UsersResource(FlaskView):
         except IntegrityError, e:
             db.session.rollback()
             raise ErrorResource(409, message="Email already exits.")
- 
-        return response(tag.to_dict())
+
+        return response(user.to_dict())
 
     @route('/<uuid:user_uuid>/', methods=['DELETE'])
     @decorators.auth(User.ROLE_ADMIN)
     def delete(self, user, **kwargs):
         """
         Delete user
-        """        
+        """
         db.session.delete(user)
         db.session.commit()
 
