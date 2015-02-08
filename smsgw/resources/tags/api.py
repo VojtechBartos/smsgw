@@ -77,7 +77,7 @@ class TagsResource(FlaskView):
         except IntegrityError, e:
             db.session.rollback()
             raise ErrorResource(409, message="Tag is already exists.")
- 
+
         return response(tag.to_dict())
 
     @route('/<uuid:tag_uuid>/', methods=['DELETE'])
@@ -85,7 +85,7 @@ class TagsResource(FlaskView):
     def delete(self, **kwargs):
         """
         Delete user contact
-        """      
+        """
         tag = kwargs.get('tag')
 
         # delete template

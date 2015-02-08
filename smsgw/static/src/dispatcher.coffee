@@ -7,8 +7,8 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 flux = require 'flux'
 assign = require 'object-assign'
 
-module.exports = assign new flux.Dispatcher(), 
-    
+module.exports = assign new flux.Dispatcher(),
+ 
     dispatchRequest: (req, action) ->
         self = this
         req.then ({meta, data}) ->
