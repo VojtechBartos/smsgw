@@ -25,17 +25,12 @@
     },
     "devDependencies": {
         "coffee-script": "~1.9.0",
-        "browserify": "~8.1.0",
-        "debowerify": "~1.2.0",
-        "coffee-reactify": "~2.1.0",
-        "watchify": "~2.3.0",
-        "reactify": "~1.0.0",
-        "uglify-js": "~2.4.15",
-        "envify": "~3.2.0",
         "gulp": "~3.8.0",
         "gulp-coffeelint": "^0.4.0",
         "gulp-util": "~3.0.2",
-        "gulp-watch": "~4.1.0",
-        "vinyl-source-stream": "~1.0.0"
+        "gulp-webpack": "~1.2.0",
+        "json-loader": "~0.5.1",
+        "cjsx-loader": "~1.2.0",
+        "coffee-loader": "~0.7.2"
     }
 }
