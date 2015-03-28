@@ -2,3 +2,5 @@
 !gulpfile.js
 
 .vagrant/
+node_modules/
+venv/
