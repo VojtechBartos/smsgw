@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-	Route,
-	Routes,
-	Redirect,
-	RouteHandler,
-	DefaultRoute
+  Route,
+  Routes,
+  Redirect,
+  RouteHandler,
+  DefaultRoute
 } from 'react-router'
 
 // pages
@@ -48,7 +48,7 @@ import UsersList from './components/pages/app/users/list.coffee'
 
 
 export default (
-	<Route handler={Wrapper} path="/">
+  <Route handler={Wrapper} path="/">
     <Redirect from="/" to="dashboard" />
     <Redirect from="directory" to="contacts" />
     <Redirect from="messages" to="messages-outbox" />
@@ -93,5 +93,5 @@ export default (
           <DefaultRoute handler={UsersList} />
         </Route>
     </Route>
-	</Route>
+  </Route>
 )
