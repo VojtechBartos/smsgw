@@ -13,30 +13,47 @@ module.exports = React.createClass
     getDefaultProps: ->
         pending: no
         disabled: no
+        onSubmit: null
+        onError: null
 
     isValid: ->
-        yes
+        valid = yes
+        password = @refs.password.getDOMNode().value
+        passwordVerify = @refs.passwordVerify.getDOMNode().value
+
+        if password or password.length > 0
+            if password != passwordVerify
+                valid = no
+                msg = "Password and verify password needs to be same"
+                @props.onError message: msg if @props.onError
+        valid
 
     getData: ->
-        email: @refs.email.getDOMNode().value
-
-    toggle: ->
-        @setState active: !@state.active
+        password: @refs.password.getDOMNode().value
 
     render: ->
         <form onSubmit={@props.onSubmit}>
             <div className="form-group">
-                <input type="email" 
-                       name="email" 
-                       ref="email" 
+                <input type="password"
+                       name="password"
+                       ref="password"
                        className="form-control"
-                       placeholder="E-mail"
+                       placeholder="Password"
                        disabled={@props.disabled}
                        required />
             </div>
-            <LaddaButton 
+            <div className="form-group">
+                <input type="password"
+                       name="passwordVerify"
+                       ref="passwordVerify"
+                       className="form-control"
+                       placeholder="Verfiy password"
+                       disabled={@props.disabled}
+                       required />
+            </div>
+            <LaddaButton
                 active={@props.pending}
                 style="expand-right">
-                <button>Reset password</button>
+                <button>Save password</button>
             </LaddaButton>
         </form>

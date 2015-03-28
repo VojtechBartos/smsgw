@@ -13,28 +13,71 @@ UserConstants = require '../../constants/UserConstants.coffee'
 # components
 FlashMessages = require '../components/flash-messages.coffee'
 ResetPasswordForm = require './forms/reset-password-form.coffee'
+SendEmailForm = require './forms/send-email-form.coffee'
 
 
 module.exports = React.createClass
 
-    mixins: [Router.Navigation]
+    mixins: [Router.Navigation, Router.State]
 
     getInitialState: ->
         pending: no
+        formPending: no
         flashMessages: []
+        token: @getParams().token
 
     componentDidMount: ->
+        UserStore.addResponseListener @handleResponse
+        UserStore.addErrorListener @handleError
 
-    handleResponse: ->
-        
+    componentWillUnmount: ->
+        UserStore.removeResponseListener @handleResponse
+        UserStore.removeErrorListener @handleError
+
+    handleResponse: ({meta, data}) ->
+        @setState
+            pending: no
+            formPending: no
+            flashMessages: [ text: meta.message, type: 'success']
+
+        console.log data
+
+
+    handleError: (err) ->
+        @setState
+            pending: no
+            formPending: no
+            flashMessages: [ text: err.message, type: 'danger']
 
     handleSubmit: (e) ->
         e.preventDefault()
-        form = @refs.resetPasswordForm
+        form = @refs.form
         if form.isValid()
-            @setState pending: yes
+            @setState
+                pending: no
+                formPending: yes
+
+            UserActions.resetPassword @state.token, form.getData()
 
     render: ->
+        if not @state.token?
+            info = """Please fill in your email address and we will send you
+                      instructions how to reset your password."""
+            form = <SendEmailForm
+                    ref="form"
+                    onSubmit={@handleSubmit}
+                    onError={@handleError}
+                    pending={@state.formPending}
+                    disabled={@state.formPending} />
+        else
+            info = "Empty"
+            form = <ResetPasswordForm
+                    ref="form"
+                    onSubmit={@handleSubmit}
+                    onError={@handleError}
+                    pending={@state.formPending}
+                    disabled={@state.formPending} />
+
         <div id="sign" className="resetPassword">
             <h1><strong>sms</strong>gw</h1>
             <h2>reset password</h2>
@@ -43,16 +86,9 @@ module.exports = React.createClass
 
             <FlashMessages messages={@state.flashMessages} />
 
-            <p>
-                Please fill in your email address and we will send you 
-                instructions how to reset your password.
-            </p>
+            <p>{info}</p>
 
-            <ResetPasswordForm 
-                ref="resetPasswordForm" 
-                onSubmit={@handleSubmit} 
-                pending={@state.pending}
-                disabled={@state.pending} />
+            {form}
 
             <div className="info">
                 I've remembered my password. <a href="#/sign/in">Sign in</a>.<br />
