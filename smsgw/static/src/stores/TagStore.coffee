@@ -4,7 +4,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-constants = require '../constants/TagConstants.coffee'
+constants = require '../constants/TagConstants'
 createStore = require '../lib/createStore.coffee'
 Dispatcher = require '../dispatcher'
 TagStore = createStore Dispatcher

@@ -10,7 +10,6 @@ Router = require 'react-router'
 Link = Router.Link
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
-UserConstants = require '../../constants/UserConstants.coffee'
 # components
 SignInForm = require './forms/sign-in-form.coffee'
 FlashMessages = require '../components/flash-messages.coffee'

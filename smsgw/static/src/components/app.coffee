@@ -18,7 +18,6 @@ Spinner = require './components/spinner.coffee'
 # stores
 UserStore = require '../stores/UserStore.coffee'
 UserActions = require '../actions/UserActions.coffee'
-UserConstants = require '../constants/UserConstants.coffee'
 
 module.exports = React.createClass
 

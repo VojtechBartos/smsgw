@@ -9,7 +9,6 @@ React = require 'react'
 Router = require 'react-router'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
-UserConstants = require '../../constants/UserConstants.coffee'
 # components
 FlashMessages = require '../components/flash-messages.coffee'
 ResetPasswordForm = require './forms/reset-password-form.coffee'

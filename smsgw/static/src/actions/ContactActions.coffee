@@ -6,7 +6,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 Dispatcher = require '../dispatcher'
 UserActions = require './UserActions.coffee'
-constants = require '../constants/ContactConstants.coffee'
+constants = require '../constants/ContactConstants'
 endpoints = require('../api/endpoints.coffee').contacts
 api = require '../api/index.coffee'
 

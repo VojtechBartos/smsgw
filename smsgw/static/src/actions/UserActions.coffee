@@ -5,7 +5,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 Dispatcher = require '../dispatcher'
-constants = require '../constants/UserConstants.coffee'
+constants = require '../constants/UserConstants'
 endpoints = require('../api/endpoints.coffee').users
 localStorage = require 'localStorage'
 api = require '../api/index.coffee'
