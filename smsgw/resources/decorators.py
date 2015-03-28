@@ -115,7 +115,7 @@ def auth(role=User.ROLE_USER):
                             not_found()
             kwargs.update(updates)
 
-            # if requested user is not logged in, he needs to be 
+            # if requested user is not logged in, he needs to be
             # user with admin role or will be sent 403
             requested_user = kwargs.get('user')
             if requested_user is not None:
