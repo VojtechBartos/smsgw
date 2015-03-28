@@ -11,7 +11,7 @@ class Dispatcher extends flux.Dispatcher {
       setTimeout(() => {
         self.dispatch({
           action: action,
-          success: yes,
+          success: true,
           meta: meta,
           data: data
         })
@@ -22,7 +22,7 @@ class Dispatcher extends flux.Dispatcher {
 
       self.dispatch({
         action: action,
-        success: no,
+        success: false,
         error: err
       })
     })
