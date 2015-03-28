@@ -6,7 +6,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 constants = require '../constants/UserConstants.coffee'
 createStore = require '../lib/createStore.coffee'
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 
 UserStore = createStore Dispatcher,
     me: -> @get yes, '@me'

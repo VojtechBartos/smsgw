@@ -7,7 +7,6 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Dispatcher = require '../../dispatcher.coffee'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
 UserConstants = require '../../constants/UserConstants.coffee'
@@ -17,7 +16,7 @@ SignUpForm = require './forms/sign-up-form.coffee'
 
 
 module.exports = React.createClass
-    
+
     mixins: [Router.Navigation]
 
     getInitialState: ->
@@ -36,13 +35,13 @@ module.exports = React.createClass
         @transitionTo '/sign/in'
 
         if @isMounted()
-            @setState 
+            @setState
                 formPending: no
                 flashMessages: []
 
     handleError: (err) ->
         if @isMounted()
-            @setState 
+            @setState
                 formPending: no
                 flashMessages: [text: err.message, type: 'danger']
 
@@ -62,12 +61,12 @@ module.exports = React.createClass
 
             <FlashMessages messages={@state.flashMessages} />
 
-            <SignUpForm 
-                ref="signUpForm" 
+            <SignUpForm
+                ref="signUpForm"
                 onSubmit={@handleSubmit}
                 pending={@state.formPending}
                 disabled={@state.formPending} />
-            
+
             <div className="info">
                 Have an account already? <a href="#/sign/in">Sign in</a>.
             </div>

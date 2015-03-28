@@ -6,7 +6,6 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 "use strict"
 
 React = require 'react'
-Dispatcher = require '../../../../../dispatcher.coffee'
 ApplicationActions = require '../../../../../actions/ApplicationActions.coffee'
 ApplicationStore = require '../../../../../stores/ApplicationStore.coffee'
 # components
@@ -47,8 +46,8 @@ module.exports = React.createClass
         <div id="context">
             <FlashMessages messages={@state.flashMessages} />
 
-            <ApplicationForm 
-                onSubmit={@handleSubmit} 
+            <ApplicationForm
+                onSubmit={@handleSubmit}
                 ref="applicationForm"
                 submitTitle="Save"
                 pending={@state.formPending}

@@ -6,7 +6,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 constants = require '../constants/TemplateConstants.coffee'
 createStore = require '../lib/createStore.coffee'
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 TemplateStore = createStore Dispatcher
 
 TemplateStore.listenTo constants.TEMPLATE_FETCH_ALL, (payload) ->

@@ -13,7 +13,7 @@ module.exports =
         index: -> "#{BASE}/users/"
         create: -> "#{BASE}/users/"
         get: (uuid) -> "#{BASE}/users/#{uuid}/"
-        resetPassword: -> "#{BASE}/users/reset-password/"
+        resetPassword: (uuid) -> "#{BASE}/users/reset-password/#{uuid}/"
         update: (uuid) -> @get uuid
         delete: (uuid) -> @get uuid
     contacts:

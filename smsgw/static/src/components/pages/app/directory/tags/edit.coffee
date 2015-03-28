@@ -7,7 +7,6 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Dispatcher = require '../../../../../dispatcher.coffee'
 TagActions = require '../../../../../actions/TagActions.coffee'
 TagStore = require '../../../../../stores/TagStore.coffee'
 # components
@@ -24,7 +23,7 @@ module.exports = React.createClass
         pending: no
         formPending: no
         flashMessages: []
-        tag: 
+        tag:
             label: null
 
     componentDidMount: ->
@@ -71,11 +70,11 @@ module.exports = React.createClass
             <div id="context">
                 <FlashMessages messages={@state.flashMessages} />
 
-                <TagForm 
-                    onSubmit={@handleSubmit} 
+                <TagForm
+                    onSubmit={@handleSubmit}
                     ref="tagForm"
                     pending={@state.formPending}
-                    disabled={@state.formPending} 
+                    disabled={@state.formPending}
                     submitTitle="Edit"
                     data={@state.tag} />
             </div>

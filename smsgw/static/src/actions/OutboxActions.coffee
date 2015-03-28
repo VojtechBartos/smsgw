@@ -4,7 +4,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 UserActions = require './UserActions.coffee'
 constants = require '../constants/OutboxConstants.coffee'
 endpoints = require('../api/endpoints.coffee').outbox

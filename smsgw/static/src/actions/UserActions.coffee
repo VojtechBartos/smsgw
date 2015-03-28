@@ -4,7 +4,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 constants = require '../constants/UserConstants.coffee'
 endpoints = require('../api/endpoints.coffee').users
 localStorage = require 'localStorage'
@@ -66,8 +66,10 @@ module.exports =
 
         Dispatcher.dispatchRequest req, constants.USER_UPDATE
 
-    resetPassword: (data) ->
-        url = endpoints.resetPassword()
+    resetPassword: (uuid, data) ->
+        uuid = "" if not uuid?
+
+        url = endpoints.resetPassword(uuid)
         req = api.fetch 'POST', url, data: data
 
         Dispatcher.dispatchRequest req, constants.USER_RESET_PASSWORD

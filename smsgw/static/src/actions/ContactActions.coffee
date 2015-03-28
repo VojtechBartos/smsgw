@@ -4,13 +4,13 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 ###
 "use strict"
 
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 UserActions = require './UserActions.coffee'
 constants = require '../constants/ContactConstants.coffee'
 endpoints = require('../api/endpoints.coffee').contacts
 api = require '../api/index.coffee'
 
-module.exports = 
+module.exports =
 
     fetchAll: ->
         url = endpoints.index()
@@ -26,8 +26,8 @@ module.exports =
 
     create: (data) ->
         url = endpoints.create()
-        req = api.fetch 'POST', url, 
-            token: UserActions.token        
+        req = api.fetch 'POST', url,
+            token: UserActions.token
             data: data
 
         Dispatcher.dispatchRequest req, constants.CONTACT_UPDATE
@@ -35,7 +35,7 @@ module.exports =
     update: (uuid, data) ->
         url = endpoints.update uuid
         req = api.fetch 'PUT', url,
-            token: UserActions.token        
+            token: UserActions.token
             data: data
 
         Dispatcher.dispatchRequest req, constants.CONTACT_UPDATE

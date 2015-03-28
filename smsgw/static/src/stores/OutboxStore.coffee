@@ -6,7 +6,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 constants = require '../constants/OutboxConstants.coffee'
 createStore = require '../lib/createStore.coffee'
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 OutboxStore = createStore Dispatcher
 
 OutboxStore.listenTo constants.OUTBOX_FETCH_ALL, (payload) ->

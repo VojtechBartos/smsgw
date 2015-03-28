@@ -8,7 +8,6 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-Dispatcher = require '../../dispatcher.coffee'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
 UserConstants = require '../../constants/UserConstants.coffee'
@@ -35,21 +34,21 @@ module.exports = React.createClass
     handleChange: (data) ->
         # save token
         UserActions.setToken data.token
-        
+
         weak = @
         setTimeout ->
             # and redirect to dashboard
             weak.transitionTo 'dashboard'
 
             if weak.isMounted()
-                weak.setState 
+                weak.setState
                     formPending: no
                     flashMessages: []
         , 0
 
     handleError: (err) ->
         if @isMounted()
-            @setState 
+            @setState
                 formPending: no
                 flashMessages: [text: err.message, type: 'danger']
 
@@ -69,9 +68,9 @@ module.exports = React.createClass
 
             <FlashMessages messages={@state.flashMessages} />
 
-            <SignInForm 
-                ref="signInForm" 
-                onSubmit={@handleSubmit} 
+            <SignInForm
+                ref="signInForm"
+                onSubmit={@handleSubmit}
                 pending={@state.formPending}
                 disabled={@state.formPending} />
 

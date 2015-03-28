@@ -6,7 +6,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 constants = require '../constants/ApplicationConstants.coffee'
 createStore = require '../lib/createStore.coffee'
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 ApplicationStore = createStore Dispatcher
 
 ApplicationStore.listenTo constants.APPLICATION_FETCH_ALL, (payload) ->

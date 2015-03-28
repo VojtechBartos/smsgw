@@ -7,7 +7,6 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Dispatcher = require '../../dispatcher.coffee'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions.coffee'
 UserConstants = require '../../constants/UserConstants.coffee'

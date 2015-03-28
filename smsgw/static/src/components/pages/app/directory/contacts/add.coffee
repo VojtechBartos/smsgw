@@ -7,7 +7,6 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-Dispatcher = require '../../../../../dispatcher.coffee'
 ContactActions = require '../../../../../actions/ContactActions.coffee'
 ContactStore = require '../../../../../stores/ContactStore.coffee'
 # components
@@ -16,7 +15,7 @@ FlashMessages = require '../../../../components/flash-messages.coffee'
 Subheader = require '../../components/sub-header.coffee'
 
 module.exports = React.createClass
-    
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
@@ -56,8 +55,8 @@ module.exports = React.createClass
             <div id="context">
                 <FlashMessages messages={@state.flashMessages} />
 
-                <ContactForm 
-                    onSubmit={@handleSubmit} 
+                <ContactForm
+                    onSubmit={@handleSubmit}
                     ref="contactForm"
                     pending={@state.formPending}
                     disabled={@state.formPending} />

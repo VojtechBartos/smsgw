@@ -6,7 +6,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 constants = require '../constants/TagConstants.coffee'
 createStore = require '../lib/createStore.coffee'
-Dispatcher = require '../dispatcher.coffee'
+Dispatcher = require '../dispatcher'
 TagStore = createStore Dispatcher
 
 TagStore.listenTo constants.TAG_FETCH_ALL, (payload) ->
