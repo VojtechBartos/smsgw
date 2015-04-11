@@ -1,4 +1,6 @@
-import keyMirror from 'react/lib/keyMirror'
+'use strict';
+
+import keyMirror from 'react/lib/keyMirror';
 
 export default keyMirror({
   USER_SIGN_UP: null,

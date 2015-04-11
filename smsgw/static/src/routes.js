@@ -1,50 +1,52 @@
-import React from 'react'
+'use strict';
+
+import React from 'react';
 import {
   Route,
   Routes,
   Redirect,
   RouteHandler,
   DefaultRoute
-} from 'react-router'
+} from 'react-router';
 
 // pages
-import App from './components/app.coffee'
-import SignIn from './components/pages/sign-in.coffee'
-import SignUp from './components/pages/sign-up.coffee'
-import ResetPassword from './components/pages/reset-password.coffee'
-import Dashboard from './components/pages/app/dashboard.coffee'
-import Messages from './components/pages/app/messages.coffee'
-import Settings from './components/pages/app/settings.coffee'
-import Wrapper from './components/components/wrapper.coffee'
+import App from './components/app.coffee';
+import SignIn from './components/pages/sign-in.coffee';
+import SignUp from './components/pages/sign-up.coffee';
+import ResetPassword from './components/pages/reset-password.coffee';
+import Dashboard from './components/pages/app/dashboard.coffee';
+import Messages from './components/pages/app/messages.coffee';
+import Settings from './components/pages/app/settings.coffee';
+import Wrapper from './components/components/wrapper.coffee';
 // messages
-import MessagesWrapper from './components/pages/app/messages/wrapper.coffee'
-import MessagesSent from './components/pages/app/messages/sent.coffee'
-import MessagesOutbox from './components/pages/app/messages/outbox.coffee'
-import MessagesCompose from './components/pages/app/messages/compose.coffee'
+import MessagesWrapper from './components/pages/app/messages/wrapper.coffee';
+import MessagesSent from './components/pages/app/messages/sent.coffee';
+import MessagesOutbox from './components/pages/app/messages/outbox.coffee';
+import MessagesCompose from './components/pages/app/messages/compose.coffee';
 // applications
-import ApplicationsList from './components/pages/app/applications/list.coffee'
-import ApplicationsAdd from './components/pages/app/applications/add.coffee'
-import ApplicationsShowWrapper from './components/pages/app/applications/wrapper.coffee'
-import ApplicationsShowSettings from './components/pages/app/applications/show/settings.coffee'
-import ApplicationsShowOverview from './components/pages/app/applications/show/overview.coffee'
-import ApplicationsShowSentMessages from './components/pages/app/applications/show/sent-messages.coffee'
-import ApplicationsShowReceivedMessages from './components/pages/app/applications/show/received-messages.coffee'
+import ApplicationsList from './components/pages/app/applications/list.coffee';
+import ApplicationsAdd from './components/pages/app/applications/add.coffee';
+import ApplicationsShowWrapper from './components/pages/app/applications/wrapper.coffee';
+import ApplicationsShowSettings from './components/pages/app/applications/show/settings.coffee';
+import ApplicationsShowOverview from './components/pages/app/applications/show/overview.coffee';
+import ApplicationsShowSentMessages from './components/pages/app/applications/show/sent-messages.coffee';
+import ApplicationsShowReceivedMessages from './components/pages/app/applications/show/received-messages.coffee';
 // templates
-import TemplatesList from './components/pages/app/templates/list.coffee'
-import TemplatesAdd from './components/pages/app/templates/add.coffee'
-import TemplatesEdit from './components/pages/app/templates/edit.coffee'
+import TemplatesList from './components/pages/app/templates/list.coffee';
+import TemplatesAdd from './components/pages/app/templates/add.coffee';
+import TemplatesEdit from './components/pages/app/templates/edit.coffee';
 // contacts
-import DirectoryWrapper from './components/pages/app/directory/wrapper.coffee'
-import ContactsList from './components/pages/app/directory/contacts/list.coffee'
-import ContactsAdd from './components/pages/app/directory/contacts/add.coffee'
-import ContactsEdit from './components/pages/app/directory/contacts/edit.coffee'
+import DirectoryWrapper from './components/pages/app/directory/wrapper.coffee';
+import ContactsList from './components/pages/app/directory/contacts/list.coffee';
+import ContactsAdd from './components/pages/app/directory/contacts/add.coffee';
+import ContactsEdit from './components/pages/app/directory/contacts/edit.coffee';
 // tags
-import TagsList from './components/pages/app/directory/tags/list.coffee'
-import TagsAdd from './components/pages/app/directory/tags/add.coffee'
-import TagsEdit from './components/pages/app/directory/tags/edit.coffee'
+import TagsList from './components/pages/app/directory/tags/list.coffee';
+import TagsAdd from './components/pages/app/directory/tags/add.coffee';
+import TagsEdit from './components/pages/app/directory/tags/edit.coffee';
 // users
-import AdminWrapper from './components/pages/app/admin-wrapper.coffee'
-import UsersList from './components/pages/app/users/list.coffee'
+import AdminWrapper from './components/pages/app/admin-wrapper.coffee';
+import UsersList from './components/pages/app/users/list.coffee';
 
 
 export default (

@@ -1,6 +1,8 @@
-import React from 'react'
-import Router from 'react-router'
-import Routes from './routes'
+'use strict';
+
+import React from 'react';
+import Router from 'react-router';
+import Routes from './routes';
 
 Router
   .create({ routes: Routes })

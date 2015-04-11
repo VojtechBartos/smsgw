@@ -1,4 +1,6 @@
-import keyMirror from 'react/lib/keyMirror'
+'use strict';
+
+import keyMirror from 'react/lib/keyMirror';
 
 export default keyMirror({
   TEMPLATE_FETCH_ALL: null,
