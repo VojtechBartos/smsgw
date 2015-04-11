@@ -3,3 +3,9 @@
 [![Dependency Status](https://david-dm.org/VojtechBartos/smsgw.png)](https://david-dm.org/VojtechBartos/smsgw) [![devDependency Status](https://david-dm.org/VojtechBartos/smsgw/dev-status.png)](https://david-dm.org/VojtechBartos/smsgw#info=devDependencies)
 
 master thesis **IN DEVELOPMENT**
+
+## TODO's
+
+- DevOps
+    - ~~add vagrant setup~~
+    - write installation steps
