@@ -9,10 +9,10 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-UserActions = require '../../../../actions/UserActions.coffee'
+UserActions = require '../../../../actions/UserActions'
 
 module.exports = React.createClass
- 
+
     mixins: [Router.Navigation]
 
     getInitialState: ->

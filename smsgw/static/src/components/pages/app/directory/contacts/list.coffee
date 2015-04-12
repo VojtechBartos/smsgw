@@ -8,29 +8,29 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-ContactActions = require '../../../../../actions/ContactActions.coffee'
+ContactActions = require '../../../../../actions/ContactActions'
 ContactStore = require '../../../../../stores/ContactStore.coffee'
 # components
 Table = require './../../components/table.coffee'
 Spinner = require '../../../../components/spinner.coffee'
 
 module.exports = React.createClass
-      
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
         pending: no
         contacts: []
-        table: 
+        table:
             options: [
                 label: "Last name", key: "lastName"
             ,
                 label: "First name", key: "firstName"
             ,
                 label: "Phone number", key: "phoneNumber"
-            ,  
+            ,
                 label: "Tags", key: "tags"
-            ,  
+            ,
                 label: "Created", key: "createdAt"
             ]
             actions: [
@@ -58,18 +58,18 @@ module.exports = React.createClass
 
     handleDeleteAction: (contact) ->
         @setState pending: yes
-        ContactActions.delete contact.uuid
+        ContactActions.del contact.uuid
 
     render: ->
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <div id="context">
             <h1>
-                Contacts ({@state.contacts.length}) 
+                Contacts ({@state.contacts.length})
                 <Link to="contact-add">Add</Link>
             </h1>
-            <Table 
-                options={@state.table.options} 
-                items={@state.contacts} 
+            <Table
+                options={@state.table.options}
+                items={@state.contacts}
                 actions={@state.table.actions} />
         </div>

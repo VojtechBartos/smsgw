@@ -8,7 +8,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 moment = require 'moment'
-OutboxActions = require '../../../../actions/OutboxActions.coffee'
+OutboxActions = require '../../../../actions/OutboxActions'
 OutboxStore = require '../../../../stores/OutboxStore.coffee'
 # components
 Link = Router.Link
@@ -19,7 +19,7 @@ Bootstrap = require 'react-bootstrap'
 {Table, DropdownButton, MenuItem} = require 'react-bootstrap'
 
 module.exports = React.createClass
-      
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
@@ -36,21 +36,21 @@ module.exports = React.createClass
         OutboxStore.removeChangeListener @handleChange
 
     handleChange: ->
-        state = 
+        state =
             pending: no
             messages: OutboxStore.getAll 'send'
-        
+
         @setState state, ->
             setTimeout ->
                 OutboxActions.fetchAll()
-            , 30000      
+            , 30000
 
     handleDelete: (message) ->
         (e) =>
             e.preventDefault()
             @setState pending: yes
-            OutboxActions.delete message.id
-            
+            OutboxActions.del message.id
+
     render: ->
         self = @
         return <Spinner fullscreen={yes} /> if @state.pending
@@ -73,8 +73,8 @@ module.exports = React.createClass
                         contact = ->
                             if not message.contact?
                                 return message.destinationNumber
-                            
-                            <Link to="contact-edit" 
+
+                            <Link to="contact-edit"
                                   params={uuid: message.contact.uuid}>
                                 {message.contact.lastName} {message.contact.firstName}
                             </Link>
@@ -90,13 +90,13 @@ module.exports = React.createClass
                             <td>{send()}</td>
                             <td>{moment(message.created).format 'HH:mm DD.MM.YYYY'}</td>
                             <td>
-                                <DropdownButton 
-                                    title="actions" 
-                                    bsStyle="primary" 
+                                <DropdownButton
+                                    title="actions"
+                                    bsStyle="primary"
                                     bsSize="xsmall">
                                     <MenuItem eventKey="1">Edit</MenuItem>
-                                    <MenuItem 
-                                        eventKey="2" 
+                                    <MenuItem
+                                        eventKey="2"
                                         onClick={self.handleDelete message}>
                                         Delete
                                     </MenuItem>

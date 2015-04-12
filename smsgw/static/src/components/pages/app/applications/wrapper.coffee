@@ -9,14 +9,14 @@ React = require 'react'
 Router = require 'react-router'
 RouteHandler = Router.RouteHandler
 ApplicationStore = require '../../../../stores/ApplicationStore.coffee'
-ApplicationActions = require '../../../../actions/ApplicationActions.coffee'
+ApplicationActions = require '../../../../actions/ApplicationActions'
 # components
 Wrapper = require '../../../components/wrapper.coffee'
 Subheader = require '../components/sub-header.coffee'
 Spinner = require '../../../components/spinner.coffee'
 
 module.exports = React.createClass
-    
+
     mixins: [ Router.State ]
 
     getInitialState: ->
@@ -32,11 +32,11 @@ module.exports = React.createClass
             params: @getParams()
         ,
             label: 'Sent messages'
-            route: 'application-sent-messages'   
+            route: 'application-sent-messages'
             params: @getParams()
         ,
             label: 'Received messages'
-            route: 'application-received-messages'   
+            route: 'application-received-messages'
             params: @getParams()
         ]
 
@@ -50,7 +50,7 @@ module.exports = React.createClass
 
     handleChange: ->
         if @isMounted()
-            @setState 
+            @setState
                 pending: no
                 application: ApplicationStore.get @getParams().uuid
 
@@ -62,13 +62,13 @@ module.exports = React.createClass
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <Wrapper>
-            <Subheader 
-                backTitle="Applications" 
-                backRoute="applications" 
+            <Subheader
+                backTitle="Applications"
+                backRoute="applications"
                 links={@state.menu}>
                 <h1>{@state.application.label}</h1>
                 <h3>
-                    <strong><small>API Key: </small></strong> 
+                    <strong><small>API Key: </small></strong>
                     {@state.application.token}{" "}
                     <a className="small" onClick={@handleRegenerate}>regenerate</a>
                 </h3>

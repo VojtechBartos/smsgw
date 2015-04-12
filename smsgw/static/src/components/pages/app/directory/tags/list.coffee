@@ -8,20 +8,20 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-TagActions = require '../../../../../actions/TagActions.coffee'
+TagActions = require '../../../../../actions/TagActions'
 TagStore = require '../../../../../stores/TagStore.coffee'
 # components
 Table = require './../../components/table.coffee'
 Spinner = require '../../../../components/spinner.coffee'
 
 module.exports = React.createClass
-    
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
         pending: no
         tags: []
-        table: 
+        table:
             options: [
                 label: "Label", key: "label"
             ,
@@ -55,18 +55,18 @@ module.exports = React.createClass
 
     handleDeleteAction: (tag) ->
         @setState pending: yes
-        TagActions.delete tag.uuid
+        TagActions.del tag.uuid
 
     render: ->
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <div id="context">
             <h1>
-                Tags ({@state.tags.length}) 
+                Tags ({@state.tags.length})
                 <Link to="tag-add">Add</Link>
             </h1>
-            <Table 
-                options={@state.table.options} 
-                items={@state.tags} 
+            <Table
+                options={@state.table.options}
+                items={@state.tags}
                 actions={@state.table.actions} />
         </div>

@@ -8,7 +8,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 _ = require 'lodash'
 React = require 'react'
 TagStore = require '../../../../../stores/TagStore.coffee'
-TagActions = require '../../../../../actions/TagActions.coffee'
+TagActions = require '../../../../../actions/TagActions'
 # components
 Bootstrap = require 'react-bootstrap'
 Grid = Bootstrap.Grid
@@ -22,9 +22,9 @@ LaddaButton = require 'react-ladda'
 module.exports = React.createClass
 
     getInitialState: ->
-        tags: 
+        tags:
             selected: @props.data.tags or []
-            search: [] 
+            search: []
         pending:
             autocomplete: no
 
@@ -41,7 +41,7 @@ module.exports = React.createClass
         TagStore.removeChangeListener @handleStoreChange
 
     handleStoreChange: ->
-        @setState 
+        @setState
             pending:
                 autocomplete: no
             tags:
@@ -56,8 +56,8 @@ module.exports = React.createClass
         tags = @state.tags.selected
         tags.push tag.label if _.indexOf(tags, tag.label) == -1
 
-        @setState 
-            tags: 
+        @setState
+            tags:
                 selected: tags
                 search: []
 
@@ -87,51 +87,51 @@ module.exports = React.createClass
                     <Label>{tag}</Label> <a onClick={@handeOnDelete index}>remove</a>
                 </li>
             tags.push element
-        
+
         <form onSubmit={@props.onSubmit}>
             <Grid fluid={yes}>
                 <Row>
                     <Col md={3}>
                         <div className="form-group">
                             <label>First name</label>
-                            <input type="text" 
-                                   name="firstName" 
+                            <input type="text"
+                                   name="firstName"
                                    ref="firstName"
                                    className="form-control"
-                                   placeholder="First name" 
+                                   placeholder="First name"
                                    disabled={@props.disabled}
                                    defaultValue={@props.data.firstName}
                                    required />
                         </div>
                         <div className="form-group">
                             <label>Last name</label>
-                            <input type="text" 
-                                   name="lastName" 
+                            <input type="text"
+                                   name="lastName"
                                    ref="lastName"
                                    className="form-control"
-                                   placeholder="Last name" 
+                                   placeholder="Last name"
                                    disabled={@props.disabled}
                                    defaultValue={@props.data.lastName}
                                    required />
                         </div>
                         <div className="form-group">
                             <label>Phone number</label>
-                            <input type="text" 
-                                   name="phoneNumber" 
+                            <input type="text"
+                                   name="phoneNumber"
                                    ref="phoneNumber"
                                    className="form-control"
-                                   placeholder="Phone number" 
+                                   placeholder="Phone number"
                                    disabled={@props.disabled}
                                    defaultValue={@props.data.phoneNumber}
                                    required />
                         </div>
                         <div className="form-group">
                             <label>Email</label>
-                            <input type="email" 
-                                   name="email" 
+                            <input type="email"
+                                   name="email"
                                    ref="email"
                                    className="form-control"
-                                   placeholder="Email" 
+                                   placeholder="Email"
                                    disabled={@props.disabled}
                                    defaultValue={@props.data.email} />
                         </div>
@@ -139,11 +139,11 @@ module.exports = React.createClass
                     <Col md={3}>
                         <div className="form-group">
                             <label>Note</label>
-                            <textarea name="note" 
+                            <textarea name="note"
                                       ref="note"
                                       rows=5
                                       className="form-control"
-                                      disabled={@props.disabled} 
+                                      disabled={@props.disabled}
                                       defaultValue={@props.data.note}>
                             </textarea>
                         </div>
@@ -152,19 +152,19 @@ module.exports = React.createClass
                         <div className="form-group">
                             <label>Tags</label>
                             <AutocompleteInput
-                                pending={@state.pending.autocomplete} 
-                                onChange={@handleOnChange} 
+                                pending={@state.pending.autocomplete}
+                                onChange={@handleOnChange}
                                 onSelect={@handleOnSelect}
                                 options={@state.tags.search} />
                             <div className="cleaner" />
                             <ul>{tags}</ul>
                         </div>
-                        
+
                     </Col>
                 </Row>
                 <Row>
                     <Col md={3}>
-                        <LaddaButton 
+                        <LaddaButton
                             active={@props.pending}
                             style="expand-right">
                             <button>{@props.submitTitle}</button>

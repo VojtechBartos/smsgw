@@ -8,7 +8,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 UserStore = require '../../stores/UserStore.coffee'
-UserActions = require '../../actions/UserActions.coffee'
+UserActions = require '../../actions/UserActions'
 # components
 FlashMessages = require '../components/flash-messages.coffee'
 ResetPasswordForm = require './forms/reset-password-form.coffee'

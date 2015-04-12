@@ -8,14 +8,14 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-ApplicationActions = require '../../../../actions/ApplicationActions.coffee'
+ApplicationActions = require '../../../../actions/ApplicationActions'
 ApplicationStore = require '../../../../stores/ApplicationStore.coffee'
 # components
 Table = require './../components/table.coffee'
 Spinner = require '../../../components/spinner.coffee'
 
 module.exports = React.createClass
-    
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
@@ -55,18 +55,18 @@ module.exports = React.createClass
 
     handleDeleteAction: (app) ->
         @setState pending: yes
-        ApplicationActions.delete app.uuid
+        ApplicationActions.del app.uuid
 
     render: ->
         return <Spinner fullscreen={yes} /> if @state.pending
 
         <div id="context">
             <h1>
-                Applications ({@state.applications.length}) 
+                Applications ({@state.applications.length})
                 <Link to="application-add">Add</Link>
             </h1>
-            <Table 
-                options={@state.table.options} 
-                items={@state.applications} 
+            <Table
+                options={@state.table.options}
+                items={@state.applications}
                 actions={@state.table.actions} />
         </div>

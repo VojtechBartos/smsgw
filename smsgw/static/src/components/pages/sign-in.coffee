@@ -9,7 +9,7 @@ React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
 UserStore = require '../../stores/UserStore.coffee'
-UserActions = require '../../actions/UserActions.coffee'
+UserActions = require '../../actions/UserActions'
 # components
 SignInForm = require './forms/sign-in-form.coffee'
 FlashMessages = require '../components/flash-messages.coffee'

@@ -8,7 +8,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-UserActions = require '../../../../actions/UserActions.coffee'
+UserActions = require '../../../../actions/UserActions'
 UserStore = require '../../../../stores/UserStore.coffee'
 # components
 Subheader = require './../components/sub-header.coffee'
@@ -16,13 +16,13 @@ Table = require './../components/table.coffee'
 Spinner = require '../../../components/spinner.coffee'
 
 module.exports = React.createClass
-      
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
         pending: no
         users: UserStore.getAll()
-        table: 
+        table:
             options: [
                 label: "Last name", key: "lastName"
             ,
@@ -63,7 +63,7 @@ module.exports = React.createClass
 
     handleDeleteAction: (template) ->
         @setState pending: yes
-        UserActions.delete template.uuid
+        UserActions.del template.uuid
 
     render: ->
         return <Spinner fullscreen={yes} /> if @state.pending
@@ -71,11 +71,11 @@ module.exports = React.createClass
         <div>
             <div id="context">
                 <h1>
-                    Users ({@state.users.length}) 
+                    Users ({@state.users.length})
                 </h1>
-                <Table 
-                    options={@state.table.options} 
-                    items={@state.users} 
+                <Table
+                    options={@state.table.options}
+                    items={@state.users}
                     actions={@state.table.actions} />
             </div>
         </div>

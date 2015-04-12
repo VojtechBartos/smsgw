@@ -7,7 +7,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-ApplicationActions = require '../../../../actions/ApplicationActions.coffee'
+ApplicationActions = require '../../../../actions/ApplicationActions'
 ApplicationStore = require '../../../../stores/ApplicationStore.coffee'
 # components
 ApplicationForm = require './form.coffee'

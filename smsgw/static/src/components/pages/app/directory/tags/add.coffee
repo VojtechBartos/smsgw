@@ -7,7 +7,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 
 React = require 'react'
 Router = require 'react-router'
-TagActions = require '../../../../../actions/TagActions.coffee'
+TagActions = require '../../../../../actions/TagActions'
 TagStore = require '../../../../../stores/TagStore.coffee'
 # components
 TagForm = require './form.coffee'

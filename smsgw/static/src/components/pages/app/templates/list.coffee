@@ -8,7 +8,7 @@ http://arcturo.github.io/library/coffeescript/07_the_bad_parts.html
 React = require 'react'
 Router = require 'react-router'
 Link = Router.Link
-TemplateActions = require '../../../../actions/TemplateActions.coffee'
+TemplateActions = require '../../../../actions/TemplateActions'
 TemplateStore = require '../../../../stores/TemplateStore.coffee'
 # components
 Subheader = require './../components/sub-header.coffee'
@@ -16,13 +16,13 @@ Table = require './../components/table.coffee'
 Spinner = require '../../../components/spinner.coffee'
 
 module.exports = React.createClass
-      
+
     mixins: [ Router.Navigation ]
 
     getInitialState: ->
         pending: no
         templates: []
-        table: 
+        table:
             options: [
                 label: "Label", key: "label"
             ,
@@ -56,7 +56,7 @@ module.exports = React.createClass
 
     handleDeleteAction: (template) ->
         @setState pending: yes
-        TemplateActions.delete template.uuid
+        TemplateActions.del template.uuid
 
     render: ->
         return <Spinner fullscreen={yes} /> if @state.pending
@@ -64,12 +64,12 @@ module.exports = React.createClass
         <div>
             <div id="context">
                 <h1>
-                    Templates ({@state.templates.length}) 
+                    Templates ({@state.templates.length})
                     <Link to="template-add">Add</Link>
                 </h1>
-                <Table 
-                    options={@state.table.options} 
-                    items={@state.templates} 
+                <Table
+                    options={@state.table.options}
+                    items={@state.templates}
                     actions={@state.table.actions} />
             </div>
         </div>

@@ -17,7 +17,7 @@ Wrapper = require './components/wrapper.coffee'
 Spinner = require './components/spinner.coffee'
 # stores
 UserStore = require '../stores/UserStore.coffee'
-UserActions = require '../actions/UserActions.coffee'
+UserActions = require '../actions/UserActions'
 
 module.exports = React.createClass
 
