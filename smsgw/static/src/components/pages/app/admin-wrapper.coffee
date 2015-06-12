@@ -9,11 +9,11 @@ React = require 'react'
 Router = require 'react-router'
 UserStore = require '../../../stores/UserStore.coffee'
 # components
-Wrapper = require '../../components/wrapper.coffee'
+Wrapper = require '../../components/wrapper'
 
 module.exports = React.createClass
 
-    mixins: [ Router.Navigation ] 
+    mixins: [ Router.Navigation ]
 
     getInitialState: ->
         user: UserStore.me()
@@ -26,7 +26,7 @@ module.exports = React.createClass
         UserStore.removeChangeListener @handleChange
 
     handleChange: ->
-        @redirectIfIsNotAdmin()        
+        @redirectIfIsNotAdmin()
 
     redirectIfIsNotAdmin: ->
         if @state.user and @state.user.role != 'admin'

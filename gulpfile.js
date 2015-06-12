@@ -14,7 +14,7 @@ var isDevelopment = true;
  */
 gulp.task('webpack', function() {
   gulp
-    .src('./smsgw/static/src/app.js')
+    .src('./smsgw/static/src/main.js')
     .pipe(gulpWebpack({
       cache: (isDevelopment),
       watch: (isDevelopment),

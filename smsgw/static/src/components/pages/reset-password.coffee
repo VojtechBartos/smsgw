@@ -10,7 +10,7 @@ Router = require 'react-router'
 UserStore = require '../../stores/UserStore.coffee'
 UserActions = require '../../actions/UserActions'
 # components
-FlashMessages = require '../components/flash-messages.coffee'
+FlashMessages = require '../components/flash-messages'
 ResetPasswordForm = require './forms/reset-password-form.coffee'
 SendEmailForm = require './forms/send-email-form.coffee'
 

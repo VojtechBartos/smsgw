@@ -10,6 +10,7 @@
   "dependencies": {
     "flux": "^2.0.0",
     "react": "~0.13.1",
+    "react-pure-render": "^1.0.1",
     "react-tools": "~0.13.1",
     "react-router": "~0.13.2",
     "react-ladda": "~2.0.2",
@@ -20,7 +21,11 @@
     "bluebird": "~2.9.6",
     "object-assign": "~2.0.0",
     "lodash": "~3.9.1",
-    "moment": "~2.10.2"
+    "moment": "~2.10.2",
+
+    "eventemitter3": "~1.1.0",
+    "immutable": "~3.7.3",
+    "randomstring": "~1.0.5"
   },
   "devDependencies": {
     "coffee-script": "~1.9.0",

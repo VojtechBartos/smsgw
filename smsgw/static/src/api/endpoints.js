@@ -13,8 +13,8 @@ export var users = {
   create: () => `${BASE}/users/`,
   get: uuid => `${BASE}/users/${uuid}/`,
   resetPassword: uuid => `${BASE}/users/reset-password/${uuid}/`,
-  update: uuid => this.get(uuid),
-  delete: uuid => this.get(uuid)
+  update: uuid => `${BASE}/users/${uuid}/`,
+  delete: uuid => `${BASE}/users/${uuid}/`
 };
 
 /**
@@ -25,8 +25,8 @@ export var contacts = {
   index: (user = "@me") => `${BASE}/users/${user}/contacts/`,
   create: (user = "@me") => `${BASE}/users/${user}/contacts/`,
   get: (uuid, user = "@me") => `${BASE}/users/${user}/contacts/${uuid}/`,
-  update: (uuid, user = "@me") => this.get(uuid, user),
-  delete: (uuid, user = "@me") => this.get(uuid, user)
+  update: (uuid, user = "@me") => `${BASE}/users/${user}/contacts/${uuid}/`,
+  delete: (uuid, user = "@me") => `${BASE}/users/${user}/contacts/${uuid}/`
 };
 
 /**
@@ -37,8 +37,8 @@ export var templates = {
   index: (user = "@me") => `${BASE}/users/${user}/templates/`,
   create: (user = "@me") => `${BASE}/users/${user}/templates/`,
   get: (uuid, user = "@me") => `${BASE}/users/${user}/templates/${uuid}/`,
-  update: (uuid, user = "@me") => this.get(uuid, user),
-  delete: (uuid, user = "@me") => this.get(uuid, user)
+  update: (uuid, user = "@me") => `${BASE}/users/${user}/templates/${uuid}/`,
+  delete: (uuid, user = "@me") => `${BASE}/users/${user}/templates/${uuid}/`
 };
 
 /**
@@ -49,8 +49,8 @@ export var tags = {
   index: (user = "@me") => `${BASE}/users/${user}/tags/`,
   create: (user = "@me") => `${BASE}/users/${user}/tags/`,
   get: (uuid, user = "@me") => `${BASE}/users/${user}/tags/${uuid}/`,
-  update: (uuid, user = "@me") => this.get(uuid, user),
-  delete: (uuid, user = "@me") => this.get(uuid, user)
+  update: (uuid, user = "@me") => `${BASE}/users/${user}/tags/${uuid}/`,
+  delete: (uuid, user = "@me") => `${BASE}/users/${user}/tags/${uuid}/`
 };
 
 /**
@@ -64,8 +64,8 @@ export var applications = {
   regenerate: (uuid, user = "@me") => {
     return `${BASE}/users/${user}/applications/${uuid}/regenerate/`
   },
-  update: (uuid, user = "@me") => this.get(uuid, user),
-  delete: (uuid, user = "@me") => this.get(uuid, user)
+  update: (uuid, user = "@me") => `${BASE}/users/${user}/applications/${uuid}/`,
+  delete: (uuid, user = "@me") => `${BASE}/users/${user}/applications/${uuid}/`
 };
 
 /**
@@ -75,6 +75,6 @@ export var applications = {
 export var outbox = {
   index: (user = "@me") => `${BASE}/users/${user}/outbox/`,
   get: (uuid, user = "@me") => `${BASE}/users/${user}/outbox/${uuid}/`,
-  update: (uuid, user = "@me") => this.get(uuid, user),
-  delete: (uuid, user = "@me") => this.get(uuid, user)
+  update: (uuid, user = "@me") => `${BASE}/users/${user}/outbox/${uuid}/`,
+  delete: (uuid, user = "@me") => `${BASE}/users/${user}/outbox/${uuid}/`
 };
