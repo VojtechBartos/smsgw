@@ -10,7 +10,7 @@ import Component from '../../../../../lib/component';
 import FlashMessages from '../../../../components/flash-messages';
 import Subheader from '../../components/sub-header';
 import Spinner from '../../../../components/spinner';
-import Form from './form.coffee';
+import Form from './form';
 
 class Edit extends Component {
 

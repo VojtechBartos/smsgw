@@ -6,7 +6,7 @@ import {create} from '../../../../../actions/contacts';
 import Component from '../../../../../lib/component';
 import FlashMessages from '../../../../components/flash-messages';
 import Subheader from '../../components/sub-header';
-import Form from './form.coffee';
+import Form from './form';
 
 class Add extends Component {
 

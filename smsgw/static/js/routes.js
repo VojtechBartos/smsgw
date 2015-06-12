@@ -14,7 +14,7 @@ import App from './components/app';
 import Wrapper from './components/components/wrapper';
 import SignIn from './components/pages/sign-in';
 import SignUp from './components/pages/sign-up';
-import ResetPassword from './components/pages/reset-password.coffee';
+// import ResetPassword from './components/pages/reset-password.coffee';
 import Dashboard from './components/pages/app/dashboard';
 import Messages from './components/pages/app/messages';
 import Settings from './components/pages/app/settings';
@@ -46,7 +46,7 @@ import TagsList from './components/pages/app/directory/tags/list';
 import TagsAdd from './components/pages/app/directory/tags/add';
 import TagsEdit from './components/pages/app/directory/tags/edit';
 // users
-import AdminWrapper from './components/pages/app/admin-wrapper.coffee';
+import AdminWrapper from './components/pages/app/admin-wrapper';
 import UsersList from './components/pages/app/users/list';
 
 
@@ -58,7 +58,6 @@ export default (
 
     <Route name="sign-in" path="sign/in" handler={SignIn} />
     <Route name="sign-up" path="sign/up" handler={SignUp} />
-    <Route name="reset-password" path="reset-password/:token?" handler={ResetPassword} />
     <Route handler={AppPages}>
        <Route name="dashboard" handler={Dashboard} />
        <Route name="applications" handler={Wrapper}>
