@@ -1,7 +1,7 @@
 'use strict';
 
 import flux from 'flux';
-import {flash} from './actions/flashMessages';
+import {flash} from './flashMessages/actions';
 import {pendingActionsCursor} from './state';
 
 class Dispatcher extends flux.Dispatcher {

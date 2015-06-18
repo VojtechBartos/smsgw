@@ -10,90 +10,94 @@ import {
 } from 'react-router';
 
 // pages
-import App from './components/app';
-import Wrapper from './components/components/wrapper';
-import SignIn from './components/pages/sign-in';
-import SignUp from './components/pages/sign-up';
-// import ResetPassword from './components/pages/reset-password.coffee';
-import Dashboard from './components/pages/app/dashboard';
-import Messages from './components/pages/app/messages';
-import Settings from './components/pages/app/settings';
-import AppPages from './components/pages/app';
-// messages
-import MessagesWrapper from './components/pages/app/messages/wrapper';
-import MessagesSent from './components/pages/app/messages/sent';
-import MessagesOutbox from './components/pages/app/messages/outbox';
-import MessagesCompose from './components/pages/app/messages/compose';
-// applications
-import ApplicationsList from './components/pages/app/applications/list';
-import ApplicationsAdd from './components/pages/app/applications/add';
-import ApplicationsShowWrapper from './components/pages/app/applications/wrapper';
-import ApplicationsShowSettings from './components/pages/app/applications/show/settings';
-import ApplicationsShowOverview from './components/pages/app/applications/show/overview';
-import ApplicationsShowSentMessages from './components/pages/app/applications/show/sent-messages';
-import ApplicationsShowReceivedMessages from './components/pages/app/applications/show/received-messages';
+import Wrapper from './components/wrapper.react';
+import Main from './app/main.react';
+import Signin from './pages/signin.react';
+import Signup from './pages/signup.react';
+import App from './app/app.react';
+import Dashboard from './pages/dashboard.react';
+import Settings from './pages/settings.react';
+import Directory from './pages/directory.react';
 // templates
-import TemplatesList from './components/pages/app/templates/list';
-import TemplatesAdd from './components/pages/app/templates/add';
-import TemplatesEdit from './components/pages/app/templates/edit';
+import Templates from './templates/list.react';
+import TemplatesAdd from './templates/add.react';
+import TemplatesEdit from './templates/edit.react';
 // contacts
-import DirectoryWrapper from './components/pages/app/directory/wrapper';
-import ContactsList from './components/pages/app/directory/contacts/list';
-import ContactsAdd from './components/pages/app/directory/contacts/add';
-import ContactsEdit from './components/pages/app/directory/contacts/edit';
+import Contacts from './contacts/list.react';
+import ContactsAdd from './contacts/add.react';
+import ContactsEdit from './contacts/edit.react';
 // tags
-import TagsList from './components/pages/app/directory/tags/list';
-import TagsAdd from './components/pages/app/directory/tags/add';
-import TagsEdit from './components/pages/app/directory/tags/edit';
+import Tags from './tags/list.react';
+import TagsAdd from './tags/add.react';
+import TagsEdit from './tags/edit.react';
+// messages
+import Messages from './pages/messages.react';
+import MessagesSent from './messages/sent.react';
+import MessagesCompose from './messages/compose.react';
+import Outbox from './outbox/list.react';
 // users
-import AdminWrapper from './components/pages/app/admin-wrapper';
-import UsersList from './components/pages/app/users/list';
-
+import Admin from './pages/admin.react';
+import Users from './users/list.react';
+// applications
+import Applications from './applications/list.react';
+import ApplicationsAdd from './applications/add.react';
+import ApplicationsWrapper from './applications/wrapper.react';
+import ApplicationsSettings from './applications/settings.react';
+import ApplicationsOverview from './applications/overview.react';
+import ApplicationsSent from './applications/sent.react';
+import ApplicationsReceived from './applications/received.react';
 
 export default (
-  <Route handler={App} path="/">
+  <Route handler={Main} path="/">
     <Redirect from="/" to="dashboard" />
     <Redirect from="directory" to="contacts" />
     <Redirect from="messages" to="messages-outbox" />
 
-    <Route name="sign-in" path="sign/in" handler={SignIn} />
-    <Route name="sign-up" path="sign/up" handler={SignUp} />
-    <Route handler={AppPages}>
-       <Route name="dashboard" handler={Dashboard} />
-       <Route name="applications" handler={Wrapper}>
-          <DefaultRoute handler={ApplicationsList} />
-          <Route name="application-add" path="add" handler={ApplicationsAdd} />
-          <Route name="application" path=":uuid" handler={ApplicationsShowWrapper}>
-            <Route name="application-overview" path="overview" handler={ApplicationsShowOverview} />
-            <Route name="application-settings" path="settings" handler={ApplicationsShowSettings} />
-            <Route name="application-sent-messages" path="sent-messages" handler={ApplicationsShowSentMessages} />
-            <Route name="application-received-messages" path="received-messages" handler={ApplicationsShowReceivedMessages} />
-            </Route>
-        </Route>
-        <Route name="messages" handler={MessagesWrapper}>
-          <Route name="messages-sent" path="sent" handler={MessagesSent} />
-          <Route name="messages-outbox" path="outbox" handler={MessagesOutbox} />
-          <Route name="compose" path="compose" handler={MessagesCompose} />
-        </Route>
-        <Route name="directory" handler={Wrapper}>
-          <Route handler={DirectoryWrapper}>
-            <Route name="contacts" path="contacts" handler={ContactsList} />
-            <Route name="tags" path="tags" handler={TagsList} />
+    <Route name="signin" path="sign/in" handler={Signin} />
+    <Route name="signup" path="sign/up" handler={Signup} />
+
+    <Route handler={App}>
+      <Route name="dashboard" handler={Dashboard} />
+
+      <Route name="applications" handler={Wrapper}>
+        <DefaultRoute handler={Applications} />
+        <Route name="application-add" path="add" handler={ApplicationsAdd} />
+        <Route name="application" path=":uuid" handler={ApplicationsWrapper}>
+          <Route name="application-overview" path="overview" handler={ApplicationsOverview} />
+          <Route name="application-settings" path="settings" handler={ApplicationsSettings} />
+          <Route name="application-sent-messages" path="sent-messages" handler={ApplicationsSent} />
+          <Route name="application-received-messages" path="received-messages" handler={ApplicationsReceived} />
           </Route>
-          <Route name="contact-add" path="contacts/add" handler={ContactsAdd} />
-          <Route name="contact-edit" path="contacts/:uuid" handler={ContactsEdit} />
-          <Route name="tag-add" path="tags/add" handler={TagsAdd} />
-          <Route name="tag-edit" path="tags/:uuid" handler={TagsEdit} />
+      </Route>
+
+      <Route name="messages" handler={Messages}>
+        <Route name="messages-sent" path="sent" handler={MessagesSent} />
+        <Route name="messages-outbox" path="outbox" handler={Outbox} />
+        <Route name="compose" path="compose" handler={MessagesCompose} />
+      </Route>
+
+      <Route name="templates" handler={Wrapper}>
+        <DefaultRoute handler={Templates} />
+        <Route name="template-add" path="add" handler={TemplatesAdd} />
+        <Route name="template-edit" path=":uuid" handler={TemplatesEdit} />
+      </Route>
+
+      <Route name="directory" handler={Wrapper}>
+        <Route handler={Directory}>
+          <Route name="contacts" path="contacts" handler={Contacts} />
+          <Route name="tags" path="tags" handler={Tags} />
         </Route>
-        <Route name="settings" handler={Settings} />
-        <Route name="templates" handler={Wrapper}>
-          <DefaultRoute handler={TemplatesList} />
-          <Route name="template-add" path="add" handler={TemplatesAdd} />
-          <Route name="template-edit" path=":uuid" handler={TemplatesEdit} />
-        </Route>
-        <Route name="users" handler={AdminWrapper}>
-          <DefaultRoute handler={UsersList} />
-        </Route>
+        <Route name="contact-add" path="contacts/add" handler={ContactsAdd} />
+        <Route name="contact-edit" path="contacts/:uuid" handler={ContactsEdit} />
+        <Route name="tag-add" path="tags/add" handler={TagsAdd} />
+        <Route name="tag-edit" path="tags/:uuid" handler={TagsEdit} />
+      </Route>
+
+      <Route name="settings" handler={Settings} />
+
+      <Route name="users" handler={Admin}>
+        <DefaultRoute handler={Users} />
+      </Route>
     </Route>
   </Route>
 )
