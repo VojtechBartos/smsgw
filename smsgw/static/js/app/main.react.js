@@ -4,7 +4,6 @@ import React from 'react';
 import {RouteHandler} from 'react-router';
 import * as appState from '../state';
 import Component from '../components/component.react';
-import Wrapper from '../components/wrapper.react';
 
 // import stores
 import '../users/store';
