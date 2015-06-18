@@ -33,7 +33,8 @@ class Default(object):
     CELERY_IMPORTS = ("smsgw.tasks.callback", "smsgw.tasks.mail")
     CELERY_TIMEZONE = 'UTC'
     CELERY_BROKER_URL = "amqp://"
-    CELERY_RESULT_BACKEND = "amqp"
+    CELERY_RESULT_BACKEND = None
+    CELERY_IGNORE_RESULT = True
     CELERY_QUEUES = (Queue('callbacks', routing_key='callbacks'),
                      Queue('mails', routing_key='mails'))
     CELERYBEAT_SCHEDULE = None
