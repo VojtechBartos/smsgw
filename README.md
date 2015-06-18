@@ -6,6 +6,8 @@ master thesis **IN DEVELOPMENT**
 
 ## TODO's
 
+- React
+  - autobinding at the component
 - DevOps
-    - ~~add vagrant setup~~
-    - write installation steps
+  - ~~add vagrant setup~~
+  - write installation steps

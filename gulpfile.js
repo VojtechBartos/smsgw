@@ -14,7 +14,7 @@ var isDevelopment = true;
  */
 gulp.task('webpack', function() {
   gulp
-    .src('./smsgw/static/src/app.js')
+    .src('./smsgw/static/js/main.js')
     .pipe(gulpWebpack({
       cache: (isDevelopment),
       watch: (isDevelopment),
@@ -24,11 +24,6 @@ gulp.task('webpack', function() {
       },
       module: {
         loaders: [
-          {
-            test: /\.coffee$/,
-            exclude: /node_modules/,
-            loaders: ['coffee', 'cjsx']
-          },
           {
             test: /\.js$/,
             exclude: /node_modules/,

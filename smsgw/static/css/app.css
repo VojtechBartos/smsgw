@@ -15,6 +15,7 @@ body {
 
 /* Utils */
 .cleaner { clear: both; }
+.wrapper { position: relative; height: 100%; width: 100%; }
 
 /* General */
 .margin-top-25 { margin-top: 25px; }
@@ -46,7 +47,7 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 /* Loading */
 
 #smsgw { position: relative; width: 100%; height: 100%; }
-#smsgw > div { position: relative; width: 100%; height: 100%; }
+/*#smsgw > div { position: relative; width: 100%; height: 100%; }*/
 
 /* Sign in/up and reset password */
 #sign { width: 300px; margin: 0 auto 0 auto; padding: 11% 0 0 0; }
@@ -106,6 +107,6 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 #context .tags { float: left; width: 250px; margin-left: 40px; }
 #context .tags .autocomplete { float: left; position: relative; }
 #context .tags .autocomplete input { float: left; width: 180px; }
-#context .tags .autocomplete .throbber { float: right; width: 32px; height: 32px; margin-top: 5px; background: url('/images/throbber.gif') no-repeat; } 
+#context .tags .autocomplete .throbber { float: right; width: 32px; height: 32px; margin-top: 5px; background: url('/images/throbber.gif') no-repeat; }
 #context .tags .autocomplete ul.options { position: absolute; top: 47px; max-height: 300px; width: 212px; z-index: 10; padding: 0; margin: 0; background: #ffffff; list-style: none; border: 1px solid #e5e5e5; border-top: 0; }
 #context .tags .autocomplete ul.options li { float: left; width: 202px; margin: 0; padding: 5px; cursor: pointer; border-bottom: 1px solid #e5e5e5; }

@@ -32,7 +32,7 @@ class AuthResource(FlaskView):
         user = User.query.filter_by(email=data['email']).first()
         if user is None or user.compare_password(data['password']) is False:
             raise ErrorResource(
-                403, 
+                403,
                 message="Invalid password or email."
             )
 
@@ -55,6 +55,6 @@ class AuthResource(FlaskView):
 
         # create payload response
         return response({
-            'token': token.token,
-            'email': user.email
+            'uuid': user.uuid,
+            'token': token.token
         }, status_code=200)
