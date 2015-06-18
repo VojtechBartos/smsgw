@@ -8,7 +8,7 @@ from smsgw.extensions import db
 
 
 class AuthResourceTest(SmsgwIntegrationTestCase):
-    
+
     LOGIN_URN = '/api/1.0/auth/login/'
 
     def test_login_endpoint(self):
@@ -19,7 +19,7 @@ class AuthResourceTest(SmsgwIntegrationTestCase):
         self.assert400(res)
 
         # invalid email format
-        res = self.post(self.LOGIN_URN, 
+        res = self.post(self.LOGIN_URN,
                         data=datasets.login.INVALID_EMAIL_FORMAT)
         self.assert400(res)
 
@@ -35,7 +35,6 @@ class AuthResourceTest(SmsgwIntegrationTestCase):
         res = self.post(self.LOGIN_URN, data=datasets.login.VALID)
         self.assert200(res)
         self.assertIsNotNone(res.json['data']['token'])
-        self.assertEqual(res.json['data']['email'], datasets.login.VALID['email'])
 
         # wrong password
         res = self.post(self.LOGIN_URN, data=datasets.login.INVALID)
