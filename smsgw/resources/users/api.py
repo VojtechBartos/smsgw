@@ -36,7 +36,7 @@ class UsersResource(FlaskView):
         """
         return response(user.to_dict())
 
-    @decorators.jsonschema_validate(payload=post.schema)
+    @decorators.jsonschema_validate(post.schema)
     def post(self):
         """
         Creating new user
@@ -129,7 +129,7 @@ class UsersResource(FlaskView):
 
     @route('/<uuid:user_uuid>/', methods=['PUT'])
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=put.schema)
+    @decorators.jsonschema_validate(put.schema)
     def put(self, user, **kwargs):
         """
         Updating exiting user

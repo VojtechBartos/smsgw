@@ -24,7 +24,7 @@ class ContactsResource(FlaskView):
         """
         user = kwargs.get('user')
 
-        return response([contact.to_dict() 
+        return response([contact.to_dict()
                          for contact in user.contacts.all()])
 
     @route('/<uuid:contact_uuid>/')
@@ -37,7 +37,7 @@ class ContactsResource(FlaskView):
         return response(contact.to_dict())
 
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=post.schema)
+    @decorators.jsonschema_validate(post.schema)
     def post(self, **kwargs):
         """
         Creating user contact
@@ -55,7 +55,7 @@ class ContactsResource(FlaskView):
 
     @route('/<uuid:contact_uuid>/', methods=['PUT'])
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=put.schema)
+    @decorators.jsonschema_validate(put.schema)
     def put(self, **kwargs):
         """
         Updating user contact
@@ -65,7 +65,7 @@ class ContactsResource(FlaskView):
         # save to db
         contact.update(request.json)
         db.session.commit()
- 
+
         return response(contact.to_dict())
 
     @route('/<uuid:contact_uuid>/', methods=['DELETE'])
@@ -73,7 +73,7 @@ class ContactsResource(FlaskView):
     def delete(self, **kwargs):
         """
         Delete user contact
-        """      
+        """
         contact = kwargs.get('contact')
 
         # delete template

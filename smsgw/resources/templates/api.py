@@ -49,7 +49,7 @@ class TemplatesResource(FlaskView):
         })
 
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=post.schema)
+    @decorators.jsonschema_validate(post.schema)
     def post(self, **kwargs):
         """
         Creating new user template
@@ -73,7 +73,7 @@ class TemplatesResource(FlaskView):
 
     @route('/<uuid:template_uuid>/', methods=['PUT'])
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=put.schema)
+    @decorators.jsonschema_validate(put.schema)
     def put(self, **kwargs):
         """
         Updateing existing template
@@ -81,7 +81,7 @@ class TemplatesResource(FlaskView):
         template = kwargs.get('template')
         template.update(request.json)
         db.session.commit()
- 
+
         return response({
             'uuid': template.uuid,
             'label': template.label,
@@ -94,7 +94,7 @@ class TemplatesResource(FlaskView):
     def delete(self, **kwargs):
         """
         Delete template
-        """        
+        """
         # delete template
         template = kwargs.get('template')
         db.session.delete(template)

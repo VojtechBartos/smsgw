@@ -20,7 +20,7 @@ class AuthResource(FlaskView):
     route_base = '/auth/'
 
     @route('/login/', methods=['POST'])
-    @decorators.jsonschema_validate(payload=login.schema)
+    @decorators.jsonschema_validate(login.schema)
     def login(self):
         """
         """

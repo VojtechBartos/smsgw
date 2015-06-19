@@ -45,7 +45,7 @@ class TagsResource(FlaskView):
         return response(tag.to_dict())
 
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=post.schema)
+    @decorators.jsonschema_validate(post.schema)
     def post(self, **kwargs):
         """
         Creating user tag
@@ -64,7 +64,7 @@ class TagsResource(FlaskView):
 
     @route('/<uuid:tag_uuid>/', methods=['PUT'])
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=put.schema)
+    @decorators.jsonschema_validate(put.schema)
     def put(self, **kwargs):
         """
         Updating user tag

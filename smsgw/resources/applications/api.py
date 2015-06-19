@@ -26,7 +26,7 @@ class ApplicationsResource(FlaskView):
         """
         user = kwargs.get('user')
 
-        return response([app.to_dict() 
+        return response([app.to_dict()
                          for app in user.applications.all()])
 
     @route('/<uuid:application_uuid>/')
@@ -39,7 +39,7 @@ class ApplicationsResource(FlaskView):
         return response(application.to_dict())
 
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=post.schema)
+    @decorators.jsonschema_validate(post.schema)
     def post(self, **kwargs):
         """
         Creating new user application
@@ -59,7 +59,7 @@ class ApplicationsResource(FlaskView):
 
     @route('/<uuid:application_uuid>/', methods=['PUT'])
     @decorators.auth()
-    @decorators.jsonschema_validate(payload=put.schema)
+    @decorators.jsonschema_validate(put.schema)
     def put(self, **kwargs):
         """
         Updateing existing application
@@ -71,7 +71,7 @@ class ApplicationsResource(FlaskView):
         except IntegrityError, e:
             db.session.rollback()
             raise ErrorResource(409, message="Prefix  is already exists.")
- 
+
         return response(application.to_dict())
 
     @route('/<uuid:application_uuid>/regenerate/', methods=['PUT'])
@@ -91,7 +91,7 @@ class ApplicationsResource(FlaskView):
     def delete(self, **kwargs):
         """
         Delete user application
-        """      
+        """
         application = kwargs.get('application')
 
         # delete template
