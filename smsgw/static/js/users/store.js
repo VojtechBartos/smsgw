@@ -20,15 +20,10 @@ export function getLoggedIn() {
  */
 export const dispatchToken = Dispatcher.register(({action, data, meta}) => {
   switch (action) {
+    case actions.update:
     case actions.getLoggedIn:
       data = _.extend(data, { isLoggedIn: true });
 
-      usersCursor(users => {
-        return users.set(data.uuid, new User(data));
-      });
-      break;
-
-    case actions.update:
       usersCursor(users => {
         return users.set(data.uuid, new User(data));
       });
