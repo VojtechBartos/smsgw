@@ -50,8 +50,12 @@ class ErrorResource(Exception):
 
         @app.errorhandler(ValidationError)
         def on_validation_error(error):
-            message = error.schema.get('message') or error.message
-            return response(None, status_code=400, message=message)
+            payload = None
+            message, errors = get_validation_data(error)
+            if errors is not None:
+                payload = { 'errors': errors }
+
+            return response(payload, status_code=400, message=message)
 
         @app.errorhandler(Exception)
         def on_unhandled_exception(error):
