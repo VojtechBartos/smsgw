@@ -15,7 +15,6 @@ class Dispatcher extends flux.Dispatcher {
 
   dispatchAsync(action, promise) {
     const name = action.toString();
-    const self = this;
 
     // pending property is defined lazily.
     if (!action.hasOwnProperty('pending'))
@@ -27,12 +26,12 @@ class Dispatcher extends flux.Dispatcher {
     return promise.then(body => {
       const {data, meta} = body
 
-      self.setPending(name, false);
+      this.setPending(name, false);
       super.dispatch({action, data, meta});
 
       return body;
     }).error(err => {
-      self.setPending(name, false);
+      this.setPending(name, false);
 
       super.dispatch({
         action: flash,
@@ -51,37 +50,6 @@ class Dispatcher extends flux.Dispatcher {
 
   isPending(name) {
     return pendingActionsCursor().has(name);
-  }
-
-
-
-
-
-
-  dispatchRequest(req, action) {
-    self = this
-    req.then(body => {
-      let data = body.data
-      let meta = body.meta
-
-      setTimeout(() => {
-        self.dispatch({
-          action: action,
-          success: true,
-          meta: meta,
-          data: data
-        })
-      })
-    }).error(err => {
-      action = action.split('_')
-      action = `${action[0]}_ERROR`
-
-      self.dispatch({
-        action: action,
-        success: false,
-        error: err
-      })
-    })
   }
 
 }
