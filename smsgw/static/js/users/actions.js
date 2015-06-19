@@ -85,9 +85,9 @@ export function update(uuid, data) {
  * @param {Object} data payload
  */
 export function resetPassword(uuid, data) {
-  let request = api.post(users.resetPasswprd(uuid), { data: data });
+  let request = api.post(users.resetPassword(uuid), { data: data });
 
-  return Dispatcher.dispatch(resetPasswprd, request);
+  return Dispatcher.dispatch(resetPassword, request);
 }
 
 /**
