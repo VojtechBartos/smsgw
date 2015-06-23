@@ -1,0 +1,8 @@
+- name: install python and rabbitmq server
+  apt: name={{ item }}
+  with_items:
+    - python
+    - python-dev
+    - python-setuptools
+    - python-virtualenv
+    - python-software-properties

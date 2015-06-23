@@ -5,54 +5,10 @@
     - name: upgrade all packages to latest version and update cache
       apt: upgrade=dist update_cache=yes
 
-    - name: installing general packages
-      apt: name={{ item }}
-      with_items:
-        - sendmail-bin
-        - sendmail
-        - g++
-        - make
-        - vim
-        - git-core
-        - cmake
-
-    - name: install nginx
-      apt: name=nginx
-
-    - name: install python and rabbitmq server
-      apt: name={{ item }}
-      with_items:
-        - python
-        - python-dev
-        - python-setuptools
-        - python-virtualenv
-        - python-software-properties
-        - rabbitmq-server
-
-    # supervisor
-    - name: install supervisor
-      apt: name=supervisor
-
-    # nodejs
-    - shell: curl -sL https://deb.nodesource.com/setup | bash -
-    - apt: name=nodejs
-    - npm: name=webpack global=yes
-    - npm: name=jest-cli global=yes
-    - npm: name=babel global=yes
-    - npm: name=gulp global=yes
-
-    # mariadb
-    - apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
-    - apt_repository: repo='deb http://mirror.vpsfree.cz/mariadb/repo/5.5/debian wheezy main'
-    - apt: update_cache=yes
-    - apt: name=mariadb-server
-    - apt: name=libmariadbclient-dev
-
-    # gammu
-    - git: repo=https://github.com/gammu/gammu.git
-           dest=/tmp/gammu
-           version=1.34.0
-    - shell: ./configure chdir=/tmp/gammu
-    - shell: make chdir=/tmp/gammu
-    - shell: make install chdir=/tmp/gammu
-
+    - include: tasks/common.yml
+    - include: tasks/nginx.yml
+    - include: tasks/rabbitmq.yml
+    - include: tasks/supervisor.yml
+    - include: tasks/mariadb.yml
+    - include: tasks/python.yml
+    - include: tasks/gammu.yml
