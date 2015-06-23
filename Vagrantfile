@@ -13,5 +13,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     config.vm.synced_folder "./", "/smsgw/",
       rsync__auto: true,
-      rsync__exclude: [".git/", "node_modules/", "venv/", "smsgw/static/build/"]
+      rsync__exclude: [".git/", "node_modules/", "venv/"]
 end
