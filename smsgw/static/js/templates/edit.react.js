@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-import React from 'react'
+import React from 'react';
 import Immutable from 'immutable';
 import * as store from './store';
 import * as actions from './actions';
@@ -18,7 +18,7 @@ class Edit extends Component {
       flash(err.message);
 
       this.redirectToList();
-    })
+    });
   }
 
   uuid() {
@@ -28,11 +28,10 @@ class Edit extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const form = this.refs.templateForm;
-    if (form.isValid()) {
+    if (form.isValid())
       actions.update(this.uuid(), form.getData()).then(() => {
         flash('Successfuly saved.');
       });
-    }
   }
 
   redirectToList() {
@@ -43,9 +42,8 @@ class Edit extends Component {
     const messages = this.props.flashMessages;
     const template = store.get(this.uuid());
 
-    if (actions.get.pending || !template) {
+    if (actions.get.pending || !template)
       return <Spinner fullscreen={true} />;
-    }
 
     return (
       <div>

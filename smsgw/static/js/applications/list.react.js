@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -25,9 +25,8 @@ class List extends Component {
   }
 
   render() {
-    if (actions.getAll.pending || actions.remove.pending) {
+    if (actions.getAll.pending || actions.remove.pending)
       return <Spinner fullscreen={true} />;
-    }
 
     const apps = this.props.applications;
     const table = {

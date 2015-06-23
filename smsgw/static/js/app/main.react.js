@@ -37,15 +37,15 @@ export default class Main extends Component {
   componentDidMount() {
     // event listener on app state change
     appState.state.on('change', () => {
-      console.time('app render');
+      console.time('app render'); // eslint-disable-line no-console
       this.setState(this.getState(), () => {
-        console.timeEnd('app render');
+        console.timeEnd('app render'); // eslint-disable-line no-console
       });
     });
   }
 
   render() {
-    return <RouteHandler {...this.state} router={this.context.router} />
+    return <RouteHandler {...this.state} router={this.context.router} />;
   }
 
 }

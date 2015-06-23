@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {RouteHandler} from 'react-router';
 import {Map} from 'immutable';
-import * as actions from '../users/actions'
+import * as actions from '../users/actions';
 import * as store from '../users/store';
 import {flash} from '../flashMessages/actions';
 import Component from '../components/component.react';
@@ -18,9 +18,8 @@ class App extends Component {
     actions.getLoggedIn().catch((err) => {
       flash(err.message, 'danger');
 
-      if (err.status === 401) {
+      if (err.status === 401)
         this.redirectWhenUnauthorized();
-      }
     });
   }
 
@@ -31,16 +30,15 @@ class App extends Component {
   render() {
     const user = store.getLoggedIn();
 
-    if (actions.getLoggedIn.pending || !user) {
+    if (actions.getLoggedIn.pending || !user)
       return <Spinner fullscreen={true} />;
-    }
 
     return (
       <Wrapper>
         <Header user={user} {...this.props} />
         <RouteHandler {...this.props} />
       </Wrapper>
-    )
+    );
   }
 
 }

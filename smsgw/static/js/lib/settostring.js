@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /*
   Override toString methods. Useful for logging Flux actions for example.

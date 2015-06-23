@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use strict';
 
 const BASE = '/api/1.0';
@@ -62,7 +63,7 @@ export var applications = {
   create: (user = "@me") => `${BASE}/users/${user}/applications/`,
   get: (uuid, user = "@me") => `${BASE}/users/${user}/applications/${uuid}/`,
   regenerate: (uuid, user = "@me") => {
-    return `${BASE}/users/${user}/applications/${uuid}/regenerate/`
+    return `${BASE}/users/${user}/applications/${uuid}/regenerate/`;
   },
   update: (uuid, user = "@me") => `${BASE}/users/${user}/applications/${uuid}/`,
   delete: (uuid, user = "@me") => `${BASE}/users/${user}/applications/${uuid}/`

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import Dispatcher from '../dispatcher';
 import setToString from '../lib/settostring';
@@ -8,7 +8,7 @@ import setToString from '../lib/settostring';
  * @param  {String} message
  * @param  {String} type
  */
-export function flash(text, type = "success") {
+export function flash(text, type = 'success') {
   Dispatcher.dispatch(flash, { text, type });
 }
 

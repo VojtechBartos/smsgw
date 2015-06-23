@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -25,20 +25,19 @@ class List extends Component {
   }
 
   render() {
-    if (actions.getAll.pending || actions.remove.pending) {
+    if (actions.getAll.pending || actions.remove.pending)
       return <Spinner fullscreen={true} />;
-    }
 
     const templates = this.props.templates;
     const table = {
       options: [
-        { label: "Label", key: "label" },
-        { label: "Text", key: "text" },
-        { label: "Created", key: "createdAt" }
+        { label: 'Label', key: 'label' },
+        { label: 'Text', key: 'text' },
+        { label: 'Created', key: 'createdAt' }
       ],
       actions: [
-        { label: "Edit", handler: this.onEditAaction.bind(this) },
-        { label: "Delete", handler: this.onDeleteAction.bind(this) }
+        { label: 'Edit', handler: this.onEditAaction.bind(this) },
+        { label: 'Delete', handler: this.onDeleteAction.bind(this) }
       ]
     };
 

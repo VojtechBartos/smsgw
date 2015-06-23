@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import LaddaButton from 'react-ladda';

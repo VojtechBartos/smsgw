@@ -24,7 +24,7 @@ class Dispatcher extends flux.Dispatcher {
 
     this.setPending(name, true);
     return promise.then(body => {
-      const {data, meta} = body
+      const {data, meta} = body;
 
       this.setPending(name, false);
       super.dispatch({action, data, meta});
@@ -54,4 +54,4 @@ class Dispatcher extends flux.Dispatcher {
 
 }
 
-export default new Dispatcher()
+export default new Dispatcher();

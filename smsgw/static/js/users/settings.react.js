@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import LaddaButton from 'react-ladda';
 import {Grid, Row, Col} from 'react-bootstrap';
 import Component from '../components/component.react';
 import {update} from './actions';
-import {flash} from '../flashMessages/actions'
+import {flash} from '../flashMessages/actions';
 
 class Settings extends Component {
 
@@ -14,13 +14,13 @@ class Settings extends Component {
     let password = this.refs.password.getDOMNode().value;
     let passwordVerify = this.refs.password.getDOMNode().value;
 
-    if (password || password.length > 0) {
-      if (password != passwordVerify) {
+    if (password || password.length > 0)
+      if (password !== passwordVerify) {
         isValid = false;
 
-        flash("Password and verify password needs to be same.");
+        flash('Password and verify password needs to be same.');
       }
-    }
+
     return isValid;
   }
 
@@ -39,11 +39,10 @@ class Settings extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    if (this.isValid()) {
+    if (this.isValid())
       update('@me', this.getData()).then(() => {
         flash('Successfully saved.');
       });
-    }
   }
 
   render() {

@@ -1,11 +1,9 @@
-"use strict";
+'use strict';
 
 import React from 'react';
-import {Link} from 'react-router';
 import {Map} from 'immutable';
 import {getAll, remove} from './actions';
 import Component from '../components/component.react';
-import Subheader from '../components/subheader.react';
 import Table from '../components/table.react';
 import Spinner from '../components/spinner.react';
 
@@ -38,11 +36,10 @@ class List extends Component {
       actions: [
 
       ]
-    }
+    };
 
-    if (getAll.pending || !users) {
+    if (getAll.pending || !users)
       return <Spinner fullscreen={true} />;
-    }
 
     return (
       <div>

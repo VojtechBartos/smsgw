@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -40,9 +40,8 @@ class Header extends Component {
 
   render() {
     let className = ['dropdown'];
-    if (this.state.menu) {
+    if (this.state.menu)
       className.push('open');
-    }
 
     let menu = [
       'dashboard', 'applications', 'messages',
@@ -51,9 +50,8 @@ class Header extends Component {
     let user = {};
     if (this.props.user) {
       user = this.props.user;
-      if (user.role) {
+      if (user.role)
         menu.push('users');
-      }
     }
 
     return (
@@ -100,6 +98,6 @@ class Header extends Component {
 
 Header.propTypes = {
   router: React.PropTypes.func.isRequired
-}
+};
 
 export default Header;

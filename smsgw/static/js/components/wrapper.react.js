@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {RouteHandler} from 'react-router';
@@ -18,7 +18,7 @@ class Wrapper extends React.Component {
           // TODO(vojta) rewrite to ES6 closure syntax
           var content = props.children;
           if (!content)
-            content = <RouteHandler {...props} />
+            content = <RouteHandler {...props} />;
           return content;
         })(this.props)}
       </div>

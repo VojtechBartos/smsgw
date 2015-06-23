@@ -1,0 +1,27 @@
+{
+  "parser": "babel-eslint",
+  "rules": {
+    "no-console": 1,
+    "no-underscore-dangle": 0,
+    "no-shadow": 0,
+    "quotes": [1, "single", "avoid-escape"],
+    "curly": [2, "multi"],
+    "new-cap": [1, {"capIsNew": false, "newIsCap": true}],
+    "global-strict": [0, "always"],
+    // React
+    "react/jsx-quotes": 1,
+    "react/jsx-uses-react": 1
+  },
+  "globals": {
+    "console": true,
+    "window": true,
+    "document": true,
+    "setTimeout": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "jsx": true
+  }
+}

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -16,14 +16,13 @@ class Subheader extends React.Component {
 
   render() {
     let back = null;
-    if (this.props.backTitle) {
+    if (this.props.backTitle)
       back = (
         <a className="back" onClick={e => this.onBackInHistory(e)}>
           <span className="chevron" />
           {this.props.backTitle}
         </a>
       );
-    }
 
     return (
       <div id="subheader">
@@ -32,9 +31,11 @@ class Subheader extends React.Component {
         {this.props.children}
         <div className="cleaner" />
         {this.props.links.map((link, index) => {
-          return <Link to={link.route}
-                       key={index}
-                       params={link.params}>{link.label}</Link>
+          return (
+            <Link to={link.route} key={index} params={link.params}>
+              {link.label}
+            </Link>
+          );
         })}
         <div className="cleaner" />
       </div>

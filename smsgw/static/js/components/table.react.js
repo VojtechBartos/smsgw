@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import _ from 'lodash';
 import React from 'react';
@@ -34,18 +34,16 @@ class CustomTable extends React.Component {
               {options.map(option => {
                 let value = item[option.key];
                 let content = [];
-                if (_.isBoolean(value)) {
+                if (_.isBoolean(value))
                   content = (
                     <Label bsStyle={(value) ? 'success' : 'danger'}>
                       {(value) ? 'yes' : 'no'}
                     </Label>
                   );
-                }
-                else if (_.isArray(value)) {
+                else if (_.isArray(value))
                   value.forEach((i) => {
-                    conent.push(<Label key={i} bsStyle="info">{i}</Label>);
+                    content.push(<Label key={i} bsStyle="info">{i}</Label>);
                   });
-                }
                 else content = value;
 
                 return <td key={option.key}>{content}</td>;
@@ -53,7 +51,7 @@ class CustomTable extends React.Component {
               <td key="actions">
                 {actions.map((action, j) =>
                   <span key={j}>
-                    {(j == 0) ? '' : ' | '}
+                    {(j === 0) ? '' : ' | '}
                     <a onClick={this.onAction(action, item)}>
                       {action.label}
                     </a>

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import LaddaButton from 'react-ladda';
@@ -29,7 +29,7 @@ class SignUp extends Component {
   redirectAfterSignUp() {
     this.props.router.transitionTo('signin');
 
-    flash("Signed up. Now you can login.");
+    flash('Signed up. Now you can login.');
   }
 
   render() {

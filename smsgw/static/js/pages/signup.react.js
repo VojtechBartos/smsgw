@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -9,7 +9,7 @@ import SignUpForm from '../users/signup.react';
 
 class SignUp extends Component {
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps() {
     // TODO(vojta) if user is already signed in, redirect him to dashboard
   }
 

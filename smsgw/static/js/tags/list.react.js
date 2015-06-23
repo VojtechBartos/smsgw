@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -25,9 +25,8 @@ class List extends Component {
   }
 
   render() {
-    if (actions.getAll.pending || actions.remove.pending) {
+    if (actions.getAll.pending || actions.remove.pending)
       return <Spinner fullscreen={true} />;
-    }
 
     const tags = this.props.tags;
     const table = {
@@ -37,8 +36,8 @@ class List extends Component {
         { label: 'Number of contacts', key: 'numberOfContacts' }
       ],
       actions: [
-        { label: "Edit", handler: this.onEditAction.bind(this) },
-        { label: "Delete", handler: this.onDeleteAction.bind(this) }
+        { label: 'Edit', handler: this.onEditAction.bind(this) },
+        { label: 'Delete', handler: this.onDeleteAction.bind(this) }
       ]
     };
 
@@ -57,6 +56,6 @@ class List extends Component {
 List.propTypes = {
   router: React.PropTypes.func,
   tags: React.PropTypes.instanceOf(Map).isRequired
-}
+};
 
 export default List;

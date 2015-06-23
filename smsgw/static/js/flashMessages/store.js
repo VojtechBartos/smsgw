@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import {flash} from './actions';
 import {flashMessagesCursor} from '../state';
@@ -7,7 +7,7 @@ import Dispatcher from '../dispatcher';
 /**
  * Registerting to dispatcher
  */
-export const dispatchToken = Dispatcher.register(({action, data, meta}) => {
+export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
     case flash:
       flashMessagesCursor(messages => {

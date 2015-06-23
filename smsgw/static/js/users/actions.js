@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import Dispatcher from '../dispatcher';
 import {users} from '../endpoints';
@@ -49,7 +49,7 @@ export function getAll() {
 export function get(uuid) {
   let request = api.get(users.get(uuid), { token: _token });
 
-  return Dispatcher.dispatch(get, request)
+  return Dispatcher.dispatch(get, request);
 }
 
 /**
@@ -107,7 +107,7 @@ export function del(uuid) {
 export function signIn(data) {
   let request = api.post(users.signIn(), { data: data });
 
-  return Dispatcher.dispatch(signIn, request).then(({data, meta}) => {
+  return Dispatcher.dispatch(signIn, request).then(({data, meta}) => { // eslint-disable-line no-unused-vars
     setToken(data.token);
   });
 }

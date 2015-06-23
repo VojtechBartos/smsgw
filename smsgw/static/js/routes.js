@@ -1,13 +1,7 @@
 'use strict';
 
 import React from 'react';
-import {
-  Route,
-  Routes,
-  Redirect,
-  RouteHandler,
-  DefaultRoute
-} from 'react-router';
+import { Route, Redirect, DefaultRoute } from 'react-router';
 
 // pages
 import Wrapper from './components/wrapper.react';
@@ -100,4 +94,4 @@ export default (
       </Route>
     </Route>
   </Route>
-)
+);

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import Component from '../components/component.react';

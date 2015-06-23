@@ -1,18 +1,16 @@
-/**
- * https://google-styleguide.googlecode.com/svn/trunk/javascriptguide.xml
- */
 "use strict";
 
-var gulp = require('gulp');
-var gulpWebpack = require('gulp-webpack');
-var webpack = require('webpack');
-var sh = require('execSync'); // TODO(vojta) replace by native in node 0.12
-var isDevelopment = true;
+import gulp from 'gulp';
+import gulpWebpack from 'gulp-webpack';
+import webpack from 'webpack';
+import sh from 'execSync'; // TODO(vojta) replace by native in node 0.12
+
+const isDevelopment = true;
 
 /**
  * Webpack
  */
-gulp.task('webpack', function() {
+gulp.task('webpack', () => {
   gulp
     .src('./smsgw/static/js/main.js')
     .pipe(gulpWebpack({
@@ -23,20 +21,19 @@ gulp.task('webpack', function() {
         filename: "js/[name].js"
       },
       module: {
+        preLoaders: [
+          { test: /\.js$/, exclude: /node_modules/, loader: "eslint-loader"}
+        ],
         loaders: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-          }
+          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
         ]
       },
-      plugins: (function() {
+      plugins: (() => {
         // get git tag
-        var result = sh.exec('git describe');
-        var tag = (result.code === 0) ? result.stdout : new Date().getTime();
+        const result = sh.exec('git describe');
+        const tag = (result.code === 0) ? result.stdout : new Date().getTime();
 
-        var plugins = [
+        let plugins = [
           new webpack.DefinePlugin({
             'process.env': {
               NODE_ENV: JSON.stringify((isDevelopment) ? 'development' : 'production')
@@ -58,6 +55,9 @@ gulp.task('webpack', function() {
         }
         return plugins;
       })(),
+      eslint: {
+        configFile: './.eslintrc'
+      }
     }))
     .pipe(gulp.dest('./smsgw/static/build/'));
 });

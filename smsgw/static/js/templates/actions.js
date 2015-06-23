@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import Dispatcher from '../dispatcher';
 import {templates} from '../endpoints';
@@ -13,7 +13,7 @@ export function getAll() {
   let request = api.get(templates.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
-};
+}
 
 /**
  * Get specific template
@@ -23,7 +23,7 @@ export function get(uuid) {
   let request = api.get(templates.get(uuid), { token });
 
   return Dispatcher.dispatch(get, request);
-};
+}
 
 /**
  * Create new template
@@ -33,7 +33,7 @@ export function create(data) {
   let request = api.post(templates.create(), { token, data });
 
   return Dispatcher.dispatch(create, request);
-};
+}
 
 /**
  * Update template
@@ -44,7 +44,7 @@ export function update(uuid, data) {
   let request = api.put(templates.update(uuid), { token, data });
 
   return Dispatcher.dispatch(update, request);
-};
+}
 
 /**
  * Delete template
@@ -54,7 +54,7 @@ export function remove(uuid) {
   let request = api.del(templates.delete(uuid), { token });
 
   return Dispatcher.dispatch(remove, request);
-};
+}
 
 // Override toString methods. Pretty useful for dispatched actions monitoring.
 setToString('templates', {

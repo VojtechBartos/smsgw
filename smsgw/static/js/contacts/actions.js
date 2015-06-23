@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import Dispatcher from '../dispatcher';
 import {contacts} from '../endpoints';
@@ -13,7 +13,7 @@ export function getAll() {
   let request = api.get(contacts.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
-};
+}
 
 /**
  * Get specific
@@ -23,7 +23,7 @@ export function get(uuid) {
   let request = api.get(contacts.get(uuid), { token });
 
   return Dispatcher.dispatch(get, request);
-};
+}
 
 /**
  * Create new
@@ -33,7 +33,7 @@ export function create(data) {
   let request = api.post(contacts.create(), { token, data });
 
   return Dispatcher.dispatch(create, request);
-};
+}
 
 /**
  * Update
@@ -44,7 +44,7 @@ export function update(uuid, data) {
   let request = api.put(contacts.update(uuid), { token, data });
 
   return Dispatcher.dispatch(update, request);
-};
+}
 
 /**
  * Delete
@@ -54,7 +54,7 @@ export function remove(uuid) {
   let request = api.del(contacts.delete(uuid), { token });
 
   return Dispatcher.dispatch(remove, request);
-};
+}
 
 // Override toString methods. Pretty useful for dispatched actions monitoring.
 setToString('contacts', {

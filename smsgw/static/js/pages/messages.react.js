@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import Component from '../components/component.react';
@@ -26,6 +26,6 @@ class MessagesWrapper extends Component {
 
 MessagesWrapper.propTypes = {
   router: React.PropTypes.func
-}
+};
 
 export default MessagesWrapper;

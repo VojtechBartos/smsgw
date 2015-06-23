@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import Immutable from 'immutable';
@@ -8,16 +8,15 @@ import Component from '../components/component.react';
 import FlashMessages from '../components/flashmessages.react';
 import Subheader from '../components/subheader.react';
 
-class Add extends React.Component {
+class Add extends Component {
 
   onFormSubmit(e) {
     e.preventDefault();
     const form = this.refs.templateForm;
-    if (form.isValid()) {
+    if (form.isValid())
       create(form.getData()).then(() => {
         this.redirectOnSuccess();
       });
-    }
   }
 
   redirectOnSuccess() {

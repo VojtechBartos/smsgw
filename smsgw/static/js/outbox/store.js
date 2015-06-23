@@ -1,6 +1,5 @@
-"use strict";
+'use strict';
 
-import _ from 'lodash';
 import * as actions from './actions';
 import {outboxCursor} from '../state';
 import Dispatcher from '../dispatcher';
@@ -17,12 +16,12 @@ export function get(id) {
 /**
  * Registerting to dispatcher
  */
-export const dispatchToken = Dispatcher.register(({action, data, meta}) => {
+export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
     case actions.getAll:
       outboxCursor(outbox => {
         return outbox.withMutations(items => {
-          data.forEach(i => items.set(i.id, new Outbox(i)) );
+          data.forEach(i => items.set(i.id, new Message(i)) );
         });
       });
       break;

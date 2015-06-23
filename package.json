@@ -8,6 +8,17 @@
     "url": "git@github.com:VojtechBartos/smsgw.git"
   },
   "dependencies": {
+    "gulp": "~3.9.0",
+    "gulp-util": "~3.0.2",
+    "gulp-webpack": "~1.5.0",
+    "babel": "^5.0.8",
+    "babel-core": "^5.0.8",
+    "babel-eslint": "^3.0.1",
+    "babel-loader": "^5.0.0",
+    "json-loader": "~0.5.1",
+    "execSync": "~1.0.2",
+    "eslint-loader": "^0.14.0",
+    "eslint-plugin-react": "^2.0.1",
     "flux": "^2.0.0",
     "react": "~0.13.1",
     "react-pure-render": "^1.0.1",
@@ -24,13 +35,5 @@
     "eventemitter3": "~1.1.0",
     "immutable": "~3.7.3",
     "randomstring": "~1.0.5"
-  },
-  "devDependencies": {
-    "gulp": "~3.9.0",
-    "gulp-util": "~3.0.2",
-    "gulp-webpack": "~1.5.0",
-    "execSync": "~1.0.2",
-    "json-loader": "~0.5.1",
-    "babel-loader": "~5.1.3"
   }
 }

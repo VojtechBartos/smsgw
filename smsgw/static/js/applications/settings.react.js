@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import Immutable from 'immutable';
@@ -13,11 +13,10 @@ class Settings extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const form = this.refs.applicationForm;
-    if (form.isValid()) {
+    if (form.isValid())
       update(this.props.application.uuid, form.getData()).then(() => {
         flash('Successfuly saved.');
       });
-    }
   }
 
   render() {

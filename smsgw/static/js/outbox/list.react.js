@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Link} from 'react-router';
@@ -8,7 +8,6 @@ import moment from 'moment';
 import * as actions from './actions';
 import Component from '../components/component.react';
 import Spinner from '../components/spinner.react';
-import Subheader from '../components/subheader.react';
 
 class Outbox extends Component {
 
@@ -23,9 +22,8 @@ class Outbox extends Component {
   render() {
     const outbox = this.props.outbox;
 
-    if (actions.getAll.pending || actions.remove.pending || !outbox) {
+    if (actions.getAll.pending || actions.remove.pending || !outbox)
       return <Spinner fullscreen={true} />;
-    }
 
     return (
       <div id="context">
@@ -44,9 +42,8 @@ class Outbox extends Component {
           <tbody>
             {outbox.map((message, i) => {
               const contact = () => {
-                if (!message.contact) {
+                if (!message.contact)
                   return message.destinationNumber;
-                }
 
                 return (
                   <Link to="contact-edit"
@@ -58,9 +55,9 @@ class Outbox extends Component {
 
               const send = () => {
                 if (!message.send) return;
-                const dt = moment(message.send);
+                // const dt = moment(message.send);
                 // "#{dt.format 'HH:mm DD.MM.YYYY'} (#{dt.from moment()})"
-                return `TODO(vojta)`;
+                // return `TODO(vojta)`;
               };
 
               return (

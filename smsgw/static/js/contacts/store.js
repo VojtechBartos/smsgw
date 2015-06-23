@@ -1,6 +1,5 @@
-"use strict";
+'use strict';
 
-import _ from 'lodash';
 import * as actions from './actions';
 import {contactsCursor} from '../state';
 import Dispatcher from '../dispatcher';
@@ -17,7 +16,7 @@ export function get(uuid) {
 /**
  * Registerting to dispatcher
  */
-export const dispatchToken = Dispatcher.register(({action, data, meta}) => {
+export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
     case actions.getAll:
       contactsCursor(contacts => {

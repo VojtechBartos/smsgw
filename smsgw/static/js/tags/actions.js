@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import Dispatcher from '../dispatcher';
 import {tags} from '../endpoints';
@@ -19,7 +19,7 @@ export function search(name) {
   });
 
   return Dispatcher.dispatch(search, request);
-};
+}
 
 /**
  * Get all
@@ -28,7 +28,7 @@ export function getAll() {
   let request = api.get(tags.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
-};
+}
 
 /**
  * Get specific
@@ -38,7 +38,7 @@ export function get(uuid) {
   let request = api.get(tags.get(uuid), { token });
 
   return Dispatcher.dispatch(get, request);
-};
+}
 
 /**
  * Create new
@@ -48,7 +48,7 @@ export function create(data) {
   let request = api.post(tags.create(), { token, data });
 
   return Dispatcher.dispatch(create, request);
-};
+}
 
 /**
  * Update
@@ -59,7 +59,7 @@ export function update(uuid, data) {
   let request = api.put(tags.update(uuid), { token, data });
 
   return Dispatcher.dispatch(update, request);
-};
+}
 
 /**
  * Delete
@@ -69,7 +69,7 @@ export function remove(uuid) {
   let request = api.del(tags.delete(uuid), { token });
 
   return Dispatcher.dispatch(remove, request);
-};
+}
 
 // Override toString methods. Pretty useful for dispatched actions monitoring.
 setToString('tags', {

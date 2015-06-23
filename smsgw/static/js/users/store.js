@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import _ from 'lodash';
 import * as actions from './actions';
@@ -18,7 +18,7 @@ export function getLoggedIn() {
 /**
  * Registerting to dispatcher
  */
-export const dispatchToken = Dispatcher.register(({action, data, meta}) => {
+export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
     case actions.update:
     case actions.getLoggedIn:

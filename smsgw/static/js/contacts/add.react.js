@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import Immutable from 'immutable';
@@ -13,11 +13,10 @@ class Add extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const form = this.refs.contactForm;
-    if (form.isValid()) {
+    if (form.isValid())
       create(form.getData()).then(() => {
         this.redirectOnSuccess();
       });
-    }
   }
 
   redirectOnSuccess() {

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import Dispatcher from '../dispatcher';
 import {outbox} from '../endpoints';
@@ -13,7 +13,7 @@ export function getAll() {
   let request = api.get(outbox.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
-};
+}
 
 /**
  * Delete
@@ -23,7 +23,7 @@ export function remove(id) {
   let request = api.del(outbox.delete(id), { token });
 
   return Dispatcher.dispatch(remove, request);
-};
+}
 
 // Override toString methods. Pretty useful for dispatched actions monitoring.
 setToString('outbox', {

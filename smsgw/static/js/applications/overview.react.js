@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
 import React from 'react';
-import {PieChart, BarChart, AreaChart} from 'react-d3';
+import {PieChart, BarChart} from 'react-d3';
 import Component from '../components/component.react';
 
 class Overview extends Component {

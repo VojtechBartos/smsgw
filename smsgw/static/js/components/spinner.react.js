@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 
@@ -6,9 +6,8 @@ class Spinner extends React.Component {
 
   render() {
     let classNames = ['spinner'];
-    if (this.props.fullscreen) {
+    if (this.props.fullscreen)
       classNames.push('fullscreen');
-    }
 
     return (
       <div className={classNames.join(' ')}>

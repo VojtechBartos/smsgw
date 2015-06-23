@@ -1,7 +1,6 @@
-"use strict";
+'use strict';
 
 import React from 'react';
-import {RouteHandler} from 'react-router';
 import Component from '../components/component.react';
 import Wrapper from '../components/wrapper.react';
 import Subheader from '../components/subheader.react';
@@ -26,6 +25,6 @@ class Directory extends Component {
 
 Directory.propTypes = {
   router: React.PropTypes.func
-}
+};
 
 export default Directory;

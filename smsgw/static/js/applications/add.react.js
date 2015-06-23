@@ -1,8 +1,7 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {List} from 'immutable';
-import {flash} from '../flashMessages/actions';
 import {create} from './actions';
 import Component from '../components/component.react';
 import Subheader from '../components/subheader.react';
@@ -14,11 +13,10 @@ class Add extends Component {
   onFormSubmit(e) {
     e.preventDefault();
     const form = this.refs.applicationForm;
-    if (form.isValid()) {
+    if (form.isValid())
       create(form.getData()).then(() => {
         this.redirectOnSuccess();
       });
-    }
   }
 
   redirectOnSuccess() {

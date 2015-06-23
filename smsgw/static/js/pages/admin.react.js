@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {getLoggedIn} from '../users/store';
@@ -9,9 +9,8 @@ class Admin extends Component {
 
   componentDidMount() {
     const user = getLoggedIn();
-    if (user && user.role !== 'admin') {
+    if (user && user.role !== 'admin')
       this.redirectToDashboard();
-    }
   }
 
   redirectToDashboard() {
@@ -19,7 +18,7 @@ class Admin extends Component {
   }
 
   render() {
-    return <Wrapper {...this.props} />
+    return <Wrapper {...this.props} />;
   }
 
 }

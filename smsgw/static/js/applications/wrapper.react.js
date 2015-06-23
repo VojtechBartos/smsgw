@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import {Map} from 'immutable';
@@ -14,7 +14,7 @@ class ApplicationWrapper extends Component {
 
   componentDidMount() {
     actions.get(this.uuid()).error((err) => {
-      flash('Application not found.');
+      flash(err.message);
 
       this.redirectToList();
     });
@@ -58,9 +58,8 @@ class ApplicationWrapper extends Component {
       }
     ];
 
-    if (actions.get.pending || actions.regenerateToken.pending || !app) {
+    if (actions.get.pending || actions.regenerateToken.pending || !app)
       return <Spinner fullscreen={true} />;
-    }
 
     return (
       <Wrapper>

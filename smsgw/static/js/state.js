@@ -22,16 +22,14 @@ class State extends EventListener {
 
   cursor(path, defaultDataStructure = Map) {
     return (arg) => {
-      if (!this._state.getIn(path)) {
+      if (!this._state.getIn(path))
         this._state = this._state.setIn(path, defaultDataStructure());
-      }
 
-      if (!arg) {
+      if (!arg)
         return this._state.getIn(path);
-      }
 
       this.set(this._state.updateIn(path, arg));
-    }
+    };
   }
 
 }

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 import React from 'react';
 import LaddaButton from 'react-ladda';
@@ -11,7 +11,7 @@ class Form extends Component {
     super(props);
     this.state = {
       length: 0
-    }
+    };
   }
 
   isValid() {

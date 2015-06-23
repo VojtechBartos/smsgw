@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 import React from 'react';
-import LaddaButton from 'react-ladda'
-import {Grid, Row, Col, Label} from 'react-bootstrap';
+import LaddaButton from 'react-ladda';
+import {Grid, Row, Col} from 'react-bootstrap';
 import Component from '../components/component.react';
 import AutocompleteInput from '../components/autocompleteinput.react';
 
@@ -32,17 +32,22 @@ class Form extends Component {
 
   onChange(value) {
     // TODO(vojta)
+    console.log(value); // eslint-disable-line no-console
   }
 
   onSelect(tag) {
     // TODO(vojta)
+    console.log(tag); // eslint-disable-line no-console
   }
 
   onDelete(index) {
     // TODO(vojta)
+    console.log(index); // eslint-disable-line no-console
   }
 
   render() {
+    const tags = [];
+
     return (
       <form onSubmit={e => this.props.onSubmit(e)}>
         <Grid fluid={true}>

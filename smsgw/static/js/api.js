@@ -2,7 +2,6 @@
 
 import BPromise from 'bluebird';
 import request from 'superagent';
-import localStorage from 'localStorage';
 import _ from 'lodash';
 
 /**
@@ -44,15 +43,14 @@ let fetch = (method, url, options) => {
           .accept('application/json')
           .type('application/json');
 
-    if (_.has(options, 'token')) {
+    if (_.has(options, 'token'))
       req = req.set('Authorization', `Token ${options.token}`);
-    }
-    if (_.has(options, 'data') && options.data) {
+
+    if (_.has(options, 'data') && options.data)
       req = req.send(options.data);
-    }
-    if (_.has(options, 'query') && options.query) {
+
+    if (_.has(options, 'query') && options.query)
       req = req.query(options.query);
-    }
 
     req.end((err, res) => {
       let body = res.body;
@@ -62,12 +60,11 @@ let fetch = (method, url, options) => {
       error.status = res.status;
       error.url = res.req.url;
       if (body) {
-        if (_.has(body, 'data')) {
+        if (_.has(body, 'data'))
           error.data = body.data;
-        }
-        if (_.has(body, 'meta') && _.has(body.meta, 'message')) {
+
+        if (_.has(body, 'meta') && _.has(body.meta, 'message'))
           error.message = body.meta.message;
-        }
       }
 
       return reject(error);
