@@ -30,7 +30,7 @@
     "superagent": "~1.2.0",
     "localStorage": "~1.0.3",
     "bluebird": "~2.9.6",
-    "lodash": "~3.9.1",
+    "lodash": "~3.10.0",
     "moment": "~2.10.2",
     "eventemitter3": "~1.1.0",
     "immutable": "~3.7.3",
