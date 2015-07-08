@@ -32,7 +32,7 @@ def underscore_to_camelcase(value):
     :param value: {str} underscored string
     :return: {str} camelcased string
     """
-    def camelcase(): 
+    def camelcase():
         yield str.lower
         while True:
             yield str.capitalize
@@ -46,3 +46,27 @@ def generate_uuid():
     :return: {string} uuid
     """
     return str(uuid.uuid4())
+
+
+
+def is_special_char(char):
+    """
+    TODO(vojta) diacriticts and etc
+    :param char: {str}
+    """
+    # GSM Default 7-bit special character (count as 2 char)
+    special = ['^', '{', '}', '[', ']', '~', '|', '€', '\\']
+
+    # GSM Default 7-bit character (count as 1 char)
+    default = ['@', '£', '$', '¥', 'è', 'é', 'ù', 'ì', 'ò', 'Ç', 'Ø', 'ø', 'Å',
+               'å', 'Δ', '_', 'Φ', 'Γ', 'Λ', 'Ω', 'Π', 'Ψ', 'Σ', 'Θ', 'Ξ', 'Æ',
+               'æ', 'É', '!', '"', '#', '¤', '%', '&', '\'', '(',')', '*', '+',
+               ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8',
+               '9', ':', ';', '<', '=', '>', '?', '¡', 'A', 'B', 'C', 'D', 'E',
+               'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
+               'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'Ñ', '§', '¿', 'a', 'b',
+               'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+               'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'ä', 'ñ',
+               'à']
+
+    return char in special
