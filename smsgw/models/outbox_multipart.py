@@ -17,7 +17,7 @@ class OutboxMultipart(BaseModel):
     sequencePosition = db.Column(mysql.INTEGER(11), primary_key=True)
 
     coding = db.Column(db.Enum('Default_No_Compression','Unicode_No_Compression',
-                               '8bit','Default_Compression','Unicode_Compression'), 
+                               '8bit','Default_Compression','Unicode_Compression'),
                         server_default='Default_No_Compression', nullable=False)
     text = db.Column(mysql.TEXT)
     textEncoded = db.Column(mysql.TEXT)
