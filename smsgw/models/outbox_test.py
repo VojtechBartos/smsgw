@@ -98,7 +98,7 @@ class OutboxModelTest(SmsgwIntegrationTestCase):
         self.assertEqual(len(multiparts), 2)
         self.assertEqual(message, dataset['message'])
         for index, multipart in enumerate(multiparts):
-            self.assertEqual(multipart.sequencePosition, index + 1)
+            self.assertEqual(multipart.sequencePosition, index + 2)
 
         # flash multipart message
         dataset = datasets.MULTIPART_MESSAGES[1]
@@ -126,7 +126,7 @@ class OutboxModelTest(SmsgwIntegrationTestCase):
         self.assertEqual(len(multiparts), 3)
         self.assertEqual(message, dataset['message'])
         for index, multipart in enumerate(multiparts):
-            self.assertEqual(multipart.sequencePosition, index + 1)
+            self.assertEqual(multipart.sequencePosition, index + 2)
 
         # TODO(vojta) test UDH generation
 

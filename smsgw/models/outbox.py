@@ -145,15 +145,13 @@ class Outbox(BaseModel):
                 hex=str(hex(randint(0, 255)).split('x')[1]).ljust(2, "0")
             )
             multiparts = cls.get_message_multipart(message, multipart_length)
+            part = str(len(multiparts)).rjust(2, "0")
             outbox = Outbox(
                 userId=user_id,
                 applicationId=application_id,
                 coding=coding,
                 text=multiparts[0],
-                udh="{udh}{part}01".format(
-                    udh=udh,
-                    part=str(len(multiparts)).ljust(2, "0")
-                ),
+                udh="{udh}{part}01".format(udh=udh, part=part),
                 klass=klass,
                 multipart="true",
                 deliveryReport="no",
@@ -172,7 +170,7 @@ class Outbox(BaseModel):
 
             # add other parts of the message to database
             for index, message in enumerate(multiparts[1:]):
-                position = index + 1
+                position = index + 2
                 multipart = OutboxMultipart(
                     id=outbox.id,
                     sequencePosition=position,
@@ -181,8 +179,8 @@ class Outbox(BaseModel):
                     klass=klass,
                     udh="{udh}{part}{position}".format(
                         udh=udh,
-                        part=position,
-                        position=str(position).ljust(2, "0")
+                        part=part,
+                        position=str(position).rjust(2, "0")
                     )
                 )
 
