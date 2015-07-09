@@ -23,3 +23,25 @@ class OutboxMultipart(BaseModel):
     textEncoded = db.Column(mysql.TEXT)
     udh = db.Column(mysql.TEXT)
     klass = db.Column('class', mysql.INTEGER, server_default='-1')
+
+
+    def to_dict(self, properties=None):
+        """
+        To dictionary
+        :param properties: {list} of required properties
+        :return: {dict}
+        """
+        dict = {
+            'id': self.id,
+            'position': self.sequencePosition,
+            'text': self.text,
+            'created': self.created.isoformat(sep=' ') if self.created \
+                                                       else None,
+            'updated': self.updated.isoformat(sep=' ') if self.updated \
+                                                       else None
+        }
+
+        if properties is None:
+            properties = dict.keys()
+
+        return {key: dict.get(key) for key in properties}
