@@ -76,6 +76,11 @@ class Outbox(BaseModel):
 
 
     def to_dict(self, properties=None):
+        """
+        To dictionary
+        :param properties: {list} of required properties
+        :return: {dict}
+        """
         dict = {
             'id': self.id,
             'destinationNumber': self.destinationNumber,
@@ -83,7 +88,8 @@ class Outbox(BaseModel):
             'application': self.application.to_dict() if self.application \
                                                       else None,
             'text': self.text,
-            'send': self.send.isoformat(sep=' ') if self.send else None,
+            'multiparts': [multipart.to_dict() for multipart in self.multiparts],
+            'send': self.sent.isoformat(sep=' ') if self.sent else None,
             'created': self.created.isoformat(sep=' ') if self.created \
                                                        else None,
             'updated': self.updated.isoformat(sep=' ') if self.updated \
