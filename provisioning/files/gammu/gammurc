@@ -1,6 +1,6 @@
 [gammu]
 
-device = /dev/ttyUSB4
+device = /dev/ttyUSB0
 connection = at
 
 [smsd]
@@ -12,7 +12,7 @@ service = sql
 driver = native_mysql
 user = smsgw
 password = smsgw
-pc = 192.168.50.20
+pc = 192.168.50.30
 database = smsgw
 
 deliveryreport = yes
@@ -22,9 +22,9 @@ debuglevel = 2
 
 [sql]
 
-; 
+;
 ; phone
-; 
+;
 
 insert_phone = INSERT INTO `phone` (`netCode`, `netName`, `imei`, `hostname`, `send`, `receive`, `updated`, `timeout`, `client`, `battery`, `signal`) VALUES (%O, %M, %I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
 delete_phone = DELETE FROM `phone` WHERE `imei` = %I
@@ -32,13 +32,13 @@ update_sent = UPDATE `phone` SET `sent` = `sent` + 1 WHERE `imei` = %I
 update_received = UPDATE `phone` SET `received` = `received` + 1 WHERE `imei` = %I
 refresh_phone_status = UPDATE `phone` SET `timeout` = (NOW() + INTERVAL 10 SECOND) + 0, `battery` = %1, `signal` = %2, `netCode` = %O, `netName` = %M WHERE `imei` = %I
 
-; 
+;
 ; inbox
 ;
 
 save_inbox_sms_insert = INSERT INTO inbox (`received`, `textEncoded`, `senderNumber`, `coding`, `smscNumber`, `udh`, `class`, `text`, `recipient`, `updated`) VALUES (%d, %E, %R, %c, %F, %u, %x, %T, %P, NOW())
 
-; 
+;
 ; outbox
 ;
 
@@ -57,7 +57,7 @@ delete_outbox_multipart = DELETE FROM outbox_multipart WHERE id=%1
 find_outbox_body = SELECT textEncoded, coding, udh, class, text, id, destinationNumber, multipart, relativeValidity, deliveryReport, creator FROM outbox WHERE id=%1
 find_outbox_multipart = SELECT textEncoded, coding, udh, class, text, id, sequencePosition FROM outbox_multipart WHERE id=%1 AND sequencePosition=%2
 
-; 
+;
 ; sent items
 ;
 
