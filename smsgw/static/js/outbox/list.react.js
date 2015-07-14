@@ -15,7 +15,9 @@ class Outbox extends Component {
     actions.getAll();
   }
 
-  onDeleteAction(message) {
+  onDeleteAction(e, message) {
+    e.preventDefault();
+
     actions.remove(message.id);
   }
 
@@ -34,6 +36,7 @@ class Outbox extends Component {
             <tr>
               <th>To</th>
               <th>Text</th>
+              <th>Parts</th>
               <th>Sending at</th>
               <th>Created</th>
               <th></th>
@@ -52,18 +55,21 @@ class Outbox extends Component {
                   </Link>
                 );
               };
-
               const send = () => {
                 if (!message.send) return;
                 // const dt = moment(message.send);
                 // "#{dt.format 'HH:mm DD.MM.YYYY'} (#{dt.from moment()})"
                 // return `TODO(vojta)`;
               };
+              let text = message.text;
+              if (text && message.multiparts.length > 0)
+                text += ' ...';
 
               return (
                 <tr key={i}>
                   <td>{contact()}</td>
-                  <td>{message.text}</td>
+                  <td>{text}</td>
+                  <td>{message.multiparts.length + 1}</td>
                   <td>{send()}</td>
                   <td>{moment(message.created).format('HH:mm DD.MM.YYYY')}</td>
                   <td>
@@ -72,7 +78,7 @@ class Outbox extends Component {
                                     bsSize="xsmall">
                       <MenuItem eventKey="1">Edit</MenuItem>
                       <MenuItem eventKey="2"
-                                onClick={this.onDeleteAction(message)}>
+                                onClick={(e) => this.onDeleteAction(e, message)}>
                         Delete
                       </MenuItem>
                     </DropdownButton>
