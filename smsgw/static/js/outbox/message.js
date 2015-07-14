@@ -6,6 +6,7 @@ const OutboxRecord = Record({
   id: null,
   destinationNumber: null,
   contact: null,
+  multiparts: [],
   text: null,
   send: null,
   created: null,
