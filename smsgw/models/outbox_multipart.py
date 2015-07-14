@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.schema import Index
@@ -13,7 +14,9 @@ class OutboxMultipart(BaseModel):
 
     __tablename__ = "outbox_multipart"
 
-    id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
+    id = db.Column(mysql.INTEGER(10, unsigned=True),
+                   ForeignKey('outbox.id', onupdate="CASCADE", ondelete="CASCADE"),
+                   primary_key=True)
     sequencePosition = db.Column(mysql.INTEGER(11), primary_key=True)
 
     coding = db.Column(db.Enum('Default_No_Compression','Unicode_No_Compression',
