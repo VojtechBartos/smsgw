@@ -37,11 +37,7 @@ class OutboxMultipart(BaseModel):
         dict = {
             'id': self.id,
             'position': self.sequencePosition,
-            'text': self.text,
-            'created': self.created.isoformat(sep=' ') if self.created \
-                                                       else None,
-            'updated': self.updated.isoformat(sep=' ') if self.updated \
-                                                       else None
+            'text': self.text
         }
 
         if properties is None:
