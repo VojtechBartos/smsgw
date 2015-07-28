@@ -12,7 +12,7 @@ class Contact(BaseModel, DateMixin):
     """ Contact model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
-    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False, 
+    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False,
                      default=generate_uuid)
     userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
 
@@ -22,7 +22,7 @@ class Contact(BaseModel, DateMixin):
     email = db.Column(db.String(128))
     note = db.Column(db.String(255))
 
-    _tags = db.relationship("Tag", secondary=relations.contactTags,
+    _tags = db.relationship("Tag", secondary=relations.contact_on_tags,
                             backref="contacts", lazy="dynamic")
 
     @property
@@ -45,12 +45,14 @@ class Contact(BaseModel, DateMixin):
         tags = []
         for label in items:
             dummy = Tag(label=label)
-            tag = Tag.get_or_create(reference=dummy.label)
+            tag = Tag.get_or_create(reference=dummy.reference,
+                                    userId=self.userId)
             tag.label = label
+            tag.userId = self.userId
             tags.append(tag)
 
         self._tags = tags
-    
+
     def to_dict(self, properties=None):
         dict = {
             'id': self.id,

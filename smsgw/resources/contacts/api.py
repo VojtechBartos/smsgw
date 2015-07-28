@@ -4,7 +4,9 @@
 from flask import request, current_app
 from flask.ext.classy import FlaskView, route
 
-from smsgw.models import Contact
+from sqlalchemy import or_
+
+from smsgw.models import Contact, Tag
 from smsgw.lib.utils import response
 from smsgw.resources import decorators
 from smsgw.resources.contacts.schemas import post, put
@@ -24,8 +26,17 @@ class ContactsResource(FlaskView):
         """
         user = kwargs.get('user')
 
-        return response([contact.to_dict()
-                         for contact in user.contacts.all()])
+        # search or not
+        search = request.args.get('search')
+        contacts = user.contacts
+        if search is not None:
+            like = "%{0}%".format(search)
+            contacts = contacts.filter(or_(Contact.firstName.ilike(like),
+                                           Contact.lastName.ilike(like)))
+
+
+        return response([contact.to_dict() for contact in contacts.all()])
+
 
     @route('/<uuid:contact_uuid>/')
     @decorators.auth()
@@ -35,6 +46,7 @@ class ContactsResource(FlaskView):
         """
         contact = kwargs.get('contact')
         return response(contact.to_dict())
+
 
     @decorators.auth()
     @decorators.jsonschema_validate(post.schema)
@@ -46,12 +58,12 @@ class ContactsResource(FlaskView):
 
         # create and save contact
         # TODO(vojta) handling unique contacts ?
-        contact = Contact(**request.json)
-        contact.userId = user.id
+        contact = Contact(userId=user.id, **request.json)
         db.session.add(contact)
         db.session.commit()
 
         return response(contact.to_dict(), status_code=201)
+
 
     @route('/<uuid:contact_uuid>/', methods=['PUT'])
     @decorators.auth()
@@ -67,6 +79,7 @@ class ContactsResource(FlaskView):
         db.session.commit()
 
         return response(contact.to_dict())
+
 
     @route('/<uuid:contact_uuid>/', methods=['DELETE'])
     @decorators.auth()

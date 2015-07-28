@@ -2,7 +2,8 @@
 
 import _ from 'lodash';
 import React from 'react';
-import {Table, Label} from 'react-bootstrap';
+import {Table, Label, DropdownButton, MenuItem} from 'react-bootstrap';
+
 
 class CustomTable extends React.Component {
 
@@ -49,14 +50,18 @@ class CustomTable extends React.Component {
                 return <td key={option.key}>{content}</td>;
               })}
               <td key="actions">
-                {actions.map((action, j) =>
-                  <span key={j}>
-                    {(j === 0) ? '' : ' | '}
-                    <a onClick={this.onAction(action, item)}>
-                      {action.label}
-                    </a>
-                  </span>
-                )}
+                <DropdownButton title="actions"
+                                bsStyle="primary"
+                                bsSize="xsmall">
+                  {actions.map((action, j) => {
+                    return (
+                      <MenuItem key={j} eventKey={j}
+                                onClick={this.onAction(action, item)}>
+                        {action.label}
+                      </MenuItem>
+                    );
+                  })}
+                </DropdownButton>
               </td>
             </tr>
           )}

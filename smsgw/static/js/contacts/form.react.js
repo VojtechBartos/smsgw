@@ -11,7 +11,7 @@ class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: this.props.tags || [],
+      selected: this.props.tags,
       search: []
     };
   }
@@ -22,11 +22,11 @@ class Form extends Component {
 
   getData() {
     return {
-      firstName: this.firstName.getDOMNode().value,
-      lastName: this.lastName.getDOMNode().value,
-      phoneNumber: this.phoneNumber.getDOMNode().value,
-      email: this.email.getDOMNode().value,
-      note: this.note.getDOMNode().value
+      firstName: this.refs.firstName.getDOMNode().value,
+      lastName: this.refs.lastName.getDOMNode().value,
+      phoneNumber: this.refs.phoneNumber.getDOMNode().value,
+      email: this.refs.email.getDOMNode().value,
+      note: this.refs.note.getDOMNode().value
     };
   }
 
@@ -135,5 +135,10 @@ class Form extends Component {
   }
 
 }
+
+Form.defaultProps = {
+  data: {},
+  tags: []
+};
 
 export default Form;

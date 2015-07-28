@@ -2,15 +2,14 @@
 
 import {Record} from 'immutable';
 
-const OutboxRecord = Record({
+const SentRecord = Record({
   id: null,
   destinationNumber: null,
   contact: null,
-  multiparts: [],
   text: null,
   send: null,
   created: null,
   upddate: null
 });
 
-export default class Outbox extends OutboxRecord {}
+export default class Sent extends SentRecord {}

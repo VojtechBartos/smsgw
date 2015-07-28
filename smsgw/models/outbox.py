@@ -5,7 +5,7 @@ from datetime import datetime
 from random import randint
 
 from sqlalchemy.dialects import mysql
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, distinct, func
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
@@ -29,6 +29,8 @@ class Outbox(BaseModel):
     userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
     applicationId = db.Column(mysql.INTEGER(10, unsigned=True),
                               ForeignKey('application.id'))
+
+    group = db.Column(db.String(8))
 
     creator = db.Column(mysql.TEXT, nullable=False)
     phone = db.Column(db.String(255))
@@ -55,7 +57,8 @@ class Outbox(BaseModel):
     contact = db.relationship(
         'Contact',
         primaryjoin="Contact.phoneNumber==Outbox.destinationNumber",
-        foreign_keys=[destinationNumber]
+        foreign_keys=[destinationNumber],
+        uselist=False
     )
 
     multiparts = db.relationship(
@@ -76,6 +79,11 @@ class Outbox(BaseModel):
 
 
     def to_dict(self, properties=None):
+        """
+        To dictionary
+        :param properties: {list} of required properties
+        :return: {dict}
+        """
         dict = {
             'id': self.id,
             'destinationNumber': self.destinationNumber,
@@ -83,7 +91,8 @@ class Outbox(BaseModel):
             'application': self.application.to_dict() if self.application \
                                                       else None,
             'text': self.text,
-            'send': self.send.isoformat(sep=' ') if self.send else None,
+            'multiparts': [multipart.to_dict() for multipart in self.multiparts],
+            'send': self.sent.isoformat(sep=' ') if self.sent else None,
             'created': self.created.isoformat(sep=' ') if self.created \
                                                        else None,
             'updated': self.updated.isoformat(sep=' ') if self.updated \
@@ -97,8 +106,46 @@ class Outbox(BaseModel):
 
 
     @classmethod
+    def get_grouped(cls, user_id, application_id=None):
+        """
+
+        """
+        groups = cls.query \
+                  .with_entities(
+                    cls.id,
+                    cls.group,
+                    cls.text,
+                    cls.sent,
+                    cls.created,
+                    func.count(cls.id)
+                  ) \
+                  .filter(cls.group != None) \
+                  .filter(cls.userId == user_id) \
+                  .order_by(cls.sent.desc()) \
+                  .group_by(cls.group) \
+                  .all()
+
+        payload = []
+        for identifier, group, message, send, created, respondents in groups:
+            multiparts = OutboxMultipart.query \
+                                        .filter_by(id=identifier) \
+                                        .all()
+
+            payload.append({
+                'id': group,
+                'message': message,
+                'send': send,
+                'created': created,
+                'multiparts': [multipart.to_dict() for multipart in multiparts],
+                'countOfRespondents': respondents
+            })
+
+        return payload
+
+
+    @classmethod
     def send(cls, destination_number, message, user_id=None, application_id=None,
-             send=datetime.utcnow(), send_timeout=None,
+             group=None, send=datetime.utcnow(), send_timeout=None,
              send_before=None, send_after=None,
              flash=False, coding=DEFAULT_NO_COMPRESSION):
         """
@@ -117,8 +164,8 @@ class Outbox(BaseModel):
         """
         assert message is not None
         assert destination_number is not None
-        assert type(message) == str
-        assert type(destination_number) == str
+        assert type(message) == str or type(message) == unicode
+        assert type(destination_number) == str or type(destination_number) == unicode
 
         # defining if message is type of flash or not, 0 flash, 1 not flash
         klass = str(int(not flash))
@@ -146,9 +193,11 @@ class Outbox(BaseModel):
             )
             multiparts = cls.get_message_multipart(message, multipart_length)
             part = str(len(multiparts)).rjust(2, "0")
+
             outbox = Outbox(
                 userId=user_id,
                 applicationId=application_id,
+                group=group,
                 coding=coding,
                 text=multiparts[0],
                 udh="{udh}{part}01".format(udh=udh, part=part),
@@ -191,6 +240,7 @@ class Outbox(BaseModel):
             # message with length lower or equal max length
             outbox = Outbox(userId=user_id,
                             applicationId=application_id,
+                            group=group,
                             coding=coding,
                             text=message,
                             klass=klass,

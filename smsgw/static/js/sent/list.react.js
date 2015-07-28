@@ -9,7 +9,7 @@ import * as actions from './actions';
 import Component from '../components/component.react';
 import Spinner from '../components/spinner.react';
 
-class Outbox extends Component {
+class List extends Component {
 
   componentDidMount() {
     actions.getAll();
@@ -22,28 +22,27 @@ class Outbox extends Component {
   }
 
   render() {
-    const outbox = this.props.outbox;
+    const sentItems = this.props.sent;
 
-    if (actions.getAll.pending || actions.remove.pending || !outbox)
+    if (actions.getAll.pending || actions.remove.pending || !sentItems)
       return <Spinner fullscreen={true} />;
 
     return (
       <div id="context">
-        <h1>Outbox ({outbox.size})</h1>
+        <h1>Sent ({sentItems.size})</h1>
 
         <Table>
           <thead>
             <tr>
               <th>To</th>
               <th>Text</th>
-              <th>Parts</th>
               <th>Sending at</th>
               <th>Created</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            {outbox.map((message, i) => {
+            {sentItems.map((message, i) => {
               const contact = () => {
                 if (!message.contact)
                   return message.destinationNumber;
@@ -61,15 +60,11 @@ class Outbox extends Component {
                 // "#{dt.format 'HH:mm DD.MM.YYYY'} (#{dt.from moment()})"
                 // return `TODO(vojta)`;
               };
-              let text = message.text;
-              if (text && message.multiparts.length > 0)
-                text += ' ...';
 
               return (
                 <tr key={i}>
                   <td>{contact()}</td>
-                  <td>{text}</td>
-                  <td>{message.multiparts.length + 1}</td>
+                  <td>{message.text}</td>
                   <td>{send()}</td>
                   <td>{moment(message.created).format('HH:mm DD.MM.YYYY')}</td>
                   <td>
@@ -94,9 +89,9 @@ class Outbox extends Component {
 
 }
 
-Outbox.propTypes = {
+List.propTypes = {
   router: React.PropTypes.func,
-  outbox: React.PropTypes.instanceOf(Map).isRequired
+  sent: React.PropTypes.instanceOf(Map).isRequired
 };
 
-export default Outbox;
+export default List;
