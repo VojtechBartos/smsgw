@@ -1,3 +1,16 @@
 ---
 - name: install nginx
   apt: name=nginx
+
+- name: create symlink for local site
+  file:
+    src: /smsgw/provisioning/files/nginx/local.conf
+    dest: /etc/nginx/sites-enabled/local.conf
+    state: link
+
+- name: delete default nginx sites-enabled
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify:
+    - restart nginx
