@@ -74,8 +74,28 @@ export var applications = {
  * @type {Object}
  */
 export var outbox = {
+  validate: () => `${BASE}/outbox/validate/`,
   index: (user = "@me") => `${BASE}/users/${user}/outbox/`,
+  create: (user = "@me") => `${BASE}/users/${user}/outbox/`,
   get: (uuid, user = "@me") => `${BASE}/users/${user}/outbox/${uuid}/`,
   update: (uuid, user = "@me") => `${BASE}/users/${user}/outbox/${uuid}/`,
   delete: (uuid, user = "@me") => `${BASE}/users/${user}/outbox/${uuid}/`
+};
+
+/**
+ * Sent resource
+ * @type {Object}
+ */
+export var sent = {
+  index: (user = "@me") => `${BASE}/users/${user}/sent/`,
+  get: (uuid, user = "@me") => `${BASE}/users/${user}/sent/${uuid}/`,
+  delete: (uuid, user = "@me") => `${BASE}/users/${user}/sent/${uuid}/`
+};
+
+/**
+ * Phones resource
+ * @type {Object}
+ */
+export var phones = {
+  index: () => `${BASE}/phones/`
 };
