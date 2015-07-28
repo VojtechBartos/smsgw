@@ -57,7 +57,8 @@ class Outbox(BaseModel):
     contact = db.relationship(
         'Contact',
         primaryjoin="Contact.phoneNumber==Outbox.destinationNumber",
-        foreign_keys=[destinationNumber]
+        foreign_keys=[destinationNumber],
+        uselist=False
     )
 
     multiparts = db.relationship(
@@ -106,7 +107,7 @@ class Outbox(BaseModel):
 
     @classmethod
     def send(cls, destination_number, message, user_id=None, application_id=None,
-             send=datetime.utcnow(), send_timeout=None,
+             group=None, send=datetime.utcnow(), send_timeout=None,
              send_before=None, send_after=None,
              flash=False, coding=DEFAULT_NO_COMPRESSION):
         """
@@ -125,8 +126,8 @@ class Outbox(BaseModel):
         """
         assert message is not None
         assert destination_number is not None
-        assert type(message) == str
-        assert type(destination_number) == str
+        assert type(message) == str or type(message) == unicode
+        assert type(destination_number) == str or type(destination_number) == unicode
 
         # defining if message is type of flash or not, 0 flash, 1 not flash
         klass = str(int(not flash))
@@ -154,9 +155,11 @@ class Outbox(BaseModel):
             )
             multiparts = cls.get_message_multipart(message, multipart_length)
             part = str(len(multiparts)).rjust(2, "0")
+
             outbox = Outbox(
                 userId=user_id,
                 applicationId=application_id,
+                group=group,
                 coding=coding,
                 text=multiparts[0],
                 udh="{udh}{part}01".format(udh=udh, part=part),
@@ -199,6 +202,7 @@ class Outbox(BaseModel):
             # message with length lower or equal max length
             outbox = Outbox(userId=user_id,
                             applicationId=application_id,
+                            group=group,
                             coding=coding,
                             text=message,
                             klass=klass,
