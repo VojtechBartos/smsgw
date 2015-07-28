@@ -8,18 +8,18 @@ schema = {
     "type": "object",
     "method": "POST",
     "required": [
-        "firstName", 
+        "firstName",
         "lastName",
         "phoneNumber"
     ],
-    "additionalProperties": False, 
+    "additionalProperties": False,
     "properties": {
         "firstName": {
             "type": "string",
             "minLength": 2,
             "maxLength": 16
         },
-        "lastName": {            
+        "lastName": {
             "type": "string",
             "minLength": 2,
             "maxLength": 16
@@ -40,7 +40,7 @@ schema = {
             "type": ["array", "null"],
             "items": {
                 "type": "string",
-                "minLength": 2,
+                "minLength": 1,
                 "maxLength": 23
             }
         }

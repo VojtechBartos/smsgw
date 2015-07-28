@@ -6,14 +6,14 @@ schema = {
     "type": "object",
     "method": "POST",
     "required": ["label"],
-    "additionalProperties": False, 
+    "additionalProperties": False,
     "properties": {
         "label": {
             "type": "string",
             "minLength": 3,
             "maxLength": 32,
         },
-        "note": {            
+        "note": {
             "type": ["string", "null"],
             "maxLanegth": 255
         }
