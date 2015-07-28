@@ -30,6 +30,8 @@ class Outbox(BaseModel):
     applicationId = db.Column(mysql.INTEGER(10, unsigned=True),
                               ForeignKey('application.id'))
 
+    group = db.Column(db.String(8))
+
     creator = db.Column(mysql.TEXT, nullable=False)
     phone = db.Column(db.String(255))
 
