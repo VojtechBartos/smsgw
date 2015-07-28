@@ -20,7 +20,7 @@ class Phone(BaseModel):
     battery = db.Column(mysql.INTEGER)
     signal = db.Column(mysql.INTEGER)
     client = db.Column(mysql.TEXT)
-    
+
     sent = db.Column(mysql.INTEGER, nullable=False, server_default='0')
     received = db.Column(mysql.INTEGER, nullable=False, server_default='0')
     send = db.Column(db.Enum("yes", "no"), default='no', nullable=False)
@@ -28,10 +28,43 @@ class Phone(BaseModel):
     timeout = db.Column(db.TIMESTAMP)
 
     created = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow, 
+        db.TIMESTAMP, default=datetime.utcnow,
         server_default=text('CURRENT_TIMESTAMP')
     )
     updated = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow, 
+        db.TIMESTAMP, default=datetime.utcnow,
         onupdate=datetime.utcnow
     )
+
+
+    def to_dict(self, properties=None):
+        """
+        To dictionary
+        :param properties: {list} of required properties
+        :return: {dict}
+        """
+        dict = {
+            'id': self.id,
+            'hostname': self.hostname,
+            'imei': self.imei,
+            'netCode': self.netCode,
+            'netName': self.netName,
+            'battery': self.battery,
+            'signal': self.signal,
+            'client': self.client,
+            'sent': self.sent,
+            'received': self.received,
+            'sendEnabled': True if self.send == 'yes' else False,
+            'receiveEnabled': True if self.receive == 'yes' else False,
+            'lastActivity': self.timeout.isoformat(sep=' ') if self.timeout \
+                                                            else None,
+            'created': self.created.isoformat(sep=' ') if self.created \
+                                                       else None,
+            'updated': self.updated.isoformat(sep=' ') if self.updated \
+                                                       else None
+        }
+
+        if properties is None:
+            properties = dict.keys()
+
+        return {key: dict.get(key) for key in properties}
