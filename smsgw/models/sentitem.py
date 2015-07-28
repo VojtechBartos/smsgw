@@ -2,13 +2,14 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from datetime import datetime
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func
+from sqlalchemy.orm import aliased
 from sqlalchemy.dialects import mysql
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
 from smsgw.extensions import db
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, Contact
 
 
 class SentItem(BaseModel):
@@ -92,6 +93,59 @@ class SentItem(BaseModel):
             properties = dict.keys()
 
         return {key: dict.get(key) for key in properties}
+
+
+    @classmethod
+    def get_grouped(cls, user_id, application_id=None):
+        """
+        :param user_id: {int} user identifier
+        :param application_id: {int} application identifier
+        """
+        alias = aliased(cls)
+        query = db.session.query(
+            cls.id,
+            cls.destinationNumber,
+            cls.sent,
+            cls.created,
+            db.session.query(func.group_concat(alias.text)) \
+                      .filter(alias.group == cls.group) \
+                      .filter(alias.destinationNumber == cls.destinationNumber) \
+                      .order_by(alias.sequencePosition.desc())
+                      .label('message'),
+            func.count(cls.id).label('multiparts'),
+            Contact.uuid,
+            Contact.firstName,
+            Contact.lastName
+        ) \
+        .outerjoin(Contact, Contact.phoneNumber==cls.destinationNumber) \
+        .filter(cls.userId == user_id) \
+        .filter(cls.applicationId == application_id) \
+        .group_by(cls.group, cls.destinationNumber) \
+        .order_by(cls.sent.desc())
+
+        payload = []
+        for identifier, number, s, c, text, multiparts, uuid, fn, ln in query.all():
+            contact = None
+            if uuid is not None:
+                contact = {
+                    'uuid': uuid,
+                    'phoneNumber': number,
+                    'firstName': fn,
+                    'lastName': ln
+                }
+
+            payload.append({
+                'id': identifier,
+                'destinationNumber': number,
+                'text': text,
+                'multiparts': multiparts,
+                'contact': contact,
+                'send': s.isoformat(sep=' ') if s else None,
+                'created': c.isoformat(sep=' ') if c else None
+            })
+
+        return payload
+
 
 Index('sentitem_date', SentItem.delivery)
 Index('sentitem_tpmr', SentItem.tpmr)
