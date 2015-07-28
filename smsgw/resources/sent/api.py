@@ -14,19 +14,27 @@ from smsgw.extensions import db
 class SentResource(FlaskView):
     """ Sent endpoints """
 
-    route_base = '/users/<uuid:user_uuid>/sent/'
+    route_base = '/'
 
+    @route('/users/<uuid:user_uuid>/sent/', methods=['GET'])
+    @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/sent/',
+           methods=['GET'])
     @decorators.auth()
     def index(self, **kwargs):
         """
         Returning list of sent items
         """
         user = kwargs.get('user')
+        application = kwargs.get('application')
+        messages = SentItem.get_grouped(
+            user_id=user.id,
+            application_id=application.id if application else None
+        )
 
-        return response([message.to_dict() for message in user.sent_items.all()])
+        return response(messages)
 
 
-    @route('/<uuid:sentitem_uuid>/', methods=['DELETE'])
+    @route('/users/<uuid:user_uuid>/sent/<int:sentitem_id>/', methods=['GELETE'])
     @decorators.auth()
     def delete(self, **kwargs):
         """
