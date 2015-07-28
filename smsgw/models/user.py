@@ -39,6 +39,7 @@ class User(BaseModel, DateMixin):
     tags = relationship("Tag", backref='user', lazy='dynamic')
     applications = relationship("Application", backref='user', lazy='dynamic')
     outbox = relationship("Outbox", backref='user', lazy='dynamic')
+    sent_items = relationship("SentItem", backref='user', lazy='dynamic')
 
 
     @property
