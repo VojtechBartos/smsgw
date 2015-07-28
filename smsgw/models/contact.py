@@ -22,7 +22,7 @@ class Contact(BaseModel, DateMixin):
     email = db.Column(db.String(128))
     note = db.Column(db.String(255))
 
-    _tags = db.relationship("Tag", secondary=relations.contactTags,
+    _tags = db.relationship("Tag", secondary=relations.contact_on_tags,
                             backref="contacts", lazy="dynamic")
 
     @property
