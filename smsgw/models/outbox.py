@@ -5,7 +5,7 @@ from datetime import datetime
 from random import randint
 
 from sqlalchemy.dialects import mysql
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, distinct, func
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
@@ -103,6 +103,44 @@ class Outbox(BaseModel):
             properties = dict.keys()
 
         return {key: dict.get(key) for key in properties}
+
+
+    @classmethod
+    def get_grouped(cls, user_id, application_id=None):
+        """
+
+        """
+        groups = cls.query \
+                  .with_entities(
+                    cls.id,
+                    cls.group,
+                    cls.text,
+                    cls.sent,
+                    cls.created,
+                    func.count(cls.id)
+                  ) \
+                  .filter(cls.group != None) \
+                  .filter(cls.userId == user_id) \
+                  .order_by(cls.sent.desc()) \
+                  .group_by(cls.group) \
+                  .all()
+
+        payload = []
+        for identifier, group, message, send, created, respondents in groups:
+            multiparts = OutboxMultipart.query \
+                                        .filter_by(id=identifier) \
+                                        .all()
+
+            payload.append({
+                'id': group,
+                'message': message,
+                'send': send,
+                'created': created,
+                'multiparts': [multipart.to_dict() for multipart in multiparts],
+                'countOfRespondents': respondents
+            })
+
+        return payload
 
 
     @classmethod
