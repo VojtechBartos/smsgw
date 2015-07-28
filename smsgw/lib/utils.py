@@ -2,7 +2,11 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 import uuid
+import pytz
+import random
+import string
 from flask import jsonify
+from dateutil.parser import parse as dtparse
 from smsgw.constants.http_status_codes import STATUS_CODES
 
 
@@ -26,6 +30,7 @@ def response(payload, status_code=200, message='OK.'):
     }
     return jsonify(res), status_code
 
+
 def underscore_to_camelcase(value):
     """
     Transformation string from underscore to camelcase
@@ -40,6 +45,7 @@ def underscore_to_camelcase(value):
     value = "".join(c.next()(x) if x else '_' for x in value.split("_"))
     return value[0].upper() + value[1:]
 
+
 def generate_uuid():
     """
     Generate new uuid
@@ -48,12 +54,33 @@ def generate_uuid():
     return str(uuid.uuid4())
 
 
+def random_string(length=6):
+    """
+    Generate random string from ASCII characters and digits
+    :param lentgh: {str} length of random string
+    """
+    return ''.join(random.choice(string.ascii_uppercase + string.digits)
+                   for _ in range(length))
+
+
+def str_to_datetime(string, timezone=pytz.utc):
+    """
+    Convert string to datetime.datetime
+    :param string: {str} datetime in string
+    :param timezone: {pytz.timezone}
+    :return: {datetime.datetime} datetime
+    """
+    dt = dtparse(string)
+
+    return timezone.localize(dt) if dt is not None else None
+
 
 def is_special_char(char):
     """
     TODO(vojta) diacriticts and etc
     :param char: {str}
     """
+    char = str(char)
     # GSM Default 7-bit special character (count as 2 char)
     special = ['^', '{', '}', '[', ']', '~', '|', '€', '\\']
 
