@@ -12,3 +12,9 @@
     - include: tasks/mariadb.yml
     - include: tasks/python.yml
     - include: tasks/gammu.yml
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
