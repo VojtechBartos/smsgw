@@ -26,20 +26,22 @@ import TagsAdd from './tags/add.react';
 import TagsEdit from './tags/edit.react';
 // messages
 import Messages from './pages/messages.react';
-import MessagesSent from './messages/sent.react';
-import MessagesCompose from './messages/compose.react';
+import Sent from './sent/list.react';
 import Outbox from './outbox/list.react';
-// users
-import Admin from './pages/admin.react';
-import Users from './users/list.react';
+import Compose from './outbox/compose.react';
+import Inbox from './inbox/list.react';
 // applications
 import Applications from './applications/list.react';
 import ApplicationsAdd from './applications/add.react';
 import ApplicationsWrapper from './applications/wrapper.react';
 import ApplicationsSettings from './applications/settings.react';
 import ApplicationsOverview from './applications/overview.react';
-import ApplicationsSent from './applications/sent.react';
-import ApplicationsReceived from './applications/received.react';
+// admin
+import Admin from './pages/admin.react';
+import Users from './users/list.react';
+import Phones from './phones/list.react';
+import InboxNoResolved from './pages/inbox.react';
+
 
 export default (
   <Route handler={Main} path="/">
@@ -59,15 +61,15 @@ export default (
         <Route name="application" path=":uuid" handler={ApplicationsWrapper}>
           <Route name="application-overview" path="overview" handler={ApplicationsOverview} />
           <Route name="application-settings" path="settings" handler={ApplicationsSettings} />
-          <Route name="application-sent-messages" path="sent-messages" handler={ApplicationsSent} />
-          <Route name="application-received-messages" path="received-messages" handler={ApplicationsReceived} />
+          <Route name="application-sent-messages" path="sent-messages" handler={Sent} />
+          <Route name="application-received-messages" path="received-messages" handler={Inbox} />
           </Route>
       </Route>
 
       <Route name="messages" handler={Messages}>
-        <Route name="messages-sent" path="sent" handler={MessagesSent} />
+        <Route name="messages-sent" path="sent" handler={Sent} />
         <Route name="messages-outbox" path="outbox" handler={Outbox} />
-        <Route name="compose" path="compose" handler={MessagesCompose} />
+        <Route name="compose" path="compose" handler={Compose} />
       </Route>
 
       <Route name="templates" handler={Wrapper}>
@@ -89,8 +91,10 @@ export default (
 
       <Route name="settings" handler={Settings} />
 
-      <Route name="users" handler={Admin}>
-        <DefaultRoute handler={Users} />
+      <Route handler={Admin}>
+        <Route name="users" handler={Users} />
+        <Route name="phones" handler={Phones} />
+        <Route name="inbox" handler={InboxNoResolved} />
       </Route>
     </Route>
   </Route>
