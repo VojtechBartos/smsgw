@@ -13,6 +13,9 @@ import '../contacts/store';
 import '../tags/store';
 import '../outbox/store';
 import '../applications/store';
+import '../sent/store';
+import '../phones/store';
+import '../inbox/store';
 
 export default class Main extends Component {
 
@@ -28,9 +31,15 @@ export default class Main extends Component {
       users: appState.usersCursor(),
       templates: appState.templatesCursor(),
       contacts: appState.contactsCursor(),
+      contactsSearch: appState.contactsSearchCursor(),
       tags: appState.tagsCursor(),
+      tagsSearch: appState.tagsSearchCursor(),
       outbox: appState.outboxCursor(),
-      applications: appState.applicationsCursor()
+      outboxGroups: appState.outboxGroupsCursor(),
+      applications: appState.applicationsCursor(),
+      sent: appState.sentCursor(),
+      phones: appState.phonesCursor(),
+      inbox: appState.inboxCursor()
     };
   }
 
