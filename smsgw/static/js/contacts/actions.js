@@ -7,6 +7,21 @@ import {token} from '../users/actions';
 import * as api from '../api';
 
 /**
+ * Search tag by name
+ * @param  {String} phrase
+ */
+export function search(phrase) {
+  let request = api.get(contacts.index(), {
+    token,
+    query: {
+      search: phrase
+    }
+  });
+
+  return Dispatcher.dispatch(search, request);
+}
+
+/**
  * Get all
  */
 export function getAll() {
@@ -58,6 +73,7 @@ export function remove(uuid) {
 
 // Override toString methods. Pretty useful for dispatched actions monitoring.
 setToString('contacts', {
+  search,
   getAll,
   get,
   create,
