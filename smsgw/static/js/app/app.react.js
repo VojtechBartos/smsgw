@@ -36,7 +36,7 @@ class App extends Component {
     return (
       <Wrapper>
         <Header user={user} {...this.props} />
-        <RouteHandler {...this.props} />
+        <RouteHandler user={user} {...this.props} />
       </Wrapper>
     );
   }
