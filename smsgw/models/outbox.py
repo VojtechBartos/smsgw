@@ -13,7 +13,7 @@ from sqlalchemy.schema import Index
 from smsgw.extensions import db
 from smsgw.models import BaseModel
 from smsgw.models.outbox_multipart import OutboxMultipart
-from smsgw.lib.utils import is_special_char
+from smsgw.lib.utils import is_special_char, generate_uuid
 
 
 class Outbox(BaseModel):
@@ -26,6 +26,8 @@ class Outbox(BaseModel):
     UNICODE_NO_COMPRESSION = 'Unicode_No_Compression'
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
+    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False,
+                     default=generate_uuid)
     userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
     applicationId = db.Column(mysql.INTEGER(10, unsigned=True),
                               ForeignKey('application.id'))
@@ -86,6 +88,7 @@ class Outbox(BaseModel):
         """
         dict = {
             'id': self.id,
+            'uuid': self.uuid,
             'destinationNumber': self.destinationNumber,
             'contact': self.contact.to_dict() if self.contact else None,
             'application': self.application.to_dict() if self.application \
