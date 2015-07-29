@@ -50,8 +50,9 @@ class Header extends Component {
     let user = {};
     if (this.props.user) {
       user = this.props.user;
-      if (user.role)
+      if (user.role === 'admin')
         menu.push('users');
+        menu.push('phones');
     }
 
     return (
