@@ -9,7 +9,7 @@ import * as api from '../api';
 /**
  * Get all
  */
-export function getAll(user, application = null) {
+export function getAll(user = null, application = null) {
   let request = api.get(inbox.index(user, application), { token });
 
   return Dispatcher.dispatch(getAll, request);
@@ -18,8 +18,8 @@ export function getAll(user, application = null) {
 /**
  * Delete
  */
-export function remove(user, application = null) {
-  let request = api.del(inbox.delete(user, application), { token });
+export function remove(uuid, application = null, user = '@me') {
+  let request = api.del(inbox.delete(uuid, application, user), { token });
 
   return Dispatcher.dispatch(remove, request);
 }
