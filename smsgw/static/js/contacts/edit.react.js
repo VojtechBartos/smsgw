@@ -59,7 +59,8 @@ class Edit extends Component {
                 ref="contactForm"
                 pending={actions.update.pending}
                 submitTitle="Edit"
-                data={contact} />
+                data={contact}
+                {...this.props} />
         </div>
       </div>
     );

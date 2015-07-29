@@ -37,7 +37,8 @@ class Add extends Component {
 
           <Form onSubmit={(e) => this.onFormSubmit(e)}
                 ref="contactForm"
-                pending={create.pending} />
+                pending={create.pending}
+                {...this.props} />
         </div>
       </div>
     );

@@ -2,9 +2,13 @@
 
 import React from 'react';
 import LaddaButton from 'react-ladda';
+import ReactTagsInput from 'react-tagsinput';
 import {Grid, Row, Col} from 'react-bootstrap';
+import {Map} from 'immutable';
 import Component from '../components/component.react';
-import AutocompleteInput from '../components/autocompleteinput.react';
+import Tag from '../tags/tag';
+import {search as tagsActionSearch} from '../tags/actions';
+
 
 class Form extends Component {
 
@@ -12,7 +16,7 @@ class Form extends Component {
     super(props);
     this.state = {
       selected: this.props.tags,
-      search: []
+      completions: Map()
     };
   }
 
@@ -26,27 +30,69 @@ class Form extends Component {
       lastName: this.refs.lastName.getDOMNode().value,
       phoneNumber: this.refs.phoneNumber.getDOMNode().value,
       email: this.refs.email.getDOMNode().value,
-      note: this.refs.note.getDOMNode().value
+      note: this.refs.note.getDOMNode().value,
+      tags: this.refs.tags.getTags().map(el => {
+        const tag = el.props.tag;
+        return (tag instanceof Tag) ? tag.label : tag;
+      })
     };
   }
 
-  onChange(value) {
-    // TODO(vojta)
-    console.log(value); // eslint-disable-line no-console
+  // React Tags Input
+
+  addTag(item) {
+    this.refs.tags.addTag(item);
+
+    this.setState({ completions: Map() });
   }
 
-  onSelect(tag) {
-    // TODO(vojta)
-    console.log(tag); // eslint-disable-line no-console
+  validate(item) {
+    const tag = item.props.tag;
+    if (typeof tag === 'string' || tag instanceof String)
+      return tag.trim().length > 0;
+
+    return true;
   }
 
-  onDelete(index) {
-    // TODO(vojta)
-    console.log(index); // eslint-disable-line no-console
+  complete(value) {
+    if (!value || value === '') {
+      this.setState({ completions: Map() });
+      return;
+    }
+
+    tagsActionSearch(value).then(() => {
+      const { tagsSearch } = this.props;
+
+      this.setState({ completions: tagsSearch });
+    });
   }
+
+  transform(item) {
+    return (
+      <span tag={item}>
+        {(item instanceof Tag) ? item.label : item}
+      </span>
+    );
+  }
+
+  renderTag(key, element, removeTag) {
+    return (
+      <span key={key} className="react-tagsinput-tag">
+        {element}
+        {(() => {
+          if (!removeTag) return null;
+          return <a onClick={removeTag} className="react-tagsinput-remove" />;
+        })()}
+      </span>
+    );
+  }
+
+  // Render
 
   render() {
-    const tags = [];
+    let tags = [];
+    if (this.props.data.tags)
+      tags = this.props.data.tags.map(item => this.transform(item));
 
     return (
       <form onSubmit={e => this.props.onSubmit(e)}>
@@ -112,12 +158,22 @@ class Form extends Component {
             <Col md={2}>
               <div className="form-group">
                 <label>Tags</label>
-                <AutocompleteInput pending={false}
-                                   onChange={this.onChange}
-                                   onSelect={this.onSelect}
-                                   options={this.state.search} />
-                <div className="cleaner" />
-                <ul>{tags}</ul>
+                  <ReactTagsInput ref="tags"
+                                  placeholder="Add tag"
+                                  addOnBlur={false}
+                                  defaultValue={tags}
+                                  validate={tag => this.validate(tag)}
+                                  transform={tag => this.transform(tag)}
+                                  renderTag={(...props) => this.renderTag(...props)}
+                                  onChangeInput={tag => this.complete(tag)} />
+                  <div className="react-tagsinput-completion">
+                    {this.state.completions.map((item, index) => {
+                      return React.cloneElement(
+                        this.renderTag(index, this.transform(item)),
+                        { onClick: () => this.addTag(item) }
+                      );
+                    })}
+                  </div>
               </div>
             </Col>
           </Row>
@@ -137,8 +193,14 @@ class Form extends Component {
 }
 
 Form.defaultProps = {
+  pending: false,
+  submitTitle: 'Create',
   data: {},
   tags: []
+};
+
+Form.propTypes = {
+  tagsSearch: React.PropTypes.instanceOf(Map).isRequired
 };
 
 export default Form;

@@ -1,7 +1,7 @@
 'use strict';
 
 import * as actions from './actions';
-import {contactsCursor} from '../state';
+import {contactsCursor, contactsSearchCursor} from '../state';
 import Dispatcher from '../dispatcher';
 import Contact from './contact';
 
@@ -18,6 +18,15 @@ export function get(uuid) {
  */
 export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
+    case actions.search:
+      contactsSearchCursor(contacts => {
+        contacts = contacts.clear();
+        return contacts.withMutations(items => {
+          data.forEach(i => items.set(i.uuid, new Contact(i)) );
+        });
+      });
+      break;
+
     case actions.getAll:
       contactsCursor(contacts => {
         return contacts.withMutations(items => {
