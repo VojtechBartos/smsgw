@@ -87,9 +87,22 @@ export var outbox = {
  * @type {Object}
  */
 export var sent = {
-  index: (user = "@me") => `${BASE}/users/${user}/sent/`,
-  get: (uuid, user = "@me") => `${BASE}/users/${user}/sent/${uuid}/`,
-  delete: (uuid, user = "@me") => `${BASE}/users/${user}/sent/${uuid}/`
+  index: (user = '@me', application = null) => {
+    if (user && application)
+      return `${BASE}/users/${user}/applications/${application}/sent/`;
+    else if (user)
+      return `${BASE}/users/${user}/sent/`;
+    else
+      return `${BASE}/sent/`;
+  },
+  delete: (uuid, application = null, user = '@me') => {
+    if (user && application)
+      return `${BASE}/users/${user}/applications/${application}/sent/${uuid}/`;
+    else if (user)
+      return `${BASE}/users/${user}/sent/${uuid}`;
+    else
+      return `${BASE}/sent/${uuid}`;
+  }
 };
 
 /**
