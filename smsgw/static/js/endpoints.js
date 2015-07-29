@@ -99,3 +99,26 @@ export var sent = {
 export var phones = {
   index: () => `${BASE}/phones/`
 };
+
+/**
+ * Inbox resource
+ * @type {Object}
+ */
+export var inbox = {
+  index: (user = '@me', application = null) => {
+    if (user && application)
+      return `${BASE}/users/${user}/applications/${application}/inbox/`;
+    else if (user)
+      return `${BASE}/users/${user}/inbox/`;
+    else
+      return `${BASE}/inbox/`;
+  },
+  delete: (uuid, application = null, user = '@me') => {
+    if (user && application)
+      return `${BASE}/users/${user}/applications/${application}/inbox/${uuid}/`;
+    else if (user)
+      return `${BASE}/users/${user}/inbox/${uuid}`;
+    else
+      return `${BASE}/inbox/${uuid}`;
+  }
+};
