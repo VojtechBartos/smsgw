@@ -25,23 +25,30 @@ class SentResource(FlaskView):
         Returning list of sent items
         """
         user = kwargs.get('user')
-        application = kwargs.get('application')
-        messages = SentItem.get_grouped(
-            user_id=user.id,
-            application_id=application.id if application else None
-        )
+        app = kwargs.get('application')
+        messages = SentItem.get(user_id=user.id,
+                                application_id=app.id if app else None)
 
         return response(messages)
 
 
-    @route('/users/<uuid:user_uuid>/sent/<int:sentitem_id>/', methods=['GELETE'])
+    @route('/users/<uuid:user_uuid>/sent/<uuid:sentitem>/', methods=['DELETE'])
+    @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/sent/<uuid:sentitem>/',
+           methods=['DELETE'])
     @decorators.auth()
-    def delete(self, **kwargs):
+    def delete(self, sentitem, **kwargs):
         """
         Delete sent message
         """
-        sent_item = kwargs.get('sentitem')
-        db.session.delete(sent_item)
+        user = kwargs.get('user')
+        app = kwargs.get('application')
+
+        SentItem.remove(uuid=sentitem,
+                        user_id=user.id,
+                        application_id=app.id if app else None)
+
         db.session.commit()
 
-        return response(sent_item.to_dict())
+        return response({
+            'uuid': sentitem
+        })
