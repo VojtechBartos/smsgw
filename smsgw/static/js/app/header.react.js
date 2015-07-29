@@ -53,6 +53,7 @@ class Header extends Component {
       if (user.role === 'admin')
         menu.push('users');
         menu.push('phones');
+        menu.push('inbox');
     }
 
     return (
