@@ -9,6 +9,7 @@ from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
 from smsgw.extensions import db
+from smsgw.lib.utils import generate_uuid
 from smsgw.models import BaseModel, Contact
 
 
@@ -18,6 +19,7 @@ class SentItem(BaseModel):
     __tablename__ = 'sentitems'
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
+    uuid = db.Column(mysql.CHAR(36), nullable=False, default=generate_uuid)
     userId = db.Column(mysql.INTEGER(10, unsigned=True), ForeignKey('user.id'))
     applicationId = db.Column(mysql.INTEGER(10, unsigned=True),
                               ForeignKey('application.id'))
@@ -62,6 +64,7 @@ class SentItem(BaseModel):
         db.TIMESTAMP, default=datetime.utcnow,
         server_default=dbtext('CURRENT_TIMESTAMP')
     )
+
     updated = db.Column(
         db.TIMESTAMP, default=datetime.utcnow,
         onupdate=datetime.utcnow
@@ -76,6 +79,7 @@ class SentItem(BaseModel):
         """
         dict = {
             'id': self.id,
+            'uuid': self.uuid,
             'destinationNumber': self.destinationNumber,
             'contact': self.contact.to_dict() if self.contact else None,
             'status': self.status,
@@ -96,7 +100,7 @@ class SentItem(BaseModel):
 
 
     @classmethod
-    def get_grouped(cls, user_id, application_id=None):
+    def get(cls, user_id, application_id=None):
         """
         :param user_id: {int} user identifier
         :param application_id: {int} application identifier
@@ -104,6 +108,7 @@ class SentItem(BaseModel):
         alias = aliased(cls)
         query = db.session.query(
             cls.id,
+            cls.uuid,
             cls.destinationNumber,
             cls.sent,
             cls.created,
@@ -124,18 +129,19 @@ class SentItem(BaseModel):
         .order_by(cls.sent.desc())
 
         payload = []
-        for identifier, number, s, c, text, multiparts, uuid, fn, ln in query.all():
+        for i, uuid, number, s, c, text, multiparts, cuuid, fn, ln in query.all():
             contact = None
             if uuid is not None:
                 contact = {
-                    'uuid': uuid,
+                    'uuid': cuuid,
                     'phoneNumber': number,
                     'firstName': fn,
                     'lastName': ln
                 }
 
             payload.append({
-                'id': identifier,
+                'id': i,
+                'uuid': uuid,
                 'destinationNumber': number,
                 'text': text,
                 'multiparts': multiparts,
@@ -145,6 +151,19 @@ class SentItem(BaseModel):
             })
 
         return payload
+
+
+    @classmethod
+    def remove(cls, uuid, user_id, application_id=None):
+        """
+        Removing message with multiparts
+        :param user_id: {int} user identifier
+        :param uuid: {int} uuid identifier
+        """
+        db.session.query(cls).filter(cls.uuid == uuid) \
+                             .filter(cls.userId == user_id) \
+                             .filter(cls.applicationId == application_id) \
+                             .delete(synchronize_session=False)
 
 
 Index('sentitem_date', SentItem.delivery)
