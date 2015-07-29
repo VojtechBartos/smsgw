@@ -4,6 +4,7 @@ import {Record} from 'immutable';
 
 const OutboxRecord = Record({
   id: null,
+  uuid: null,
   destinationNumber: null,
   contact: null,
   multiparts: [],
