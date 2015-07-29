@@ -1,7 +1,7 @@
 'use strict';
 
 import * as actions from './actions';
-import {tagsCursor} from '../state';
+import {tagsCursor, tagsSearchCursor} from '../state';
 import Dispatcher from '../dispatcher';
 import Tag from './tag';
 
@@ -18,6 +18,15 @@ export function get(uuid) {
  */
 export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
+    case actions.search:
+      tagsSearchCursor(tags => {
+        tags = tags.clear();
+        return tags.withMutations(items => {
+          data.forEach(i => items.set(i.uuid, new Tag(i)) );
+        });
+      });
+      break;
+
     case actions.getAll:
       tagsCursor(tags => {
         return tags.withMutations(items => {
