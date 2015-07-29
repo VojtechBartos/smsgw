@@ -9,18 +9,17 @@ import * as api from '../api';
 /**
  * Get all
  */
-export function getAll() {
-  let request = api.get(sent.index(), { token });
+export function getAll(user = null, application = null) {
+  let request = api.get(sent.index(user, application), { token });
 
   return Dispatcher.dispatch(getAll, request);
 }
 
 /**
  * Delete
- * @param  {String} id
  */
-export function remove(id) {
-  let request = api.del(sent.delete(id), { token });
+export function remove(uuid, application = null, user = '@me') {
+  let request = api.del(sent.delete(uuid, application, user), { token });
 
   return Dispatcher.dispatch(remove, request);
 }

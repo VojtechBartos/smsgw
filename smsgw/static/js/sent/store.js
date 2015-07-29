@@ -6,11 +6,13 @@ import Dispatcher from '../dispatcher';
 import Message from './message';
 
 /**
- * Get by id
- * @param  {String} id
+ * Get all
  */
-export function get(id) {
-  return sentCursor().get(id);
+export function getAll(applicationUuid) {
+  return sentCursor().filter(sent => {
+    const app = sent.application;
+    return (!app || app.uuid === applicationUuid);
+  });
 }
 
 /**
@@ -20,15 +22,16 @@ export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
     case actions.getAll:
       sentCursor(sent => {
+        sent = sent.clear();
         return sent.withMutations(items => {
-          data.forEach(i => items.set(i.id, new Message(i)) );
+          data.forEach(i => items.set(i.uuid, new Message(i)) );
         });
       });
       break;
 
     case actions.remove:
       sentCursor(sent => {
-        return sent.remove(data.id);
+        return sent.remove(data.uuid);
       });
       break;
   }

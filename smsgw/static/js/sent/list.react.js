@@ -4,25 +4,38 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
 import {Map} from 'immutable';
-import moment from 'moment';
 import * as actions from './actions';
+import * as store from './store';
 import Component from '../components/component.react';
 import Spinner from '../components/spinner.react';
+import Application from '../applications/application';
+import User from '../users/user';
 
 class List extends Component {
 
   componentDidMount() {
-    actions.getAll();
+    const { user, application } = this.props;
+
+    actions.getAll(
+      (user) ? user.uuid : null,
+      (application) ? application.uuid : null
+    );
   }
 
   onDeleteAction(e, message) {
     e.preventDefault();
 
-    actions.remove(message.id);
+    const { user, application } = this.props;
+    actions.remove(
+      message.uuid,
+      (application) ? application.uuid : null,
+      (user) ? user.uuid : null
+    );
   }
 
   render() {
-    const sentItems = this.props.sent;
+    const { application } = this.props;
+    const sentItems = store.getAll((application) ? application.uuid : null);
 
     if (actions.getAll.pending || actions.remove.pending || !sentItems)
       return <Spinner fullscreen={true} />;
@@ -36,7 +49,8 @@ class List extends Component {
             <tr>
               <th>To</th>
               <th>Text</th>
-              <th>Sending at</th>
+              <th>Parts</th>
+              <th>Sent at</th>
               <th>Created</th>
               <th></th>
             </tr>
@@ -54,25 +68,19 @@ class List extends Component {
                   </Link>
                 );
               };
-              const send = () => {
-                if (!message.send) return;
-                // const dt = moment(message.send);
-                // "#{dt.format 'HH:mm DD.MM.YYYY'} (#{dt.from moment()})"
-                // return `TODO(vojta)`;
-              };
 
               return (
                 <tr key={i}>
                   <td>{contact()}</td>
-                  <td>{message.text}</td>
-                  <td>{send()}</td>
-                  <td>{moment(message.created).format('HH:mm DD.MM.YYYY')}</td>
+                  <td style={{maxWidth: '500px'}}>{message.text}</td>
+                  <td>{message.multiparts}</td>
+                  <td>{message.send}</td>
+                  <td>{message.created}</td>
                   <td>
                     <DropdownButton title="actions"
                                     bsStyle="primary"
                                     bsSize="xsmall">
-                      <MenuItem eventKey="1">Edit</MenuItem>
-                      <MenuItem eventKey="2"
+                      <MenuItem eventKey="1"
                                 onClick={(e) => this.onDeleteAction(e, message)}>
                         Delete
                       </MenuItem>
@@ -91,6 +99,8 @@ class List extends Component {
 
 List.propTypes = {
   router: React.PropTypes.func,
+  user: React.PropTypes.instanceOf(User),
+  application: React.PropTypes.instanceOf(Application),
   sent: React.PropTypes.instanceOf(Map).isRequired
 };
 

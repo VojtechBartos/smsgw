@@ -3,13 +3,13 @@
 import {Record} from 'immutable';
 
 const SentRecord = Record({
-  id: null,
+  uuid: null,
   destinationNumber: null,
   contact: null,
+  multiparts: 1,
   text: null,
   send: null,
-  created: null,
-  upddate: null
+  created: null
 });
 
 export default class Sent extends SentRecord {}
