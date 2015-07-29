@@ -24,6 +24,7 @@ class Application(BaseModel, DateMixin):
     note = db.Column(db.String(255))
 
     outbox = relationship("Outbox", backref='application', lazy='dynamic')
+    inbox = relationship("Inbox", backref='application', lazy='dynamic')
     sent_items = relationship("SentItem", backref='application', lazy='dynamic')
 
 
