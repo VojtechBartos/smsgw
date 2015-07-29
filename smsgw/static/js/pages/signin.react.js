@@ -28,7 +28,6 @@ class SignIn extends Component {
         <SignInForm {...this.props} />
 
         <div className="info">
-          Forgot your password? Reset Password.<br />
           Don't have an account? <Link to="signup">Sign up</Link> for free.
         </div>
       </div>
