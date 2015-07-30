@@ -3,14 +3,15 @@
 import Dispatcher from '../dispatcher';
 import {templates} from '../endpoints';
 import setToString from '../lib/settostring';
-import {token} from '../users/actions';
+import {getToken} from '../users/actions';
 import * as api from '../api';
 
 /**
  * Get all
  */
 export function getAll() {
-  let request = api.get(templates.index(), { token });
+  const token = getToken();
+  const request = api.get(templates.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
 }
@@ -20,7 +21,8 @@ export function getAll() {
  * @param  {String} uuid
  */
 export function get(uuid) {
-  let request = api.get(templates.get(uuid), { token });
+  const token = getToken();
+  const request = api.get(templates.get(uuid), { token });
 
   return Dispatcher.dispatch(get, request);
 }
@@ -30,7 +32,8 @@ export function get(uuid) {
  * @param  {Object} data
  */
 export function create(data) {
-  let request = api.post(templates.create(), { token, data });
+  const token = getToken();
+  const request = api.post(templates.create(), { token, data });
 
   return Dispatcher.dispatch(create, request);
 }
@@ -41,7 +44,8 @@ export function create(data) {
  * @param  {Object} data
  */
 export function update(uuid, data) {
-  let request = api.put(templates.update(uuid), { token, data });
+  const token = getToken();
+  const request = api.put(templates.update(uuid), { token, data });
 
   return Dispatcher.dispatch(update, request);
 }
@@ -51,7 +55,8 @@ export function update(uuid, data) {
  * @param  {String} uuid
  */
 export function remove(uuid) {
-  let request = api.del(templates.delete(uuid), { token });
+  const token = getToken();
+  const request = api.del(templates.delete(uuid), { token });
 
   return Dispatcher.dispatch(remove, request);
 }

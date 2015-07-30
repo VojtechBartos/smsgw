@@ -3,14 +3,15 @@
 import Dispatcher from '../dispatcher';
 import {outbox} from '../endpoints';
 import setToString from '../lib/settostring';
-import {token} from '../users/actions';
+import {getToken} from '../users/actions';
 import * as api from '../api';
 
 /**
  * Get all groups
  */
 export function getAll() {
-  let request = api.get(outbox.index(), { token });
+  const token = getToken();
+  const request = api.get(outbox.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
 }
@@ -27,6 +28,7 @@ export function create(data) {
     tags: (data.tags || []).map(tag => tag.uuid),
     contacts: (data.contacts || []).map(contact => contact.uuid)
   };
+  const token = getToken();
   const request = api.post(outbox.create(), { token, data: payload });
 
   return Dispatcher.dispatch(create, request);
@@ -37,6 +39,7 @@ export function create(data) {
  * @param  {String} phoneNumber
  */
 export function validate(phoneNumber) {
+  const token = getToken();
   const request = api.post(outbox.validate(), { token, data: { phoneNumber } });
 
   return Dispatcher.dispatch(validate, request);
@@ -47,7 +50,8 @@ export function validate(phoneNumber) {
  * @param  {String} group id
  */
 export function remove(id) {
-  let request = api.del(outbox.delete(id), { token });
+  const token = getToken();
+  const request = api.del(outbox.delete(id), { token });
 
   return Dispatcher.dispatch(remove, request);
 }

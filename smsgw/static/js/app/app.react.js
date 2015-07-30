@@ -24,6 +24,8 @@ class App extends Component {
   }
 
   redirectWhenUnauthorized() {
+    actions.signOut();
+
     this.props.router.transitionTo('signin');
   }
 

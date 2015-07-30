@@ -3,13 +3,14 @@
 import Dispatcher from '../dispatcher';
 import {phones} from '../endpoints';
 import setToString from '../lib/settostring';
-import {token} from '../users/actions';
+import {getToken} from '../users/actions';
 import * as api from '../api';
 
 /**
  * Get all
  */
 export function getAll() {
+  const token = getToken();
   const request = api.get(phones.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
@@ -20,6 +21,7 @@ export function getAll() {
  * @param  {String} uuid
  */
 export function get(uuid) {
+  const token = getToken();
   const request = api.get(phones.get(uuid), { token });
 
   return Dispatcher.dispatch(get, request);

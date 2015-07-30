@@ -3,7 +3,7 @@
 import Dispatcher from '../dispatcher';
 import {contacts} from '../endpoints';
 import setToString from '../lib/settostring';
-import {token} from '../users/actions';
+import {getToken} from '../users/actions';
 import * as api from '../api';
 
 /**
@@ -11,7 +11,8 @@ import * as api from '../api';
  * @param  {String} phrase
  */
 export function search(phrase) {
-  let request = api.get(contacts.index(), {
+  const token = getToken();
+  const request = api.get(contacts.index(), {
     token,
     query: {
       search: phrase
@@ -25,7 +26,8 @@ export function search(phrase) {
  * Get all
  */
 export function getAll() {
-  let request = api.get(contacts.index(), { token });
+  const token = getToken();
+  const request = api.get(contacts.index(), { token });
 
   return Dispatcher.dispatch(getAll, request);
 }
@@ -35,7 +37,8 @@ export function getAll() {
  * @param  {String} uuid
  */
 export function get(uuid) {
-  let request = api.get(contacts.get(uuid), { token });
+  const token = getToken();
+  const request = api.get(contacts.get(uuid), { token });
 
   return Dispatcher.dispatch(get, request);
 }
@@ -45,7 +48,8 @@ export function get(uuid) {
  * @param  {Object} data
  */
 export function create(data) {
-  let request = api.post(contacts.create(), { token, data });
+  const token = getToken();
+  const request = api.post(contacts.create(), { token, data });
 
   return Dispatcher.dispatch(create, request);
 }
@@ -56,7 +60,8 @@ export function create(data) {
  * @param  {Object} data
  */
 export function update(uuid, data) {
-  let request = api.put(contacts.update(uuid), { token, data });
+  const token = getToken();
+  const request = api.put(contacts.update(uuid), { token, data });
 
   return Dispatcher.dispatch(update, request);
 }
@@ -66,7 +71,8 @@ export function update(uuid, data) {
  * @param  {String} uuid
  */
 export function remove(uuid) {
-  let request = api.del(contacts.delete(uuid), { token });
+  const token = getToken();
+  const request = api.del(contacts.delete(uuid), { token });
 
   return Dispatcher.dispatch(remove, request);
 }

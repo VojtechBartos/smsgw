@@ -6,8 +6,8 @@ import { Route, Redirect, DefaultRoute } from 'react-router';
 // pages
 import Wrapper from './components/wrapper.react';
 import Main from './app/main.react';
-import Signin from './pages/signin.react';
-import Signup from './pages/signup.react';
+import Signin from './users/signin.react';
+import Signup from './users/signup.react';
 import App from './app/app.react';
 import Dashboard from './pages/dashboard.react';
 import Settings from './pages/settings.react';

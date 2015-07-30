@@ -8,12 +8,6 @@ import * as api from '../api';
 
 let _token = localStorage.getItem('token');
 
-
-/**
- * User token
- */
-export const token = _token;
-
 /**
  * Setting up user token
  * @param {String} token hash
@@ -22,6 +16,13 @@ export function setToken(token) {
   _token = token;
 
   localStorage.setItem('token', token);
+}
+
+/**
+ * Get token
+ */
+export function getToken() {
+  return _token;
 }
 
 /**
