@@ -110,7 +110,8 @@ export var sent = {
  * @type {Object}
  */
 export var phones = {
-  index: () => `${BASE}/phones/`
+  index: () => `${BASE}/phones/`,
+  get: (uuid) => `${BASE}/phones/${uuid}/`,
 };
 
 /**

@@ -4,6 +4,7 @@ import {Record} from 'immutable';
 
 const PhoneRecord = Record({
   id: null,
+  uuid: null,
   hostname: null,
   imei: null,
   netCode: null,

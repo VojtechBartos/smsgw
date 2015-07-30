@@ -40,6 +40,7 @@ import ApplicationsOverview from './applications/overview.react';
 import Admin from './pages/admin.react';
 import Users from './users/list.react';
 import Phones from './phones/list.react';
+import PhonesDetail from './phones/detail.react';
 import InboxNoResolved from './pages/inbox.react';
 
 
@@ -92,8 +93,13 @@ export default (
       <Route name="settings" handler={Settings} />
 
       <Route handler={Admin}>
-        <Route name="users" handler={Users} />
-        <Route name="phones" handler={Phones} />
+        <Route name="users" handler={Wrapper}>
+          <DefaultRoute handler={Users} />
+        </Route>
+        <Route name="phones" handler={Wrapper}>
+          <DefaultRoute handler={Phones} />
+          <Route name="phone-detail" path=":uuid/" handler={PhonesDetail} />
+        </Route>
         <Route name="inbox" handler={InboxNoResolved} />
       </Route>
     </Route>

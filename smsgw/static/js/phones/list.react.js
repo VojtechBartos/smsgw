@@ -1,29 +1,37 @@
 'use strict';
 
 import React from 'react';
-import {Table} from 'react-bootstrap';
-import {Map} from 'immutable';
+import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
+import Immutable from 'immutable';
 import moment from 'moment';
-import * as actions from './actions';
+import {getAll} from './actions';
 import Component from '../components/component.react';
+import FlashMessages from '../components/flashmessages.react';
 import Spinner from '../components/spinner.react';
 
 class List extends Component {
 
   componentDidMount() {
-    actions.getAll();
+    getAll();
+  }
+
+  onShowAction(phone) {
+    this.props.router.transitionTo('phone-detail', {
+      uuid: phone.uuid
+    });
   }
 
   render() {
-    const phones = this.props.phones;
+    const { phones, flashMessages } = this.props;
 
-    if (actions.getAll.pending || !phones)
+    if (getAll.pending || !phones)
       return <Spinner fullscreen={true} />;
 
-    // TODO(vojta) add some detail view
     return (
       <div id="context">
         <h1>Phones ({phones.size})</h1>
+
+        <FlashMessages messages={flashMessages} />
 
         <Table>
           <thead>
@@ -35,6 +43,7 @@ class List extends Component {
               <th>Sent messages</th>
               <th>Received messages</th>
               <th>Last activity</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +57,15 @@ class List extends Component {
                   <td>{phone.sent}</td>
                   <td>{phone.received}</td>
                   <td>{moment(phone.lastActivity).format('HH:mm DD.MM.YYYY')}</td>
+                  <td>
+                    <DropdownButton title="actions"
+                                    bsStyle="primary"
+                                    bsSize="xsmall">
+                      <MenuItem onClick={() => this.onShowAction(phone)}>
+                        Show
+                      </MenuItem>
+                    </DropdownButton>
+                  </td>
                 </tr>
               );
             })}
@@ -61,7 +79,8 @@ class List extends Component {
 
 List.propTypes = {
   router: React.PropTypes.func,
-  phones: React.PropTypes.instanceOf(Map).isRequired
+  phones: React.PropTypes.instanceOf(Immutable.Map).isRequired,
+  flashMessages: React.PropTypes.instanceOf(Immutable.List).isRequired
 };
 
 export default List;
