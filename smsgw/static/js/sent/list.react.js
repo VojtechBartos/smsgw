@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {Link} from 'react-router';
-import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
+import {Table, DropdownButton, MenuItem, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import {Map} from 'immutable';
 import * as actions from './actions';
 import * as store from './store';
@@ -61,12 +61,14 @@ class List extends Component {
                 if (!message.contact)
                   return message.destinationNumber;
 
-                return (
-                  <Link to="contact-edit"
-                        params={{uuid: message.contact.uuid}}>
-                    {message.contact.lastName} {message.contact.firstName}
-                  </Link>
-                );
+                  const tooltip = <Tooltip>{message.contact.phoneNumber}</Tooltip>;
+                  return (
+                    <OverlayTrigger placement='right' overlay={tooltip}>
+                      <Link to="contact-edit" params={{uuid: message.contact.uuid}}>
+                        {message.contact.lastName} {message.contact.firstName}
+                      </Link>
+                    </OverlayTrigger>
+                  );
               };
 
               return (

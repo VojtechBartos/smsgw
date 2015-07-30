@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-// import {Link} from 'react-router';
 import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
 import {Map} from 'immutable';
 import * as actions from './actions';
