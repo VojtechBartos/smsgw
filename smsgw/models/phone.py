@@ -6,6 +6,7 @@ from sqlalchemy.dialects import mysql
 from sqlalchemy.sql.expression import text
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from smsgw.extensions import db
+from smsgw.lib.utils import generate_uuid
 from smsgw.models import BaseModel, DateMixin
 
 
@@ -13,6 +14,8 @@ class Phone(BaseModel):
     """ Phone model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
+    uuid = db.Column(mysql.CHAR(36), unique=True, nullable=False,
+                     default=generate_uuid)
     hostname = db.Column(db.String(64))
     imei = db.Column(db.String(35), nullable=False)
     netCode = db.Column(db.String(10))

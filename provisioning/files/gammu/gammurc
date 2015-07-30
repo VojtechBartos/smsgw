@@ -10,8 +10,8 @@ PIN = 1234
 
 service = sql
 driver = native_mysql
-user = smsgw
-password = smsgw
+user = root
+password = root
 pc = 192.168.50.30
 database = smsgw
 
@@ -26,7 +26,7 @@ debuglevel = 2
 ; phone
 ;
 
-insert_phone = INSERT INTO `phone` (`netCode`, `netName`, `imei`, `hostname`, `send`, `receive`, `updated`, `timeout`, `client`, `battery`, `signal`) VALUES (%O, %M, %I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
+insert_phone = INSERT INTO `phone` (`uuid`, `netCode`, `netName`, `imei`, `hostname`, `send`, `receive`, `updated`, `timeout`, `client`, `battery`, `signal`) VALUES (UUID(), %O, %M, %I, %P, %1, %2, NOW(), (NOW() + INTERVAL 10 SECOND) + 0, %N, -1, -1)
 delete_phone = DELETE FROM `phone` WHERE `imei` = %I
 update_sent = UPDATE `phone` SET `sent` = `sent` + 1 WHERE `imei` = %I
 update_received = UPDATE `phone` SET `received` = `received` + 1 WHERE `imei` = %I
