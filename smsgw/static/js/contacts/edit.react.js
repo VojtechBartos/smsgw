@@ -35,7 +35,7 @@ class Edit extends Component {
   }
 
   redirectToList() {
-    this.props.router.replaceWith('contacts');
+    this.props.router.transitionTo('contacts');
   }
 
   render() {

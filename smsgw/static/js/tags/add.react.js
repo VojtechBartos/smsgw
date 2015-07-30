@@ -20,7 +20,7 @@ class Add extends Component {
   }
 
   redirectOnSuccess() {
-    this.props.router.replaceWith('tags');
+    this.props.router.transitionTo('tags');
   }
 
   render() {

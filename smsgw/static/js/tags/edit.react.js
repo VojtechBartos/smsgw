@@ -35,7 +35,7 @@ class Edit extends Component {
   }
 
   redirectToList() {
-    this.props.router.replaceWith('tags');
+    this.props.router.transitionTo('tags');
   }
 
   render() {

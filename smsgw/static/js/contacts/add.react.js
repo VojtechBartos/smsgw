@@ -20,7 +20,7 @@ class Add extends Component {
   }
 
   redirectOnSuccess() {
-    this.props.router.replaceWith('contacts');
+    this.props.router.transitionTo('contacts');
   }
 
   render() {

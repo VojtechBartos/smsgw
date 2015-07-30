@@ -15,7 +15,7 @@ class List extends Component {
   }
 
   onEditAction(contact) {
-    this.props.router.replaceWith('contact-edit', {
+    this.props.router.transitionTo('contact-edit', {
       uuid: contact.uuid
     });
   }

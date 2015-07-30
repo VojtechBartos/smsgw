@@ -9,7 +9,7 @@ class Subheader extends React.Component {
     e.preventDefault();
 
     if (this.props.backRoute)
-      this.props.router.replaceWith(this.props.backRoute);
+      this.props.router.transitionTo(this.props.backRoute);
     else
       window.history.back();
   }

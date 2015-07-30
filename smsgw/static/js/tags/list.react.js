@@ -15,7 +15,7 @@ class List extends Component {
   }
 
   onEditAction(tag) {
-    this.props.router.replaceWith('tag-edit', {
+    this.props.router.transitionTo('tag-edit', {
       uuid: tag.uuid
     });
   }

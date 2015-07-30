@@ -23,7 +23,7 @@ class SignIn extends Component {
   }
 
   redirectAfterLogin() {
-    this.props.router.replaceWith('dashboard');
+    this.props.router.transitionTo('dashboard');
   }
 
   render() {
