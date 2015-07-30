@@ -28,8 +28,8 @@ class OutboxResource(FlaskView):
         """
         user = kwargs.get('user')
         app = kwargs.get('application')
-        groups = Outbox.get_grouped(user_id=user.id,
-                                    application_id=app.id if app else None)
+        groups = Outbox.get(user_id=user.id,
+                            application_id=app.id if app else None)
 
         return response(groups)
 
@@ -135,12 +135,20 @@ class OutboxResource(FlaskView):
 
 
     @route('/users/<uuid:user_uuid>/outbox/<string:group>/', methods=['DELETE'])
+    @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/outbox/<string:group>/',
+           methods=['DELETE'])
     @decorators.auth()
     def delete(self, group, **kwargs):
         """
         Delete outbox message
         """
-        Outbox.query.filter(Outbox.group == group).delete()
+        app = kwargs.get('application')
+        app_id = app.id if app else None
+
+        Outbox.query \
+              .filter(Outbox.group == group) \
+              .filter(Outbox.applicationId == app_id) \
+              .delete()
         db.session.commit()
 
         return response({

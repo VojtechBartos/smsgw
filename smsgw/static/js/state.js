@@ -43,7 +43,6 @@ export const applicationsCursor = state.cursor(['applications']);
 export const contactsCursor = state.cursor(['contacts']);
 export const contactsSearchCursor = state.cursor(['contactsSearch']);
 export const outboxCursor = state.cursor(['outbox']);
-export const outboxGroupsCursor = state.cursor(['outboxGroups']);
 export const tagsCursor = state.cursor(['tags']);
 export const tagsSearchCursor = state.cursor(['tagsSearch']);
 export const sentCursor = state.cursor(['sent']);

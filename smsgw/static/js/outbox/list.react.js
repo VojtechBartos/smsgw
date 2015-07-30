@@ -2,25 +2,35 @@
 
 import React from 'react';
 import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
-import {Map} from 'immutable';
 import * as actions from './actions';
+import * as store from './store';
 import Component from '../components/component.react';
 import Spinner from '../components/spinner.react';
+import FlashMessages from '../components/flashmessages.react';
+import Application from '../applications/application';
 
-class Outbox extends Component {
+
+class List extends Component {
 
   componentDidMount() {
-    actions.getAll();
+    const { application } = this.props;
+
+    actions.getAll((application) ? application.uuid : null);
   }
 
   onDeleteAction(e, group) {
     e.preventDefault();
 
-    actions.remove(group.id);
+    const { application } = this.props;
+    actions.remove(
+      group.id,
+      (application) ? application.uuid : null
+    );
   }
 
   render() {
-    const groups = this.props.outboxGroups;
+    const { application, flashMessages } = this.props;
+    const groups = store.getAll((application) ? application.uuid : null);
 
     if (actions.getAll.pending || actions.remove.pending || !groups)
       return <Spinner fullscreen={true} />;
@@ -28,6 +38,8 @@ class Outbox extends Component {
     return (
       <div id="context">
         <h1>Outbox ({groups.size})</h1>
+
+        <FlashMessages messages={flashMessages} />
 
         <Table>
           <thead>
@@ -57,9 +69,8 @@ class Outbox extends Component {
                     <DropdownButton title="actions"
                                     bsStyle="primary"
                                     bsSize="xsmall">
-                      <MenuItem eventKey="1">Edit</MenuItem>
-                      <MenuItem eventKey="2"
-                                onClick={(e) => this.onDeleteAction(e, group)}>
+                      <MenuItem>Edit</MenuItem>
+                      <MenuItem onClick={(e) => this.onDeleteAction(e, group)}>
                         Delete
                       </MenuItem>
                     </DropdownButton>
@@ -75,9 +86,9 @@ class Outbox extends Component {
 
 }
 
-Outbox.propTypes = {
+List.propTypes = {
   router: React.PropTypes.func,
-  outboxGroups: React.PropTypes.instanceOf(Map).isRequired
+  application: React.PropTypes.instanceOf(Application)
 };
 
-export default Outbox;
+export default List;

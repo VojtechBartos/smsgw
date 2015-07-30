@@ -8,6 +8,7 @@ const GroupRecord = Record({
   countOfRespondents: null,
   multiparts: [],
   send: null,
+  application: null,
   created: null
 });
 

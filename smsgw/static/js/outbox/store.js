@@ -1,18 +1,19 @@
 'use strict';
 
 import * as actions from './actions';
-import {outboxGroupsCursor} from '../state';
+import {outboxCursor} from '../state';
 import Dispatcher from '../dispatcher';
-// import Message from './message';
 import Group from './group';
 
 /**
- * Get by id
- * @param  {String} id
+ * Get all
  */
-// export function get(id) {
-//   return outboxCursor().get(id);
-// }
+export function getAll(applicationUuid) {
+  return outboxCursor().filter(outbox => {
+    const app = outbox.application;
+    return (!app || app.uuid === applicationUuid);
+  });
+}
 
 /**
  * Registerting to dispatcher
@@ -20,17 +21,16 @@ import Group from './group';
 export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
     case actions.getAll:
-      outboxGroupsCursor(groups => {
-        groups = groups.clear();
-        return groups.withMutations(items => {
+      outboxCursor(outbox => {
+        return outbox.clear().withMutations(items => {
           data.forEach(i => items.set(i.id, new Group(i)) );
         });
       });
       break;
 
     case actions.remove:
-      outboxGroupsCursor(groups => {
-        return groups.remove(data.id);
+      outboxCursor(outbox => {
+        return outbox.remove(data.id);
       });
       break;
   }

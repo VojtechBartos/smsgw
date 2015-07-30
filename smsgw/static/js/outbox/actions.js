@@ -9,9 +9,9 @@ import * as api from '../api';
 /**
  * Get all groups
  */
-export function getAll() {
+export function getAll(application) {
   const token = getToken();
-  const request = api.get(outbox.index(), { token });
+  const request = api.get(outbox.index(application), { token });
 
   return Dispatcher.dispatch(getAll, request);
 }
@@ -49,9 +49,9 @@ export function validate(phoneNumber) {
  * Delete
  * @param  {String} group id
  */
-export function remove(id) {
+export function remove(id, application) {
   const token = getToken();
-  const request = api.del(outbox.delete(id), { token });
+  const request = api.del(outbox.delete(id, application), { token });
 
   return Dispatcher.dispatch(remove, request);
 }

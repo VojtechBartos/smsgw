@@ -12,6 +12,7 @@ from sqlalchemy.schema import Index
 
 from smsgw.extensions import db
 from smsgw.models import BaseModel
+from smsgw.models.application import Application
 from smsgw.models.outbox_multipart import OutboxMultipart
 from smsgw.lib.utils import is_special_char, generate_uuid
 
@@ -109,13 +110,17 @@ class Outbox(BaseModel):
 
 
     @classmethod
-    def get_grouped(cls, user_id, application_id=None):
+    def get(cls, user_id, application_id=None):
         """
-
+        Get grouped messages
+        :param user_id: {int} user identifier
+        :param application_id: {int} application identifier
+        :return: {list}
         """
         groups = cls.query \
                   .with_entities(
                     cls.id,
+                    cls.applicationId,
                     cls.group,
                     cls.text,
                     cls.sent,
@@ -124,15 +129,15 @@ class Outbox(BaseModel):
                   ) \
                   .filter(cls.group != None) \
                   .filter(cls.userId == user_id) \
+                  .filter(cls.applicationId == application_id) \
                   .order_by(cls.sent.desc()) \
                   .group_by(cls.group) \
                   .all()
 
         payload = []
-        for identifier, group, message, send, created, respondents in groups:
-            multiparts = OutboxMultipart.query \
-                                        .filter_by(id=identifier) \
-                                        .all()
+        for identifier, appId, group, message, send, created, respondents in groups:
+            multiparts = OutboxMultipart.query.filter_by(id=identifier).all()
+            app = Application.get_one(id=appId) if appId else None
 
             payload.append({
                 'id': group,
@@ -140,6 +145,7 @@ class Outbox(BaseModel):
                 'send': send,
                 'created': created,
                 'multiparts': [multipart.to_dict() for multipart in multiparts],
+                'application': app.to_dict() if app else None,
                 'countOfRespondents': respondents
             })
 

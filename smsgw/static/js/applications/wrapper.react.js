@@ -47,6 +47,11 @@ class ApplicationWrapper extends Component {
         params
       },
       {
+        label: 'Outbox',
+        route: 'application-outbox',
+        params
+      },
+      {
         label: 'Sent messages',
         route: 'application-sent-messages',
         params
@@ -89,4 +94,3 @@ ApplicationWrapper.propTypes = {
 };
 
 export default ApplicationWrapper;
-

@@ -35,7 +35,6 @@ export default class Main extends Component {
       tags: appState.tagsCursor(),
       tagsSearch: appState.tagsSearchCursor(),
       outbox: appState.outboxCursor(),
-      outboxGroups: appState.outboxGroupsCursor(),
       applications: appState.applicationsCursor(),
       sent: appState.sentCursor(),
       phones: appState.phonesCursor(),

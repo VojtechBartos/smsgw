@@ -62,8 +62,9 @@ export default (
         <Route name="application" path=":uuid" handler={ApplicationsWrapper}>
           <Route name="application-overview" path="overview" handler={ApplicationsOverview} />
           <Route name="application-settings" path="settings" handler={ApplicationsSettings} />
-          <Route name="application-sent-messages" path="sent-messages" handler={Sent} />
-          <Route name="application-received-messages" path="received-messages" handler={Inbox} />
+          <Route name="application-outbox" path="outbox" handler={Outbox} />
+          <Route name="application-sent-messages" path="sent" handler={Sent} />
+          <Route name="application-received-messages" path="received" handler={Inbox} />
           </Route>
       </Route>
 
