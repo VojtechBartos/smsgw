@@ -9,7 +9,7 @@ from flask import request, abort
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 from smsgw.extensions import db
 from smsgw.models import User, UserToken, Template, Contact, Tag, Application, \
-    Outbox, SentItem, Inbox
+    Outbox, SentItem, Inbox, Phone
 
 
 def jsonschema_validate(schema=None, **options):
@@ -45,7 +45,8 @@ def auth(role=User.ROLE_USER):
             'application': Application,
             'outbox': Outbox,
             'sentitem': SentItem,
-            'inbox': Inbox
+            'inbox': Inbox,
+            'phone': Phone
         }
 
         def unauthorized():
