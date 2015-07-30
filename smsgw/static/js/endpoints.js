@@ -131,8 +131,8 @@ export var inbox = {
     if (user && application)
       return `${BASE}/users/${user}/applications/${application}/inbox/${uuid}/`;
     else if (user)
-      return `${BASE}/users/${user}/inbox/${uuid}`;
+      return `${BASE}/users/${user}/inbox/${uuid}/`;
     else
-      return `${BASE}/inbox/${uuid}`;
+      return `${BASE}/inbox/${uuid}/`;
   }
 };

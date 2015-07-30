@@ -2,11 +2,12 @@
 
 import React from 'react';
 import {Link} from 'react-router';
-import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
-import {Map} from 'immutable';
+import {Table, DropdownButton, MenuItem, Tooltip, OverlayTrigger} from 'react-bootstrap';
+import Immutable from 'immutable';
 import * as actions from './actions';
 import * as store from './store';
 import Component from '../components/component.react';
+import FlashMessages from '../components/flashmessages.react';
 import Spinner from '../components/spinner.react';
 import Application from '../applications/application';
 import User from '../users/user';
@@ -35,7 +36,7 @@ class List extends Component {
   }
 
   render() {
-    const { application } = this.props;
+    const { application, flashMessages } = this.props;
     const inbox = store.getAll((application) ? application.uuid : null);
 
     if (actions.getAll.pending || actions.remove.pending || !inbox)
@@ -44,6 +45,8 @@ class List extends Component {
     return (
       <div id="context">
         <h1>Inbox ({inbox.size})</h1>
+
+        <FlashMessages messages={flashMessages} />
 
         <Table>
           <thead>
@@ -61,11 +64,13 @@ class List extends Component {
                 if (!message.contact)
                   return message.destinationNumber;
 
+                const tooltip = <Tooltip>{message.contact.phoneNumber}</Tooltip>;
                 return (
-                  <Link to="contact-edit"
-                        params={{uuid: message.contact.uuid}}>
-                    {message.contact.lastName} {message.contact.firstName}
-                  </Link>
+                  <OverlayTrigger placement='right' overlay={tooltip}>
+                    <Link to="contact-edit" params={{uuid: message.contact.uuid}}>
+                      {message.contact.lastName} {message.contact.firstName}
+                    </Link>
+                  </OverlayTrigger>
                 );
               };
 
@@ -98,9 +103,10 @@ class List extends Component {
 
 List.propTypes = {
   router: React.PropTypes.func,
+  flashMessages: React.PropTypes.instanceOf(Immutable.List).isRequired,
   user: React.PropTypes.instanceOf(User),
   application: React.PropTypes.instanceOf(Application),
-  sent: React.PropTypes.instanceOf(Map).isRequired
+  sent: React.PropTypes.instanceOf(Immutable.Map).isRequired
 };
 
 export default List;

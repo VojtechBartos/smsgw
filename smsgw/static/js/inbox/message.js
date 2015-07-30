@@ -6,6 +6,7 @@ const MessageRecord = Record({
   id: null,
   uuid: null,
   senderNumber: null,
+  processed: false,
   application: null,
   contact: null,
   text: null,

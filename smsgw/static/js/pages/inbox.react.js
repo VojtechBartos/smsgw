@@ -7,10 +7,7 @@ import List from '../inbox/list.react';
 class Inbox extends Component {
 
   render() {
-    let props = this.props;
-    props.user = null;
-
-    return <List {...this.props} />;
+    return <List {...this.props} user={null} />;
   }
 
 }

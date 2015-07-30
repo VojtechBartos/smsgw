@@ -60,6 +60,7 @@ class Inbox(BaseModel):
             'id': self.id,
             'uuid': self.uuid,
             'senderNumber': self.senderNumber,
+            'processed': bool(self.processed),
             'contact': self.contact.to_dict() if self.contact else None,
             'application': self.application.to_dict() if self.application \
                                                       else None,

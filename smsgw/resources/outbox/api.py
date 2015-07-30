@@ -19,13 +19,17 @@ class OutboxResource(FlaskView):
     route_base = '/'
 
     @route('/users/<uuid:user_uuid>/outbox/', methods=['GET'])
+    @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/outbox/',
+           methods=['GET'])
     @decorators.auth()
     def index(self, **kwargs):
         """
         Getting list of outbox messages
         """
         user = kwargs.get('user')
-        groups = Outbox.get_grouped(user_id=user.id)
+        app = kwargs.get('application')
+        groups = Outbox.get_grouped(user_id=user.id,
+                                    application_id=app.id if app else None)
 
         return response(groups)
 
