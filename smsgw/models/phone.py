@@ -48,6 +48,7 @@ class Phone(BaseModel):
         """
         dict = {
             'id': self.id,
+            'uuid': self.uuid,
             'hostname': self.hostname,
             'imei': self.imei,
             'netCode': self.netCode,
