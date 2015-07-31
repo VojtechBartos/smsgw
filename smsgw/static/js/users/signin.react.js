@@ -10,9 +10,8 @@ import {signIn, getToken} from './actions';
 
 class SignIn extends Component {
 
-  componentDidMount() {
-    if (getToken())
-      this.redirectAfterLogin();
+  static willTransitionTo(transition) {
+    if (getToken()) transition.redirect('dashboard');
   }
 
   onFormSubmit(e) {

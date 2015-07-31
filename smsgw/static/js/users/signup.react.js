@@ -11,9 +11,8 @@ import {flash} from '../flashMessages/actions';
 
 class SignUp extends Component {
 
-  componentDidMount() {
-    if (getToken())
-      this.redirecToDashboard();
+  static willTransitionTo(transition) {
+    if (getToken()) transition.redirect('dashboard');
   }
 
   onFormSubmit(e) {
