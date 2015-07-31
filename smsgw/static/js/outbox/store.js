@@ -3,7 +3,7 @@
 import * as actions from './actions';
 import {outboxCursor} from '../state';
 import Dispatcher from '../dispatcher';
-import Group from './group';
+import Message from './message';
 
 /**
  * Get all
@@ -23,8 +23,14 @@ export const dispatchToken = Dispatcher.register(({action, data}) => {
     case actions.getAll:
       outboxCursor(outbox => {
         return outbox.clear().withMutations(items => {
-          data.forEach(i => items.set(i.id, new Group(i)) );
+          data.forEach(i => items.set(i.id, new Message(i)) );
         });
+      });
+      break;
+
+    case actions.get:
+      outboxCursor(outbox => {
+        return outbox.set(data.id, new Message(data));
       });
       break;
 

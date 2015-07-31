@@ -9,8 +9,8 @@ class MessagesWrapper extends Component {
 
   render() {
     const menu = [
-      { label: 'Outbox', route: 'messages-outbox' },
-      { label: 'Sent', route: 'messages-sent' },
+      { label: 'Outbox', route: 'outbox' },
+      { label: 'Sent', route: 'sent' },
       { label: 'Compose', route: 'compose' }
     ];
 

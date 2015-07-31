@@ -81,6 +81,12 @@ export var outbox = {
     else
       return `${BASE}/users/${user}/outbox/`;
   },
+  get: (group, application = null, user = '@me') => {
+    if (application)
+      return `${BASE}/users/${user}/applications/${application}/outbox/${group}/`;
+    else
+      return `${BASE}/users/${user}/outbox/${group}/`;
+  },
   create: (user = "@me") => `${BASE}/users/${user}/outbox/`,
   delete: (group, application = null, user = '@me') => {
     if (application)

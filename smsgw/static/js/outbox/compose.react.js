@@ -26,7 +26,7 @@ class Compose extends Component {
   }
 
   redirectOnSuccess() {
-    this.props.router.transitionTo('messages-outbox');
+    this.props.router.transitionTo('outbox');
   }
 
   render() {

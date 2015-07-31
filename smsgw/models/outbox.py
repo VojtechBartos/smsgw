@@ -110,7 +110,7 @@ class Outbox(BaseModel):
 
 
     @classmethod
-    def get(cls, user_id, application_id=None):
+    def get_all(cls, user_id, application_id=None):
         """
         Get grouped messages
         :param user_id: {int} user identifier
@@ -150,6 +150,44 @@ class Outbox(BaseModel):
             })
 
         return payload
+
+
+    @classmethod
+    def get(cls, group, user_id, application_id=None):
+        """
+        :param group: {str} group id
+        :param user_id: {int} user identifier
+        :param application_id: {int} application identifier
+        :return: {list}
+        """
+        items = cls.query \
+                 .filter(cls.group == group) \
+                 .filter(cls.userId == user_id) \
+                 .filter(cls.applicationId == application_id) \
+                 .order_by(cls.sent.desc()) \
+                 .all()
+        if not items:
+            return None
+
+        app = items[0].application
+        multiparts = OutboxMultipart.query.filter_by(id=items[0].id).all()
+        send = items[0].sent
+        created = items[0].created
+        updated = items[0].updated
+        contacts =  [i.contact.to_dict() for i in items if i.contact]
+        phone_numbers = [i.destinationNumber for i in items if not i.contact]
+
+        return {
+            'id': group,
+            'application': app.to_dict() if app else None,
+            'contacts': contacts,
+            'phoneNumbers': phone_numbers,
+            'multiparts': [multipart.to_dict() for multipart in multiparts],
+            'send': send.isoformat(sep=' ') if send else None,
+            'countOfRespondents': len(contacts) + len(phone_numbers),
+            'created': created.isoformat(sep=' ') if created else None,
+            'updated': updated.isoformat(sep=' ') if updated else None
+        }
 
 
     @classmethod

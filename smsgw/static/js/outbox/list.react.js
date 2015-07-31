@@ -18,6 +18,18 @@ class List extends Component {
     actions.getAll((application) ? application.uuid : null);
   }
 
+  onViewAction(e, group) {
+    e.preventDefault();
+
+    const { application } = this.props;
+    const route = (application) ? 'application-outbox-view' : 'outbox-view';
+
+    this.props.router.transitionTo(route, {
+      group: group.id,
+      uuid: (application) ? application.uuid : null
+    });
+  }
+
   onDeleteAction(e, group) {
     e.preventDefault();
 
@@ -69,7 +81,9 @@ class List extends Component {
                     <DropdownButton title="actions"
                                     bsStyle="primary"
                                     bsSize="xsmall">
-                      <MenuItem>Edit</MenuItem>
+                      <MenuItem onClick={(e) => this.onViewAction(e, group)}>
+                        View
+                      </MenuItem>
                       <MenuItem onClick={(e) => this.onDeleteAction(e, group)}>
                         Delete
                       </MenuItem>

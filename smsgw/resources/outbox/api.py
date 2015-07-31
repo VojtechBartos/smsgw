@@ -28,10 +28,29 @@ class OutboxResource(FlaskView):
         """
         user = kwargs.get('user')
         app = kwargs.get('application')
-        groups = Outbox.get(user_id=user.id,
-                            application_id=app.id if app else None)
+        groups = Outbox.get_all(user_id=user.id,
+                                application_id=app.id if app else None)
 
         return response(groups)
+
+    @route('/users/<uuid:user_uuid>/outbox/<string:group>/', methods=['GET'])
+    @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/outbox/<string:group>/',
+           methods=['GET'])
+    @decorators.auth()
+    def get(self, group, **kwargs):
+        """
+        Getting outbox group
+        """
+        user = kwargs.get('user')
+        app = kwargs.get('application')
+        group = Outbox.get(group=group,
+                           user_id=user.id,
+                           application_id=app.id if app else None)
+        if group is None:
+            raise ErrorResource(message='Outbox group not found.',
+                                status_code=404)
+
+        return response(group)
 
 
     @route('/users/<uuid:user_uuid>/outbox/', methods=['POST'])

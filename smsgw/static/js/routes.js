@@ -28,6 +28,7 @@ import TagsEdit from './tags/edit.react';
 import Messages from './pages/messages.react';
 import Sent from './sent/list.react';
 import Outbox from './outbox/list.react';
+import OutboxView from './outbox/view.react';
 import Compose from './outbox/compose.react';
 import Inbox from './inbox/list.react';
 // applications
@@ -48,7 +49,7 @@ export default (
   <Route handler={Main} path="/">
     <Redirect from="/" to="dashboard" />
     <Redirect from="directory" to="contacts" />
-    <Redirect from="messages" to="messages-outbox" />
+    <Redirect from="messages" to="outbox" />
 
     <Route name="signin" path="sign/in" handler={Signin} />
     <Route name="signup" path="sign/up" handler={Signup} />
@@ -63,14 +64,16 @@ export default (
           <Route name="application-overview" path="overview" handler={ApplicationsOverview} />
           <Route name="application-settings" path="settings" handler={ApplicationsSettings} />
           <Route name="application-outbox" path="outbox" handler={Outbox} />
+          <Route name="application-outbox-view" path="outbox/:group" handler={OutboxView} />
           <Route name="application-sent-messages" path="sent" handler={Sent} />
           <Route name="application-received-messages" path="received" handler={Inbox} />
           </Route>
       </Route>
 
       <Route name="messages" handler={Messages}>
-        <Route name="messages-sent" path="sent" handler={Sent} />
-        <Route name="messages-outbox" path="outbox" handler={Outbox} />
+        <Route name="sent" path="sent" handler={Sent} />
+        <Route name="outbox" path="outbox" handler={Outbox} />
+        <Route name="outbox-view" path="outbox/:group" handler={OutboxView} />
         <Route name="compose" path="compose" handler={Compose} />
       </Route>
 

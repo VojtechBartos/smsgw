@@ -17,6 +17,16 @@ export function getAll(application) {
 }
 
 /**
+ * Get
+ */
+export function get(id, application) {
+  const token = getToken();
+  const request = api.get(outbox.get(id, application), { token });
+
+  return Dispatcher.dispatch(get, request);
+}
+
+/**
  * Create new
  * @param  {Object} data
  */
@@ -59,6 +69,7 @@ export function remove(id, application) {
 // Override toString methods. Pretty useful for dispatched actions monitoring.
 setToString('outbox', {
   getAll,
+  get,
   remove,
   validate
 });
