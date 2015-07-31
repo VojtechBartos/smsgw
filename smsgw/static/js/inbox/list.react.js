@@ -51,7 +51,7 @@ class List extends Component {
         <Table>
           <thead>
             <tr>
-              <th>To</th>
+              <th>From</th>
               <th>Text</th>
               <th>Received at</th>
               <th>Created</th>
@@ -62,7 +62,7 @@ class List extends Component {
             {inbox.map((message, i) => {
               const contact = () => {
                 if (!message.contact)
-                  return message.destinationNumber;
+                  return message.senderNumber;
 
                 const tooltip = <Tooltip>{message.contact.phoneNumber}</Tooltip>;
                 return (
