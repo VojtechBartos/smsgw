@@ -25,7 +25,12 @@ gulp.task('webpack', () => {
           { test: /\.js$/, exclude: /node_modules/, loader: "eslint-loader"}
         ],
         loaders: [
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+          {
+            test: /\.js$/,
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+            query: { stage: 2 }
+          }
         ]
       },
       plugins: (() => {
