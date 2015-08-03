@@ -33,7 +33,7 @@ class Form extends Component {
   getData() {
     const items = this.refs.respondents.getTags().map(el => el.props.tag);
     return {
-      send: this.state.send.format('YYYY-MM-DD HH:mm:ss'),
+      send: this.state.send.utc().format('YYYY-MM-DD HH:mm:ss'),
       message: this.refs.text.getDOMNode().value,
       tags: items.filter(i => i instanceof Tag),
       contacts: items.filter(i => i instanceof Contact),
