@@ -21,7 +21,7 @@ class Form extends Component {
     super(props);
     this.state = {
       message: '',
-      send: new Date().getTime(),
+      send: moment(),
       completions: []
     };
   }
@@ -33,7 +33,7 @@ class Form extends Component {
   getData() {
     const items = this.refs.respondents.getTags().map(el => el.props.tag);
     return {
-      send: moment(this.state.send).format('YYYY-MM-DD HH:mm:ss'),
+      send: this.state.send.format('YYYY-MM-DD HH:mm:ss'),
       message: this.refs.text.getDOMNode().value,
       tags: items.filter(i => i instanceof Tag),
       contacts: items.filter(i => i instanceof Contact),
@@ -55,8 +55,8 @@ class Form extends Component {
     });
   }
 
-  onChangeDateTime(time) {
-    this.setState({ send: time });
+  onChangeDateTime(timestamp) {
+    this.setState({ send: moment(timestamp, 'x') });
   }
 
   // React Tags Input
@@ -141,7 +141,8 @@ class Form extends Component {
 
   render() {
     const templates = this.props.templates;
-    const dateTimeOptions = { ref: 'send', required: true };
+    const dateTimeOptions = { ref: 'send', required: true, disabled: true };
+    const { send } = this.state;
 
     return (
       <form onSubmit={this.props.onSubmit}>
@@ -208,9 +209,10 @@ class Form extends Component {
               <div className="form-group">
                 <label>Send at</label>
 
-                <DateTimeField onChange={value => this.onChangeDateTime(value)}
+                <DateTimeField dateTime={send.format('x')}
+                               onChange={value => this.onChangeDateTime(value)}
                                defaultText="Please select a date"
-                               inputFormat="YY-MM-DD HH:MM:SS"
+                               inputFormat="HH:MM DD/MM/YYYY"
                                inputProps={dateTimeOptions}/>
               </div>
             </Col>
