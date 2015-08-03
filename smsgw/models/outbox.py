@@ -125,6 +125,7 @@ class Outbox(BaseModel):
                     cls.text,
                     cls.sent,
                     cls.created,
+                    cls.updated,
                     func.count(cls.id)
                   ) \
                   .filter(cls.group != None) \
@@ -135,18 +136,19 @@ class Outbox(BaseModel):
                   .all()
 
         payload = []
-        for identifier, appId, group, message, send, created, respondents in groups:
+        for identifier, appId, group, message, send, created, updated, respondents in groups:
             multiparts = OutboxMultipart.query.filter_by(id=identifier).all()
             app = Application.get_one(id=appId) if appId else None
 
             payload.append({
                 'id': group,
                 'message': message,
-                'send': send,
-                'created': created,
                 'multiparts': [multipart.to_dict() for multipart in multiparts],
                 'application': app.to_dict() if app else None,
-                'countOfRespondents': respondents
+                'countOfRespondents': respondents,
+                'send': send.isoformat(sep=' ') if send else None,
+                'created': created.isoformat(sep=' ') if created else None,
+                'updated': updated.isoformat(sep=' ') if updated else None
             })
 
         return payload

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import {Table, DropdownButton, MenuItem} from 'react-bootstrap';
+import moment from 'moment';
 import * as actions from './actions';
 import * as store from './store';
 import Component from '../components/component.react';
@@ -41,6 +42,7 @@ class List extends Component {
   }
 
   render() {
+    const dtFormat = 'YYYY-MM-DD HH:mm:ss';
     const { application, flashMessages } = this.props;
     const groups = store.getAll((application) ? application.uuid : null);
 
@@ -75,8 +77,23 @@ class List extends Component {
                   <td>{text}</td>
                   <td>{group.countOfRespondents}</td>
                   <td>{group.multiparts.length + 1}</td>
-                  <td>{group.send}</td>
-                  <td>{group.created}</td>
+                  <td>
+                    {(() => {
+                      const send = moment(moment.utc(group.send, dtFormat).toDate());
+                      const now = moment();
+                      return (
+                        <div>
+                          {moment(send).format(dtFormat)} {''}
+                          <small>
+                            (in {moment.duration(send.diff(now)).humanize()})
+                          </small>
+                        </div>
+                      );
+                    })()}
+                  </td>
+                  <td>
+                    {moment(moment.utc(group.created, dtFormat).toDate()).format(dtFormat)}
+                  </td>
                   <td>
                     <DropdownButton title="actions"
                                     bsStyle="primary"
