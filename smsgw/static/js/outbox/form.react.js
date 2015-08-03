@@ -211,7 +211,7 @@ class Form extends Component {
 
                 <DateTimeField dateTime={send.format('x')}
                                onChange={value => this.onChangeDateTime(value)}
-                               defaultText="Please select a date"
+                               minDate={moment()}
                                inputFormat="HH:MM DD/MM/YYYY"
                                inputProps={dateTimeOptions}/>
               </div>
