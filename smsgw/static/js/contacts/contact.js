@@ -1,6 +1,8 @@
 'use strict';
 
 import {Record} from 'immutable';
+import {server, browser} from '../config';
+import moment from 'moment';
 
 const ContactRecord = Record({
   uuid: null,
@@ -10,7 +12,17 @@ const ContactRecord = Record({
   email: null,
   note: null,
   tags: null,
-  createdAt: null
+  created: null
 });
 
-export default class Contact extends ContactRecord {}
+export default class Contact extends ContactRecord {
+
+  get createdDatetime() {
+    return moment(moment.utc(this.created, server.datetimeFormat).toDate());
+  }
+
+  get createdLocalized() {
+    return this.createdDatetime.format(browser.datetimeFormat);
+  }
+
+}
