@@ -11,13 +11,13 @@ from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
 
 from smsgw.extensions import db
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, DateMixin
 from smsgw.models.application import Application
 from smsgw.models.outbox_multipart import OutboxMultipart
 from smsgw.lib.utils import is_special_char, generate_uuid
 
 
-class Outbox(BaseModel):
+class Outbox(BaseModel, DateMixin):
     """ Outbox model """
 
     EIGHT_BIT = '8bit'
@@ -69,15 +69,6 @@ class Outbox(BaseModel):
         primaryjoin="OutboxMultipart.id==Outbox.id",
         foreign_keys=[id],
         uselist=True
-    )
-
-    created = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        server_default=dbtext('CURRENT_TIMESTAMP')
-    )
-    updated = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        onupdate=datetime.utcnow
     )
 
 

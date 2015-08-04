@@ -54,6 +54,11 @@ class Contact(BaseModel, DateMixin):
         self._tags = tags
 
     def to_dict(self, properties=None):
+        """
+        To dictionary
+        :param properties: {list} of required properties
+        :return: {dict}
+        """
         dict = {
             'id': self.id,
             'uuid': self.uuid,
@@ -63,7 +68,10 @@ class Contact(BaseModel, DateMixin):
             'email': self.email,
             'note': self.note,
             'tags': self.tags,
-            'createdAt': self.createdAt.isoformat(sep=' ')
+            'created': self.created.isoformat(sep=' ') if self.created \
+                                                       else None,
+            'updated': self.updated.isoformat(sep=' ') if self.updated \
+                                                       else None
         }
 
         if properties is None:

@@ -10,10 +10,10 @@ from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
-from smsgw.models import BaseModel, Contact
+from smsgw.models import BaseModel, Contact, DateMixin
 
 
-class SentItem(BaseModel):
+class SentItem(BaseModel, DateMixin):
     """ SentItem model """
 
     __tablename__ = 'sentitems'
@@ -58,16 +58,6 @@ class SentItem(BaseModel):
         primaryjoin="Contact.phoneNumber==SentItem.destinationNumber",
         foreign_keys=[destinationNumber],
         uselist=True
-    )
-
-    created = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        server_default=dbtext('CURRENT_TIMESTAMP')
-    )
-
-    updated = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        onupdate=datetime.utcnow
     )
 
 

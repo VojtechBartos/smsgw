@@ -40,13 +40,22 @@ class Tag(BaseModel, DateMixin):
         self.reference = slugify(value, to_lower=True)
 
     def to_dict(self, properties=None):
+        """
+        To dictionary
+        :param properties: {list} of required properties
+        :return: {dict}
+        """
         dict = {
             'id': self.id,
             'uuid': self.uuid,
             'reference': self.reference,
             'label': self.label,
             'note': self.note,
-            'numberOfContacts': len(self.contacts) # TODO(vojta) lazy dynamic
+            'numberOfContacts': len(self.contacts), # TODO(vojta) lazy dynamic,
+            'created': self.created.isoformat(sep=' ') if self.created \
+                                                       else None,
+            'updated': self.updated.isoformat(sep=' ') if self.updated \
+                                                       else None
         }
 
         if properties is None:

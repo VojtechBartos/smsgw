@@ -10,7 +10,7 @@ from smsgw.lib.utils import generate_uuid
 from smsgw.models import BaseModel, DateMixin
 
 
-class Phone(BaseModel):
+class Phone(BaseModel, DateMixin):
     """ Phone model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
@@ -29,15 +29,6 @@ class Phone(BaseModel):
     send = db.Column(db.Enum("yes", "no"), default='no', nullable=False)
     receive = db.Column(db.Enum("yes", "no"), default='no', nullable=False)
     timeout = db.Column(db.TIMESTAMP)
-
-    created = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        server_default=text('CURRENT_TIMESTAMP')
-    )
-    updated = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        onupdate=datetime.utcnow
-    )
 
 
     def to_dict(self, properties=None):

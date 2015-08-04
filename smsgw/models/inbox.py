@@ -8,10 +8,10 @@ from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from smsgw.extensions import db
 from smsgw.lib.utils import generate_uuid
-from smsgw.models import BaseModel
+from smsgw.models import BaseModel, DateMixin
 
 
-class Inbox(BaseModel):
+class Inbox(BaseModel, DateMixin):
     """ Inbox model """
 
     id = db.Column(mysql.INTEGER(10, unsigned=True), primary_key=True)
@@ -34,16 +34,6 @@ class Inbox(BaseModel):
     klass = db.Column('class', mysql.INTEGER, nullable=False, server_default='-1')
 
     received = db.Column(db.TIMESTAMP)
-
-    created = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        server_default=dbtext('CURRENT_TIMESTAMP')
-    )
-
-    updated = db.Column(
-        db.TIMESTAMP, default=datetime.utcnow,
-        onupdate=datetime.utcnow
-    )
 
     contact = db.relationship('Contact',
                               primaryjoin="Contact.phoneNumber==Inbox.senderNumber",
