@@ -23,16 +23,8 @@ class TemplatesResource(FlaskView):
         Getting list of user's templates
         """
         user = kwargs.get('user')
-        payload = []
-        for template in user.templates:
-            payload.append({
-                'uuid': template.uuid,
-                'label': template.label,
-                'text': template.text,
-                'createdAt': template.createdAt.isoformat(sep=' ')
-            })
 
-        return response(payload)
+        return response([template.to_dict() for template in user.templates])
 
     @route('/<uuid:template_uuid>/')
     @decorators.auth()
@@ -41,12 +33,7 @@ class TemplatesResource(FlaskView):
         Get user template
         """
         template = kwargs.get('template')
-        return response({
-            'uuid': template.uuid,
-            'label': template.label,
-            'text': template.text,
-            'createdAt': template.createdAt.isoformat(sep=' ')
-        })
+        return response(template.to_dict())
 
     @decorators.auth()
     @decorators.jsonschema_validate(post.schema)
@@ -62,14 +49,7 @@ class TemplatesResource(FlaskView):
         db.session.add(template)
         db.session.commit()
 
-        # create payload
-        payload = {
-            'uuid': template.uuid,
-            'label': template.label,
-            'text': template.text,
-            'createdAt': template.createdAt.isoformat(sep=' ')
-        }
-        return response(payload, status_code=201)
+        return response(template.to_dict(), status_code=201)
 
     @route('/<uuid:template_uuid>/', methods=['PUT'])
     @decorators.auth()
@@ -82,12 +62,7 @@ class TemplatesResource(FlaskView):
         template.update(request.json)
         db.session.commit()
 
-        return response({
-            'uuid': template.uuid,
-            'label': template.label,
-            'text': template.text,
-            'createdAt': template.createdAt.isoformat(sep=' ')
-        })
+        return response(template.to_dict())
 
     @route('/<uuid:template_uuid>/', methods=['DELETE'])
     @decorators.auth()
@@ -100,9 +75,4 @@ class TemplatesResource(FlaskView):
         db.session.delete(template)
         db.session.commit()
 
-        return response({
-            'uuid': template.uuid,
-            'label': template.label,
-            'text': template.text,
-            'createdAt': template.createdAt.isoformat(sep=' ')
-        })
+        return response(template.to_dict())
