@@ -57,7 +57,11 @@ class Application(BaseModel, DateMixin):
             'token': self.token,
             'prefix': self.prefix,
             'callbackUrl': self.callbackUrl,
-            'note': self.note
+            'note': self.note,
+            'created': self.created.isoformat(sep=' ') if self.created \
+                                                       else None,
+            'updated': self.updated.isoformat(sep=' ') if self.updated \
+                                                       else None
         }
 
         if properties is None:
