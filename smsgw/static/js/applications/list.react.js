@@ -34,7 +34,8 @@ class List extends Component {
         { label: 'Label', key: 'label' },
         { label: 'Prefix', key: 'prefix' },
         { label: 'Callback url', key: 'callbackUrl' },
-        { label: 'Note', key: 'note' }
+        { label: 'Note', key: 'note' },
+        { label: 'Created', key: 'createdLocalized' }
       ],
       actions: [
         { label: 'Show', handler: this.onShowAction.bind(this) },

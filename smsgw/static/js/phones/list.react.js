@@ -23,6 +23,7 @@ class List extends Component {
 
   render() {
     const { phones, flashMessages } = this.props;
+    const now = moment();
 
     if (getAll.pending || !phones)
       return <Spinner fullscreen={true} />;
@@ -43,6 +44,7 @@ class List extends Component {
               <th>Sent messages</th>
               <th>Received messages</th>
               <th>Last activity</th>
+              <th>Created</th>
               <th></th>
             </tr>
           </thead>
@@ -56,7 +58,15 @@ class List extends Component {
                   <td>{phone.signal}%</td>
                   <td>{phone.sent}</td>
                   <td>{phone.received}</td>
-                  <td>{moment(phone.lastActivity).format('HH:mm DD.MM.YYYY')}</td>
+                  <td>
+                    <div>
+                      {phone.lastActivityLocalized} {' '}
+                      <small>
+                        ({moment.duration(phone.lastActivityDatetime.diff(now)).humanize()} ago)
+                      </small>
+                    </div>
+                  </td>
+                  <td>{phone.createdLocalized}</td>
                   <td>
                     <DropdownButton title="actions"
                                     bsStyle="primary"

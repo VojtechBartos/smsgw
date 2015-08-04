@@ -31,7 +31,7 @@ class List extends Component {
         { label: 'Company', key: 'company' },
         { label: 'Role', key: 'role' },
         { label: 'Active', key: 'isActive' },
-        { label: 'Created', key: 'createdAt' }
+        { label: 'Created', key: 'createdLocalized' }
       ],
       actions: [
 

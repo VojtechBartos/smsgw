@@ -4,6 +4,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Table, DropdownButton, MenuItem, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import Immutable from 'immutable';
+import moment from 'moment';
 import * as actions from './actions';
 import * as store from './store';
 import Component from '../components/component.react';
@@ -38,6 +39,7 @@ class List extends Component {
   render() {
     const { application, flashMessages } = this.props;
     const inbox = store.getAll((application) ? application.uuid : null);
+    const now = moment();
 
     if (actions.getAll.pending || actions.remove.pending || !inbox)
       return <Spinner fullscreen={true} />;
@@ -78,8 +80,15 @@ class List extends Component {
                 <tr key={i}>
                   <td>{contact()}</td>
                   <td style={{maxWidth: '500px'}}>{message.text}</td>
-                  <td>{message.received}</td>
-                  <td>{message.created}</td>
+                  <td>
+                    <div>
+                      {message.receivedLocalized} {' '}
+                      <small>
+                        ({moment.duration(message.receivedDatetime.diff(now)).humanize()} ago)
+                      </small>
+                    </div>
+                  </td>
+                  <td>{message.createdLocalized}</td>
                   <td>
                     <DropdownButton title="actions"
                                     bsStyle="primary"

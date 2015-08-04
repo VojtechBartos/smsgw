@@ -33,7 +33,8 @@ class List extends Component {
       options: [
         { label: 'Label', key: 'label' },
         { label: 'Note', key: 'note' },
-        { label: 'Number of contacts', key: 'numberOfContacts' }
+        { label: 'Number of contacts', key: 'numberOfContacts' },
+        { label: 'Created', key: 'createdLocalized' }
       ],
       actions: [
         { label: 'Edit', handler: this.onEditAction.bind(this) },

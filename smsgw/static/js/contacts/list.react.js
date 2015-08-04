@@ -35,7 +35,7 @@ class List extends Component {
         { label: 'First name', key: 'firstName' },
         { label: 'Phone number', key: 'phoneNumber' },
         { label: 'Tags', key: 'tags' },
-        { label: 'Created', key: 'createdAt' }
+        { label: 'Created', key: 'createdLocalized' }
       ],
       actions: [
         { label: 'Edit', handler: this.onEditAction.bind(this) },

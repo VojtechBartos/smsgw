@@ -4,6 +4,7 @@ import React from 'react';
 import {Link} from 'react-router';
 import {Table, DropdownButton, MenuItem, Tooltip, OverlayTrigger} from 'react-bootstrap';
 import {Map} from 'immutable';
+import moment from 'moment';
 import * as actions from './actions';
 import * as store from './store';
 import Component from '../components/component.react';
@@ -36,6 +37,7 @@ class List extends Component {
   render() {
     const { application } = this.props;
     const sentItems = store.getAll((application) ? application.uuid : null);
+    const now = moment();
 
     if (actions.getAll.pending || actions.remove.pending || !sentItems)
       return <Spinner fullscreen={true} />;
@@ -76,8 +78,15 @@ class List extends Component {
                   <td>{contact()}</td>
                   <td style={{maxWidth: '500px'}}>{message.text}</td>
                   <td>{message.multiparts}</td>
-                  <td>{message.send}</td>
-                  <td>{message.created}</td>
+                  <td>
+                    <div>
+                      {message.sendLocalized} {' '}
+                      <small>
+                        ({moment.duration(message.sendDatetime.diff(now)).humanize()} ago)
+                      </small>
+                    </div>
+                  </td>
+                  <td>{message.createdLocalized}</td>
                   <td>
                     <DropdownButton title="actions"
                                     bsStyle="primary"

@@ -42,9 +42,9 @@ class List extends Component {
   }
 
   render() {
-    const dtFormat = 'YYYY-MM-DD HH:mm:ss';
     const { application, flashMessages } = this.props;
     const groups = store.getAll((application) ? application.uuid : null);
+    const now = moment();
 
     if (actions.getAll.pending || actions.remove.pending || !groups)
       return <Spinner fullscreen={true} />;
@@ -78,22 +78,14 @@ class List extends Component {
                   <td>{group.countOfRespondents}</td>
                   <td>{group.multiparts.length + 1}</td>
                   <td>
-                    {(() => {
-                      const send = moment(moment.utc(group.send, dtFormat).toDate());
-                      const now = moment();
-                      return (
-                        <div>
-                          {moment(send).format(dtFormat)} {''}
-                          <small>
-                            (in {moment.duration(send.diff(now)).humanize()})
-                          </small>
-                        </div>
-                      );
-                    })()}
+                    <div>
+                      {group.sendLocalized} {''}
+                      <small>
+                        (in {moment.duration(group.sendDatetime.diff(now)).humanize()})
+                      </small>
+                    </div>
                   </td>
-                  <td>
-                    {moment(moment.utc(group.created, dtFormat).toDate()).format(dtFormat)}
-                  </td>
+                  <td>{group.createdLocalized} {''}</td>
                   <td>
                     <DropdownButton title="actions"
                                     bsStyle="primary"
