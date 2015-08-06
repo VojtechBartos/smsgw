@@ -46,6 +46,7 @@ table.table { width: 100%; border: 0; border-spacing: 0; }
 table.table a { cursor: pointer; }
 table.table > thead > tr > th{ text-align: left; background: #f5f5f5; font-size: 16px; padding: 10px 15px 10px 15px; font-weight: normal; vertical-align: bottom; border-bottom: 1px solid #e5e5e5; }
 table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; }
+.table-responsive { overflow: visible; }
 
 /* Flashes */
 
