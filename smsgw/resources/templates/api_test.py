@@ -34,7 +34,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assert200(res)
         for index, item in enumerate(res.json['data']):
             self.assertIsNotNone(item['uuid'])
-            self.assertIsNotNone(item['createdAt'])
+            self.assertIsNotNone(item['created'])
             self.assertEqual(item['label'], templates[index].label)
             self.assertEqual(item['text'], templates[index].text)
 
@@ -59,7 +59,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
             self.assertEqual(data['uuid'], template.uuid)
             self.assertEqual(data['label'], template.label)
             self.assertEqual(data['text'], template.text)
-            self.assertIsNotNone(data['createdAt'])
+            self.assertIsNotNone(data['created'])
 
     def test_post_endpoint(self):
         """ Testing user template POST endpoint """
@@ -90,7 +90,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assertIsNotNone(res.json['data']['uuid'])
         self.assertEqual(res.json['data']['label'], datasets.post.VALID['label'])
         self.assertEqual(res.json['data']['text'], datasets.post.VALID['text'])
-        self.assertIsNotNone(res.json['data']['createdAt'])
+        self.assertIsNotNone(res.json['data']['created'])
         # check if its really in DB
         templates = Template.query.filter_by(userId=self.user.id).all()
         self.assertEqual(len(templates), 1)
@@ -165,4 +165,4 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assertIsNotNone(res.json['data']['uuid'])
         self.assertIsNotNone(res.json['data']['label'])
         self.assertIsNotNone(res.json['data']['text'])
-        self.assertIsNotNone(res.json['data']['createdAt'])
+        self.assertIsNotNone(res.json['data']['created'])

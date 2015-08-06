@@ -9,7 +9,7 @@ from smsgw.lib.utils import generate_uuid
 
 
 class TemplatesResourceTest(SmsgwIntegrationTestCase):
-    
+
     INDEX_URN = '/api/1.0/users/@me/contacts/'
     POST_URN = '/api/1.0/users/@me/contacts/'
     GET_URN = '/api/1.0/users/@me/contacts/{uuid}/'
@@ -25,7 +25,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assertEqual(len(res.json['data']), 0)
 
         # import contacts datasets to DB
-        contacts = [Contact(userId=self.user.id, **item) 
+        contacts = [Contact(userId=self.user.id, **item)
                     for item in datasets.index.CONTACTS]
         db.session.add_all(contacts)
         db.session.commit()
@@ -40,12 +40,12 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
             self.assertEqual(item['lastName'], contacts[index].lastName)
             self.assertEqual(item['phoneNumber'], contacts[index].phoneNumber)
             self.assertEqual(item['email'], contacts[index].email)
-            self.assertIsNotNone(item['createdAt'])
+            self.assertIsNotNone(item['created'])
 
     def test_get_endpoint(self):
         """ User's contact GET get endpoint """
 
-        # not found 
+        # not found
         res = self.get(self.GET_URN.format(uuid=generate_uuid()))
         self.assert404(res)
 
@@ -66,7 +66,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
             self.assertEqual(data['lastName'], contact.lastName)
             self.assertEqual(data['phoneNumber'], contact.phoneNumber)
             self.assertEqual(data['email'], contact.email)
-            self.assertIsNotNone(data['createdAt'])
+            self.assertIsNotNone(data['created'])
 
     def test_post_endpoint(self):
         """ User's contact POST create endpoint """
@@ -98,7 +98,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assertEqual(data['phoneNumber'], datasets.post.VALID['phoneNumber'])
         self.assertEqual(data['email'], datasets.post.VALID['email'])
         self.assertEqual(data['note'], datasets.post.VALID['note'])
-        self.assertIsNotNone(data['createdAt'])
+        self.assertIsNotNone(data['created'])
         contact = Contact.query \
                     .filter_by(email=datasets.post.VALID['email']) \
                     .first()
@@ -112,7 +112,7 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
     def test_put_endpoint(self):
         """ User's contact PUT update endpoint"""
 
-        # not found 
+        # not found
         res = self.put(self.PUT_URN.format(uuid=generate_uuid()))
         self.assert404(res)
 
@@ -149,12 +149,12 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assertEqual(data['phoneNumber'], contact.phoneNumber)
         self.assertEqual(data['email'], contact.email)
         self.assertIsNone(data['note'])
-        self.assertIsNotNone(data['createdAt'])
+        self.assertIsNotNone(data['created'])
 
     def test_delete_endpoint(self):
         """ User's contact DELETE delete endpoint """
 
-        # not found 
+        # not found
         res = self.get(self.DELETE_URN.format(uuid=generate_uuid()))
         self.assert404(res)
 
@@ -175,4 +175,4 @@ class TemplatesResourceTest(SmsgwIntegrationTestCase):
         self.assertEqual(data['lastName'], contacts[0].lastName)
         self.assertEqual(data['phoneNumber'], contacts[0].phoneNumber)
         self.assertEqual(data['email'], contacts[0].email)
-        self.assertIsNotNone(data['createdAt'])
+        self.assertIsNotNone(data['created'])
