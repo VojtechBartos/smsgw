@@ -27,7 +27,7 @@
     "react-ladda": "~2.0.2",
     "react-d3": "~0.3.0",
     "react-tagsinput": "~1.4.0",
-    "react-bootstrap": "~0.23.4",
+    "react-bootstrap": "~0.24.3",
     "react-bootstrap-datetimepicker": "~0.0.16",
     "revalidator": "~0.3.1",
     "superagent": "~1.2.0",
