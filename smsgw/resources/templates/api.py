@@ -24,7 +24,7 @@ class TemplatesResource(FlaskView):
         """
         user = kwargs.get('user')
 
-        return response([template.to_dict() for template in user.templates])
+        return response([template.to_dict() for template in user.templates.all()])
 
     @route('/<uuid:template_uuid>/')
     @decorators.auth()
