@@ -134,9 +134,17 @@ class UsersResource(FlaskView):
         """
         Updating exiting user
         """
+        user = request.user
+        data = request.json
+
+        role = data.get('role')
+        is_active = data.get('isActive')
+        if (role is not None or is_active is not None) and user.role != user.ROLE_ADMIN:
+            raise ErrorResource(403, message="Don't have permissions.")
+
         try:
             # save to db
-            user.update(request.json)
+            user.update(data)
             db.session.commit()
         except IntegrityError, e:
             db.session.rollback()

@@ -30,6 +30,12 @@ schema = {
         },
         "password": {
             "type": ["string", "null"]
+        },
+        "role": {
+            "enum": ["user", "admin"]
+        },
+        "isActive": {
+            "type": "boolean"
         }
     }
 }

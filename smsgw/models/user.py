@@ -34,7 +34,7 @@ class User(BaseModel, DateMixin):
     isActive = db.Column(db.Boolean, default=True)
 
     tokens = relationship("UserToken", backref='user')
-    templates = relationship("Template", backref='user')
+    templates = relationship("Template", backref='user', lazy='dynamic')
     contacts = relationship("Contact", backref='user', lazy='dynamic')
     tags = relationship("Tag", backref='user', lazy='dynamic')
     applications = relationship("Application", backref='user', lazy='dynamic')
@@ -118,6 +118,15 @@ class User(BaseModel, DateMixin):
             'company': self.company,
             'role': self.role,
             'isActive': self.isActive,
+            'numbers': {
+                'contacts': self.contacts.count(),
+                'sent': self.sent_items.count(),
+                'tags': self.tags.count(),
+                'outbox': self.outbox.count(),
+                'inbox': self.inbox.count(),
+                'templates': self.templates.count(),
+                'applications': self.applications.count()
+            },
             'created': self.created.isoformat(sep=' ') if self.created \
                                                        else None,
             'updated': self.updated.isoformat(sep=' ') if self.updated \
