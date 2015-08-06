@@ -1,139 +1,40 @@
 'use strict';
 
 import React from 'react';
-import LaddaButton from 'react-ladda';
-import {Grid, Row, Col} from 'react-bootstrap';
+import {List} from 'immutable';
+import {getLoggedIn} from './store';
 import Component from '../components/component.react';
-import {update} from './actions';
-import {flash} from '../flashMessages/actions';
+import FlashMessages from '../components/flashmessages.react';
+import Subheader from '../components/subheader.react';
+import Form from './form.react';
 
 class Settings extends Component {
 
-  isValid() {
-    let isValid = true;
-    let password = this.refs.password.getDOMNode().value;
-    let passwordVerify = this.refs.password.getDOMNode().value;
-
-    if (password || password.length > 0)
-      if (password !== passwordVerify) {
-        isValid = false;
-
-        flash('Password and verify password needs to be same.');
-      }
-
-    return isValid;
-  }
-
-  getData() {
-    const password = this.refs.password.getDOMNode().value;
-
-    return {
-      firstName: this.refs.firstName.getDOMNode().value,
-      lastName: this.refs.lastName.getDOMNode().value,
-      email: this.refs.email.getDOMNode().value,
-      company: this.refs.company.getDOMNode().value,
-      password: (password.length === 0) ? null : password
-    };
-  }
-
-  onFormSubmit(e) {
-    e.preventDefault();
-
-    if (this.isValid())
-      update('@me', this.getData()).then(() => {
-        flash('Successfully saved.');
-      });
-  }
-
   render() {
-    const pending = update.pending;
-    const user = this.props.user;
+    const user = getLoggedIn();
+    const messages = this.props.flashMessages;
 
     return (
-      <form onSubmit={(e) => this.onFormSubmit(e)}>
-        <Grid fluid={true}>
-          <Row>
-            <Col md={4}>
-              <div className="form-group">
-                <label>E-Mail</label>
-                <input type="email"
-                       name="email"
-                       ref="email"
-                       placeholder="E-mail"
-                       disabled={pending}
-                       defaultValue={user.email}
-                       className="form-control"
-                       required />
-              </div>
-              <div className="form-group">
-                <label>First name</label>
-                <input type="text"
-                       name="firstName"
-                       ref="firstName"
-                       placeholder="First name"
-                       disabled={pending}
-                       defaultValue={user.firstName}
-                       className="form-control"
-                       required />
-              </div>
-              <div className="form-group">
-                <label>Last name</label>
-                <input type="text"
-                       name="lastName"
-                       ref="lastName"
-                       placeholder="Last name"
-                       disabled={pending}
-                       defaultValue={user.lastName}
-                       className="form-control"
-                       required />
-              </div>
-              <div className="form-group">
-                <label>Company</label>
-                <input type="text"
-                       name="company"
-                       ref="company"
-                       placeholder="Comapny"
-                       disabled={pending}
-                       defaultValue={user.company}
-                       className="form-control" />
-              </div>
+      <div>
+        <Subheader router={this.props.router}>
+          <h1>Settings</h1>
+          <h2>{user.firstName} {user.lastName}</h2>
+        </Subheader>
 
-              <div className="form-group">
-                <label>Password</label>
-                <input type="password"
-                       name="password"
-                       ref="password"
-                       placeholder="Password"
-                       disabled={pending}
-                       className="form-control" />
-              </div>
-              <div className="form-group">
-                <label>Verify password</label>
-                <input type="password"
-                       name="passwordVerify"
-                       ref="passwordVerify"
-                       placeholder="Verify password"
-                       disabled={pending}
-                       className="form-control" />
-              </div>
+        <div id="context">
+          <FlashMessages messages={messages} />
 
-              <div className="cleaner" />
-
-              <LaddaButton active={pending}
-                           style="expand-right">
-                  <button>Save</button>
-              </LaddaButton>
-            </Col>
-          </Row>
-        </Grid>
-      </form>
+          <Form user={user} adminVersion={false} {...this.props} />
+        </div>
+      </div>
     );
   }
 
 }
 
-Settings.defaultProps = {
-  user: {}
+Settings.propTypes = {
+  router: React.PropTypes.func,
+  flashMessages: React.PropTypes.instanceOf(List).isRequired
 };
 
 export default Settings;

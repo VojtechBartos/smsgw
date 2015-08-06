@@ -10,7 +10,7 @@ import Signin from './users/signin.react';
 import Signup from './users/signup.react';
 import App from './app/app.react';
 import Dashboard from './pages/dashboard.react';
-import Settings from './pages/settings.react';
+import Settings from './users/settings.react';
 import Directory from './pages/directory.react';
 // templates
 import Templates from './templates/list.react';
@@ -40,6 +40,7 @@ import ApplicationsOverview from './applications/overview.react';
 // admin
 import Admin from './pages/admin.react';
 import Users from './users/list.react';
+import UsersEdit from './users/edit.react';
 import Phones from './phones/list.react';
 import PhonesDetail from './phones/detail.react';
 import InboxNoResolved from './pages/inbox.react';
@@ -99,6 +100,7 @@ export default (
       <Route handler={Admin}>
         <Route name="users" handler={Wrapper}>
           <DefaultRoute handler={Users} />
+          <Route name="user-edit" path=":uuid/" handler={UsersEdit} />
         </Route>
         <Route name="phones" handler={Wrapper}>
           <DefaultRoute handler={Phones} />

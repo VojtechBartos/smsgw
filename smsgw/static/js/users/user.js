@@ -12,6 +12,16 @@ const UserRecord = Record({
   company: null,
   role: null,
   isLoggedIn: false,
+  isActive: false,
+  numbers: {
+    contacts: 0,
+    sent: 0,
+    tags: 0,
+    outbox: 0,
+    inbox: 0,
+    templates: 0,
+    applications: 0
+  },
   created: null
 });
 

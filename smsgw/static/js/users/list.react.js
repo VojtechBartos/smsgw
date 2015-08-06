@@ -13,8 +13,10 @@ class List extends Component {
     getAll();
   }
 
-  onEditAction() {
-    // TODO(vojta)
+  onEditAction(user) {
+    this.props.router.transitionTo('user-edit', {
+      uuid: user.uuid
+    });
   }
 
   onDeleteAction(user) {
@@ -34,7 +36,8 @@ class List extends Component {
         { label: 'Created', key: 'createdLocalized' }
       ],
       actions: [
-
+        { label: 'Edit', handler: this.onEditAction.bind(this) },
+        { label: 'Delete', handler: this.onDeleteAction.bind(this) }
       ]
     };
 
