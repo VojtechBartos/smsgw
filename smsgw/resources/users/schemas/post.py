@@ -26,7 +26,8 @@ schema = {
             "maxLength": 16
         },
         "password": {
-            "type": "string"
+            "type": "string",
+            "minLength": 16
         }
     }
 }
