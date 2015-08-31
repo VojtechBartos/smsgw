@@ -10,16 +10,17 @@ class Overview extends Component {
     super(props);
     this.state = {
       messages: [
-        { label: 'Received (120)', value: 60 },
+        { label: 'Inbox (120)', value: 60 },
         { label: 'Sent (80)', value: 40 }
       ],
-      answers: [
-        { label: 'A', value: 5 },
-        { label: 'B', value: 6 },
-        { label: 'C', value: 20 },
-        { label: 'D', value: 15 },
-        { label: 'E', value: 10 },
-        { label: 'F', value: 7 }
+      stats: [
+        { label: 'Monday', value: 5 },
+        { label: 'Tuesday', value: 6 },
+        { label: 'Wednesday', value: 20 },
+        { label: 'Thursday', value: 15 },
+        { label: 'Friday', value: 10 },
+        { label: 'Saturday', value: 10 },
+        { label: 'Sunday', value: 7 }
       ]
     };
   }
@@ -38,19 +39,11 @@ class Overview extends Component {
         </div>
         <div className="left span-3">
           <BarChart className="left"
-                    data={this.state.answers}
+                    data={this.state.stats}
                     width={500}
                     height={250}
                     fill={'#3182bd'}
-                    title='Answers' />
-        </div>
-        <div className="left span-3">
-          <BarChart className="left"
-                    data={this.state.answers}
-                    width={500}
-                    height={250}
-                    fill={'#3182bd'}
-                    title='Answers' />
+                    title='Last week' />
         </div>
       </div>
     );
