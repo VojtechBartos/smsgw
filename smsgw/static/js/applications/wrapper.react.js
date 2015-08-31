@@ -52,12 +52,12 @@ class ApplicationWrapper extends Component {
         params
       },
       {
-        label: 'Sent messages',
+        label: 'Sent',
         route: 'application-sent-messages',
         params
       },
       {
-        label: 'Received messages',
+        label: 'Inbox',
         route: 'application-received-messages',
         params
       }
