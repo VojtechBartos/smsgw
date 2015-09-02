@@ -155,3 +155,12 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 .react-tagsinput-invalid { background-color: #fbd8db; color: #90111a; }
 .react-tagsinput-validating { background: #fffacd; }
 .react-tagsinput-completion { margin-top: 10px; }
+.react-tagsinput-completion .react-tagsinput-tag { cursor: pointer; }
+
+@media only screen and (max-width: 1250px) {
+
+  .navbar-nav > li > a { font-size: 22px;  padding: 18px 5px; }
+  .navbar-nav.navbar-right > li.dropdown > a { padding: 9px 15px 0 0; }
+
+
+}
