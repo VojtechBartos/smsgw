@@ -12,7 +12,7 @@ export function getAll(applicationUuid) {
   return outboxCursor().filter(outbox => {
     const app = outbox.application;
     return (!app || app.uuid === applicationUuid);
-  });
+  }).sort((a, b) => a > b);
 }
 
 /**
