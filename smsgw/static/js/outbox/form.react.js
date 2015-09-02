@@ -195,15 +195,6 @@ class Form extends Component {
                           required
                           rows={10}></textarea>
               </div>
-
-              <div className="cleaner" />
-
-              <LaddaButton
-                active={this.props.pending}
-                style="expand-right">
-                <button>{this.props.submitTitle}</button>
-              </LaddaButton>
-
             </Col>
             <Col md={2}>
               <div className="form-group">
@@ -216,6 +207,13 @@ class Form extends Component {
                                inputProps={dateTimeOptions}/>
               </div>
             </Col>
+          </Row>
+          <Row>
+            <LaddaButton
+              active={this.props.pending}
+              style="expand-right">
+              <button>{this.props.submitTitle}</button>
+            </LaddaButton>
           </Row>
         </Grid>
       </form>
