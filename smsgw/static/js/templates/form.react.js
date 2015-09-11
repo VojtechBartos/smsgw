@@ -57,22 +57,23 @@ class Form extends Component {
                             defaultValue={this.props.data.text}
                             required></textarea>
               </div>
-
-              <LaddaButton
-                active={this.props.pending}
-                style="expand-right">
-                <button>{this.props.submitTitle}</button>
-              </LaddaButton>
             </Col>
-            <Col md={2}>
+            <Col md={3}>
               <Well bsSize="large" className="margin-top-25">
                 You can use some constant wich will be replaced by
                 real value. We are
-                supporting <strong>{'{firstName}'}</strong>
-                 or <strong>{'{lastName}'}</strong> for
+                supporting <strong>{'{firstName} '}</strong>
+                 or <strong>{'{lastName} '}</strong> for
                 user first name and last name.
               </Well>
             </Col>
+          </Row>
+          <Row>
+            <LaddaButton
+              active={this.props.pending}
+              style="expand-right">
+              <button>{this.props.submitTitle}</button>
+            </LaddaButton>
           </Row>
         </Grid>
       </form>

@@ -60,38 +60,47 @@ class Header extends Component {
     return (
       <nav className="navbar navbar-static-top">
         <div className="container-fluid">
-          <div id="navbar" className="navbar-collapse collapse">
             <Link to="dashboard" className="navbar-brand">
               <strong>sms</strong>gw
             </Link>
-            <ul className="nav navbar-nav">
-              {menu.map(item => {
-                return <li key={item}><Link to={item}>{item}</Link></li>;
-              })}
-            </ul>
-            <ul className="nav navbar-nav navbar-right">
-              <li className={className.join(' ')}>
-                <a onClick={(e) => this.onClick(e)}
-                   className="dropdown-toggle"
-                   role="button"
-                   aria-expanded="false">
-                  <div className="caret"></div>
-                  <div className="info">
-                    <div className="name">{user.firstName} {user.lastName}</div>
-                    <div className="company">{user.company}</div>
-                  </div>
-                </a>
-                <ul className="dropdown-menu" role="menu">
-                  <li key="email" className="dropdown-header">{user.email}</li>
-                  <li key="settings"><Link to="settings">Settings</Link></li>
-                  <li className="divider"></li>
-                  <li key="sign-out">
-                    <a onClick={(e) => this.signOut(e)}>Sign out</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+
+            <button type="button" className="navbar-toggle collapsed">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+
+            <div className="navbar-collapse collapse">
+              <ul className="nav navbar-nav">
+                {menu.map(item => {
+                  return <li key={item}><Link to={item}>{item}</Link></li>;
+                })}
+              </ul>
+              <ul className="nav navbar-nav navbar-right">
+                <li className={className.join(' ')}>
+                  <a onClick={(e) => this.onClick(e)}
+                     className="dropdown-toggle"
+                     role="button"
+                     aria-expanded="false">
+                    <div className="caret"></div>
+                    <div className="info">
+                      <div className="name">{user.firstName} {user.lastName}</div>
+                      <div className="company">{user.company}</div>
+                    </div>
+                  </a>
+                  <ul className="dropdown-menu" role="menu">
+                    <li key="email" className="dropdown-header">{user.email}</li>
+                    <li key="settings"><Link to="settings">Settings</Link></li>
+                    <li className="divider"></li>
+                    <li key="sign-out">
+                      <a onClick={(e) => this.signOut(e)}>Sign out</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
         </div>
       </nav>
     );

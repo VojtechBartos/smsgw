@@ -196,7 +196,7 @@ class Form extends Component {
                           rows={10}></textarea>
               </div>
             </Col>
-            <Col md={2}>
+            <Col md={3}>
               <div className="form-group">
                 <label>Send at</label>
 
