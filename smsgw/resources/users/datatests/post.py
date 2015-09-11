@@ -3,7 +3,7 @@
 
 VALID = {
     "email": "vojta@bighealth.com",
-    "password": "password",
+    "password": "passwordpasswordpassword",
     "firstName": "Vojta",
     "lastName": "Bartos",
     "company": "BigHealht.com"
@@ -11,7 +11,7 @@ VALID = {
 
 VALID_NO_COMPANY = {
     "email": "vojta+nocompany@bighealth.com",
-    "password": "password",
+    "password": "passwordpasswordpassword",
     "firstName": "Vojta",
     "lastName": "Bartos"
 }
@@ -31,7 +31,7 @@ NO_EMAIL = {
 
 LONG_NAMES = {
     "email": "vojta@bighealth.com",
-    "password": "password",
+    "password": "passwordpasswordpassword",
     "firstName": "Vojta more than 16 characters",
     "lastName": "Bartos more than 16 characters",
     "company": "BigHealht.com"
