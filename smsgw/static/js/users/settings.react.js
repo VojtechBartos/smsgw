@@ -24,7 +24,7 @@ class Settings extends Component {
         <div id="context">
           <FlashMessages messages={messages} />
 
-          <Form user={user} adminVersion={false} {...this.props} />
+          <Form data={user} adminVersion={false} {...this.props} />
         </div>
       </div>
     );

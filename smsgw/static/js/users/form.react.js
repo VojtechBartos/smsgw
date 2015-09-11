@@ -57,7 +57,7 @@ class Form extends Component {
 
   render() {
     const pending = update.pending;
-    const { user, adminVersion } = this.props;
+    const { data, adminVersion } = this.props;
 
     return (
       <form onSubmit={(e) => this.onFormSubmit(e)}>
@@ -71,7 +71,7 @@ class Form extends Component {
                        ref="email"
                        placeholder="E-mail"
                        disabled={pending}
-                       defaultValue={user.email}
+                       defaultValue={data.email}
                        className="form-control"
                        required />
               </div>
@@ -82,7 +82,7 @@ class Form extends Component {
                        ref="firstName"
                        placeholder="First name"
                        disabled={pending}
-                       defaultValue={user.firstName}
+                       defaultValue={data.firstName}
                        className="form-control"
                        required />
               </div>
@@ -93,7 +93,7 @@ class Form extends Component {
                        ref="lastName"
                        placeholder="Last name"
                        disabled={pending}
-                       defaultValue={user.lastName}
+                       defaultValue={data.lastName}
                        className="form-control"
                        required />
               </div>
@@ -104,7 +104,7 @@ class Form extends Component {
                        ref="company"
                        placeholder="Comapny"
                        disabled={pending}
-                       defaultValue={user.company}
+                       defaultValue={data.company}
                        className="form-control" />
               </div>
 
@@ -134,12 +134,12 @@ class Form extends Component {
 
               return (
                 <Col md={2}>
-                  <Input type="select" ref="role" label="Role" defaultValue={user.role}>
+                  <Input type="select" ref="role" label="Role" defaultValue={data.role}>
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
                   </Input>
 
-                  <Input type="select" ref="isActive" label="Active" defaultValue={user.isActive}>
+                  <Input type="select" ref="isActive" label="Active" defaultValue={data.isActive}>
                     <option value={false}>No</option>
                     <option value={true}>Yes</option>
                   </Input>
@@ -149,31 +149,31 @@ class Form extends Component {
                     <tbody>
                       <tr>
                         <td>Sent messages</td>
-                        <td>{user.numbers.sent}</td>
+                        <td>{data.numbers.sent}</td>
                       </tr>
                       <tr>
                         <td>Received messages</td>
-                        <td>{user.numbers.inbox}</td>
+                        <td>{data.numbers.inbox}</td>
                       </tr>
                       <tr>
                         <td>Waiting messages</td>
-                        <td>{user.numbers.outbox}</td>
+                        <td>{data.numbers.outbox}</td>
                       </tr>
                       <tr>
                         <td>Applications</td>
-                        <td>{user.numbers.applications}</td>
+                        <td>{data.numbers.applications}</td>
                       </tr>
                       <tr>
                         <td>Contacts</td>
-                        <td>{user.numbers.contacts}</td>
+                        <td>{data.numbers.contacts}</td>
                       </tr>
                       <tr>
                         <td>Tags</td>
-                        <td>{user.numbers.tags}</td>
+                        <td>{data.numbers.tags}</td>
                       </tr>
                       <tr>
                         <td>Templates</td>
-                        <td>{user.numbers.templates}</td>
+                        <td>{data.numbers.templates}</td>
                       </tr>
                     </tbody>
                   </Table>
