@@ -21,6 +21,7 @@ master thesis **IN DEVELOPMENT**
 
 ## TODO's
 
+- Docker
 - Database
   - `INSERT INTO `gammu` (`id`, `Version`, `Info`) VALUES (NULL, '14', '');`
 - React
