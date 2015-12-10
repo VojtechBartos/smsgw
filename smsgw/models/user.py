@@ -9,7 +9,7 @@ from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from smsgw.models import BaseModel, DateMixin
 from smsgw.lib.utils import generate_uuid
-from smsgw.extensions import bcrypt, db
+from smsgw.core import bcrypt, db
 
 
 class User(BaseModel, DateMixin):

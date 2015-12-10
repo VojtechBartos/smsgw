@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
 
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.models import BaseModel, DateMixin
 from smsgw.models.application import Application
 from smsgw.models.outbox_multipart import OutboxMultipart

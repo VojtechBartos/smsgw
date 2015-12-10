@@ -5,7 +5,7 @@ from flask import render_template, current_app
 from flask.ext.mail import Message
 
 from smsgw.tasks.base import BaseTask
-from smsgw.extensions import mail
+from smsgw.core import mail
 
 
 class MailTask(BaseTask):

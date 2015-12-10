@@ -11,7 +11,7 @@ from smsgw.lib.utils import response
 from smsgw.resources import decorators
 from smsgw.resources.auth.schemas import login
 from smsgw.resources.error.api import ErrorResource
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class AuthResource(FlaskView):

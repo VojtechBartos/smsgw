@@ -10,7 +10,7 @@ from smsgw.lib.utils import response, str_to_datetime, random_string
 from smsgw.resources import decorators
 from smsgw.resources.outbox.schemas import post, external, validate
 from smsgw.resources.error.api import ErrorResource
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class OutboxResource(FlaskView):

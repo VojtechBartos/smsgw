@@ -6,7 +6,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects import mysql
 from smsgw.models import BaseModel, DateMixin
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.lib.utils import generate_uuid
 
 

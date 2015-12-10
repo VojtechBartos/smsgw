@@ -4,7 +4,7 @@
 from smsgw.tests import SmsgwIntegrationTestCase
 from smsgw.models import Application
 from smsgw.resources.applications import datasets
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.lib.utils import generate_uuid
 
 

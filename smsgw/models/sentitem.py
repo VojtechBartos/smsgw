@@ -8,7 +8,7 @@ from sqlalchemy.dialects import mysql
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.lib.utils import generate_uuid
 from smsgw.models import BaseModel, Contact, DateMixin
 

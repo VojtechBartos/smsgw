@@ -4,7 +4,7 @@
 from smsgw.tests import SmsgwIntegrationTestCase
 from smsgw.resources.auth import datasets
 from smsgw.models import User
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class AuthResourceTest(SmsgwIntegrationTestCase):

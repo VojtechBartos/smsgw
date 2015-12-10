@@ -6,7 +6,7 @@ from flask import Flask
 from celery import Celery
 
 from smsgw import resources
-from smsgw.extensions import db, bcrypt, migrate, mail
+from smsgw.core import db, bcrypt, migrate, mail
 from smsgw.config import environments
 
 

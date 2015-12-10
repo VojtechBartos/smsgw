@@ -5,7 +5,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.schema import Index
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.models import BaseModel
 
 

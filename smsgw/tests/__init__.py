@@ -8,7 +8,7 @@ from flask.ext.testing import TestCase as FlaskTestCase
 
 from smsgw import factory
 from smsgw.models import User, UserToken
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.tests import datasets
 
 

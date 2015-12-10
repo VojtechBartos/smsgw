@@ -8,7 +8,7 @@ from flask import current_app
 
 from smsgw.resources.error.helpers import get_validation_data
 from smsgw.lib.utils import response
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class ErrorResource(Exception):

@@ -3,7 +3,7 @@
 
 import re
 from flask.ext.script import Command, Option
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.models import Inbox, Application
 from smsgw.tasks.callback import CallbackTask
 

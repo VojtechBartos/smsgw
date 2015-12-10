@@ -7,7 +7,7 @@ from flask.ext.classy import FlaskView, route
 from smsgw.models import Phone, User
 from smsgw.lib.utils import response
 from smsgw.resources import decorators
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class PhonesResource(FlaskView):
