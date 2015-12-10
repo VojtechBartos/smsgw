@@ -7,6 +7,7 @@ from celery import Celery
 
 from smsgw import resources
 from smsgw.core import db, bcrypt, migrate, mail
+from smsgw.models import Gammu
 from smsgw.config import environments
 
 
@@ -30,6 +31,9 @@ def create_app(name='smsgw', env=None):
     # register resources
     resources.register(app)
 
+    # run on startup operations
+    on_startup(app)
+
     return app
 
 
@@ -46,3 +50,15 @@ def create_celery_app(app=None):
 
     celery.Task = ContextTask
     return celery
+
+
+def on_startup(app):
+    """
+    Running necessary operation on startup of app
+    :param app: {Flask} flask app instance
+    """
+    with app.app_context():
+        Gammu.update_version(version=app.config['GAMMU_DATABASE_VERSION'],
+                             library_version=app.config['GAMMU_VERSION'])
+
+        db.session.commit()

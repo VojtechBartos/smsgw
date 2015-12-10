@@ -22,10 +22,7 @@ master thesis **IN DEVELOPMENT**
 ## TODO's
 
 - Docker
-- Database
-  - `INSERT INTO `gammu` (`id`, `Version`, `Info`) VALUES (NULL, '14', '');`
 - React
   - autobinding at the component
 - DevOps
-  - ~~add vagrant setup~~
   - write installation steps
