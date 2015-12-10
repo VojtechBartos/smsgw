@@ -1,9 +1,8 @@
 "use strict";
 
 import gulp from 'gulp';
-import gulpWebpack from 'gulp-webpack';
+import gulpWebpack from 'webpack-stream';
 import webpack from 'webpack';
-import sh from 'execSync'; // TODO(vojta) replace by native in node 0.12
 
 const isDevelopment = true;
 
@@ -25,25 +24,15 @@ gulp.task('webpack', () => {
           { test: /\.js$/, exclude: /node_modules/, loader: "eslint-loader"}
         ],
         loaders: [
-          {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader',
-            query: { stage: 2 }
-          }
+          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
         ]
       },
       plugins: (() => {
-        // get git tag
-        const result = sh.exec('git describe');
-        const tag = (result.code === 0) ? result.stdout : new Date().getTime();
-
         let plugins = [
           new webpack.DefinePlugin({
             'process.env': {
               NODE_ENV: JSON.stringify((isDevelopment) ? 'development' : 'production')
             },
-            __VERSION__: JSON.stringify(tag),
             __DEV__: (isDevelopment)
           })
         ];

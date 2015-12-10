@@ -11,18 +11,18 @@ import {flash} from '../flashMessages/actions';
 class Form extends Component {
 
   isValid() {
-    let isValid = true;
+    let valid = true;
     let password = this.refs.password.getDOMNode().value;
     let passwordVerify = this.refs.password.getDOMNode().value;
 
     if (password || password.length > 0)
       if (password !== passwordVerify) {
-        isValid = false;
+        valid = false;
 
         flash('Password and verify password needs to be same.');
       }
 
-    return isValid;
+    return valid;
   }
 
   getData() {
