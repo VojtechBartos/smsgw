@@ -39,3 +39,7 @@ class Default(object):
                      Queue('mails', routing_key='mails'))
     CELERYBEAT_SCHEDULE = None
     CELERYD_POOL_RESTARTS = True
+
+    # Gammu
+    GAMMU_VERSION = os.environ.get('GAMMU_VERSION', "1.34.0")
+    GAMMU_DATABASE_VERSION = os.environ.get('GAMMU_DATABASE_VERSION', 14)
