@@ -16,18 +16,11 @@ def register(app):
     Registration of resources modules
     :param app: {Flask} flask app instance
     """
-
     # register converters
     converters.register(app)
 
-    @app.route('/')
-    def index():
-        """ Frontend handler, rendering index.html """
-        params = {
-            'title': "SMS gateway"
-        }
-
-        return render_template('index.html', **params)
+    # registerting additional routes
+    register_additional_routes(app)
 
     # API resources registration
     directory = os.path.dirname(os.path.realpath(__file__))
@@ -44,3 +37,19 @@ def register(app):
             print "Resource '{0}' does not exists".format(module)
         except AttributeError as e:
             print "Resource class '{0}' does not exists".format(class_name)
+
+
+def register_additional_routes(app):
+    """
+    Registration of additional routes outside from Flask Classy
+    :param app: {Flask} flask app instance
+    """
+
+    @app.route('/')
+    def index():
+        """ Frontend handler, rendering index.html """
+        params = {
+            'title': "SMS gateway"
+        }
+
+        return render_template('index.html', **params)
