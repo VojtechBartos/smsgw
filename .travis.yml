@@ -7,7 +7,12 @@ python:
   - 2.7
 
 env:
-  - SMSGW_ENV=ci
+  - TESTING=1
+  - DEBUG=1
+  - DATABASE_HOST="localhost"
+  - DATABASE_NAME="smsgw_test"
+  - DATABASE_USERNAME="smsgw_test"
+  - DATABASE_PASSWORD=""
 
 install: "pip install -r requirements.txt"
 

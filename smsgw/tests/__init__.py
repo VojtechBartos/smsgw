@@ -19,8 +19,7 @@ class SmsgwUnitTestCase(UnitTestCase):
 class SmsgwIntegrationTestCase(FlaskTestCase):
 
     def create_app(self):
-        return factory.create_app(name="smsgw_testing",
-                                  env=os.environ.get('SMSGW_ENV'))
+        return factory.create_app(name="smsgw_testing")
 
     def setUp(self):
         super(SmsgwIntegrationTestCase, self).setUp()
