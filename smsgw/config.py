@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+# http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
+
+import os
+import multiprocessing
+from kombu import Queue
+from smsgw.lib.utils import get_sql_alchemy_db_uri
+
+
+WORKERS = multiprocessing.cpu_count() * 2 + 1
+
+DEBUG = os.environ.get('DEBUG', False)
+LOGGING = os.environ.get('LOGGING', False)
+TESTING = os.environ.get('TESTING', False)
+STATIC_FOLDER = os.path.join('static')
+SECRET_KEY = os.urandom(24)
+
+# Database
+DATABASE_DIALECT = os.environ.get('DATABASE_DIALECT', 'mysql')
+DATABASE_HOST = os.environ.get('DATABASE_HOST')
+DATABASE_PORT = os.environ.get('DATABASE_PORT', 3306)
+DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME')
+DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD')
+DATABASE_NAME = os.environ.get('DATABASE_NAME')
+SQLALCHEMY_DATABASE_URI = get_sql_alchemy_db_uri(
+    dialect=DATABASE_DIALECT,
+    host=DATABASE_HOST,
+    port=DATABASE_PORT,
+    username=DATABASE_USERNAME,
+    password=DATABASE_PASSWORD,
+    database=DATABASE_NAME
+)
+
+# Mail
+# MAIL_SERVER = "localhost"
+# MAIL_PORT = 25
+# MAIL_USE_TLS = False
+# MAIL_USE_SSL = False
+# MAIL_USERNAME = None
+# MAIL_PASSWORD = None
+DEFAULT_MAIL_SENDER = "info@vojtechbartos.cz"
+
+# CELERY
+CELERY_IMPORTS = ("smsgw.tasks.callback", "smsgw.tasks.mail")
+CELERY_TIMEZONE = 'UTC'
+CELERY_BROKER_URL = "amqp://"
+CELERY_RESULT_BACKEND = None
+CELERY_IGNORE_RESULT = True
+CELERY_QUEUES = (Queue('callbacks', routing_key='callbacks'),
+                 Queue('mails', routing_key='mails'))
+CELERYBEAT_SCHEDULE = None
+CELERYD_POOL_RESTARTS = True
+
+# Gammu
+GAMMU_VERSION = os.environ.get('GAMMU_VERSION', "1.34.0")
+GAMMU_DATABASE_VERSION = os.environ.get('GAMMU_DATABASE_VERSION', 14)
+GAMMU_DEVICE_ID = os.environ.get('GAMMU_DEVICE_ID', 'tmobile-huawei')
+GAMMU_DEVICE_PIN = os.environ.get('GAMMU_DEVICE_PIN', '1234')

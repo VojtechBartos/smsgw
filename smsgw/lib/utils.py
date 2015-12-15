@@ -10,6 +10,21 @@ from dateutil.parser import parse as dtparse
 from smsgw.constants.http_status_codes import STATUS_CODES
 
 
+def get_sql_alchemy_db_uri(**kwargs):
+    """
+    Helper function to get proper database uri
+    :param args: {dict} db settings
+    :return: {string} sql alchemy db uri
+    """
+    if kwargs.get('driver'):
+        kwargs['dialect'] = '{}+{}'.format(kwargs['dialect'], kwargs['driver'])
+    uri = '{dialect}://{username}:{password}@{host}:{port}/{database}'
+
+    print uri.format(**kwargs)
+
+    return uri.format(**kwargs)
+
+
 def response(payload, status_code=200, message='OK.'):
     """
 
