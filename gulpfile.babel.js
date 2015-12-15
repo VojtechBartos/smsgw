@@ -3,13 +3,20 @@
 import gulp from 'gulp';
 import gulpWebpack from 'webpack-stream';
 import webpack from 'webpack';
+import yargs from 'yargs';
 
-const isDevelopment = true;
+const args = yargs
+  .boolean('d')
+  .alias('e', 'env')
+  .default('e', 'development')
+  .argv
+const isRelease = (args.env == 'release')
+const isDevelopment = (args.env == 'development');
 
 /**
  * Webpack
  */
-gulp.task('webpack', () => {
+gulp.task('build', () => {
   gulp
     .src('./smsgw/static/js/main.js')
     .pipe(gulpWebpack({
@@ -37,7 +44,7 @@ gulp.task('webpack', () => {
           })
         ];
 
-        if (!isDevelopment) {
+        if (isRelease) {
           plugins = plugins.concat([
             new webpack.optimize.DedupePlugin(),
             new webpack.optimize.OccurenceOrderPlugin(),
@@ -59,4 +66,4 @@ gulp.task('webpack', () => {
 /**
  * Default task
  */
-gulp.task('default', ['webpack']);
+gulp.task('default', ['build']);
