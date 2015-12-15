@@ -13,7 +13,6 @@ env:
     - DATABASE_HOST="localhost"
     - DATABASE_NAME="smsgw_test"
     - DATABASE_USERNAME="smsgw_test"
-    - DATABASE_PASSWORD=""
 
 install: "pip install -r requirements.txt"
 
