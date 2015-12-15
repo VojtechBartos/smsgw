@@ -2,7 +2,10 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 import re
+import os
+from flask import render_template, current_app
 from flask.ext.script import Command, Option
+
 from smsgw.core import db
 from smsgw.models import Inbox, Application
 from smsgw.tasks.callback import CallbackTask
@@ -56,3 +59,31 @@ class ReceiveHookCommand(Command):
             message.processed = True
 
         db.session.commit()
+
+
+class GenerateConfigCommand(Command):
+    """ Generating gammurc daemon config """
+
+    option_list = (
+        Option('--destination', '-d', dest='destination', default=None),
+    )
+
+    def run(self, destination=None):
+        assert isinstance(destination, (unicode, str)), \
+            "Missing destination parameter."
+
+        # generating config
+        config = render_template('gammu/gammurc', **{
+            'GAMMU_DEVICE_ID': current_app.config['GAMMU_DEVICE_ID'],
+            'GAMMU_DEVICE_PIN': current_app.config['GAMMU_DEVICE_PIN'],
+            'DATABASE_USERNAME': current_app.config['DATABASE_USERNAME'],
+            'DATABASE_PASSWORD': current_app.config['DATABASE_PASSWORD'],
+            'DATABASE_HOST': current_app.config['DATABASE_HOST'],
+            'DATABASE_NAME': current_app.config['DATABASE_NAME']
+        })
+
+        # saving template
+        with open(os.path.join(destination), 'w+') as f:
+            f.write(config)
+
+        print "Saved in destination: %s" % destination
