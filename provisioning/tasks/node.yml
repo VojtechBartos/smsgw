@@ -1,4 +1,0 @@
----
-- shell: curl -sL https://deb.nodesource.com/setup_5.x | bash -
-- apt: name=nodejs
-- npm: name=gulp global=yes

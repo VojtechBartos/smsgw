@@ -1,5 +1,0 @@
----
-- git: repo=https://github.com/gammu/gammu.git dest=/tmp/gammu version=1.34.0
-- shell: ./configure chdir=/tmp/gammu
-- shell: make chdir=/tmp/gammu
-- shell: make install chdir=/tmp/gammu
