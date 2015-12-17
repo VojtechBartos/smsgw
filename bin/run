@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# database initialization
+./manage.py init
+
+# running server
+./wsgi.py
