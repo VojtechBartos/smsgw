@@ -36,4 +36,4 @@ RUN \
 EXPOSE 5000
 
 # running python app
-ENTRYPOINT python wsgi.py
+CMD ["bin/run"]
