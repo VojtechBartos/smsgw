@@ -4,7 +4,7 @@
 import os
 import multiprocessing
 from kombu import Queue
-from smsgw.lib.utils import get_sql_alchemy_db_uri
+from smsgw.lib.utils import get_sql_alchemy_db_uri, get_rabbitmq_uri
 
 
 WORKERS = multiprocessing.cpu_count() * 2 + 1
@@ -16,10 +16,10 @@ STATIC_FOLDER = os.path.join('static')
 SECRET_KEY = os.urandom(24)
 
 # Database
-DATABASE_DIALECT = os.environ.get('DATABASE_DIALECT', 'mysql')
-DATABASE_HOST = os.environ.get('DATABASE_HOST')
+DATABASE_DIALECT = 'mysql'
+DATABASE_HOST = os.environ.get('DATABASE_HOST', 'db')
 DATABASE_PORT = os.environ.get('DATABASE_PORT', 3306)
-DATABASE_USERNAME = os.environ.get('DATABASE_USERNAME')
+DATABASE_USERNAME = os.environ.get('DATABASE_USER')
 DATABASE_PASSWORD = os.environ.get('DATABASE_PASSWORD')
 DATABASE_NAME = os.environ.get('DATABASE_NAME')
 SQLALCHEMY_DATABASE_URI = get_sql_alchemy_db_uri(
@@ -30,6 +30,12 @@ SQLALCHEMY_DATABASE_URI = get_sql_alchemy_db_uri(
     password=DATABASE_PASSWORD,
     database=DATABASE_NAME
 )
+
+# RabbitMQ
+RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST', 'rabbitmq')
+RABBITMQ_VHOST = os.environ.get('RABBITMQ_DEFAULT_VHOST', 'smsgw')
+RABBITMQ_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'guest')
+RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_DEFAULT_PASS', 'guest')
 
 # Mail
 # MAIL_SERVER = "localhost"
@@ -43,13 +49,20 @@ DEFAULT_MAIL_SENDER = "info@vojtechbartos.cz"
 # CELERY
 CELERY_IMPORTS = ("smsgw.tasks.callback", "smsgw.tasks.mail")
 CELERY_TIMEZONE = 'UTC'
-CELERY_BROKER_URL = "amqp://"
+CELERY_BROKER_URL = get_rabbitmq_uri(
+    host=RABBITMQ_HOST,
+    vhost=RABBITMQ_VHOST,
+    user=RABBITMQ_USER,
+    password=RABBITMQ_PASSWORD
+)
 CELERY_RESULT_BACKEND = None
 CELERY_IGNORE_RESULT = True
 CELERY_QUEUES = (Queue('callbacks', routing_key='callbacks'),
                  Queue('mails', routing_key='mails'))
 CELERYBEAT_SCHEDULE = None
 CELERYD_POOL_RESTARTS = True
+CELERY_ALWAYS_EAGER = TESTING
+CELERY_EAGER_PROPAGATES_EXCEPTIONS = TESTING
 
 # Gammu
 GAMMU_VERSION = os.environ.get('GAMMU_VERSION', "1.34.0")

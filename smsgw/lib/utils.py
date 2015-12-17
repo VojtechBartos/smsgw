@@ -10,17 +10,29 @@ from dateutil.parser import parse as dtparse
 from smsgw.constants.http_status_codes import STATUS_CODES
 
 
+def get_rabbitmq_uri(**kwargs):
+    """
+    Helper function to get proper rabbitmq uri
+    :param kwargs: {dict} rabbitmq settings
+    :return: {string} rabbitmq uri
+    """
+    return "amqp://{user}:{password}@{host}:5672/{vhost}".format(
+        host=kwargs['host'],
+        vhost=kwargs['vhost'],
+        user=kwargs['user'],
+        password=kwargs['password']
+    )
+
+
 def get_sql_alchemy_db_uri(**kwargs):
     """
     Helper function to get proper database uri
-    :param args: {dict} db settings
+    :param kwargs: {dict} db settings
     :return: {string} sql alchemy db uri
     """
     if kwargs.get('driver'):
         kwargs['dialect'] = '{}+{}'.format(kwargs['dialect'], kwargs['driver'])
     uri = '{dialect}://{username}:{password}@{host}:{port}/{database}'
-
-    print uri.format(**kwargs)
 
     return uri.format(**kwargs)
 
