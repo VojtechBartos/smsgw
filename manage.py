@@ -9,7 +9,8 @@ from smsgw.manage import *
 
 
 manager = Manager(factory.create_app)
-manager.add_command('sync', queries.SyncCommand)
+manager.add_command('init', system.InitCommand)
+manager.add_command('sync', system.SyncCommand)
 manager.add_command('alembic', MigrateCommand)
 manager.add_command('gammu_hook', gammu.ReceiveHookCommand)
 manager.add_command('gammu_generate_config', gammu.GenerateConfigCommand)
