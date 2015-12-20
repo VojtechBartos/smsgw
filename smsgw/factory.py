@@ -5,7 +5,7 @@ import os
 from flask import Flask
 from celery import Celery
 
-from . import config
+from . import settings
 from .core import db, bcrypt, migrate, mail
 from .models import Gammu
 from .lib.utils import register_module
@@ -17,7 +17,7 @@ def create_app(name='smsgw'):
     """
     # flask app inicialization
     app = Flask(name, static_url_path='')
-    app.config.from_object(config)
+    app.config.from_object(settings)
 
     # extensions inicializatioon
     db.init_app(app)
