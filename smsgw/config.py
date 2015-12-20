@@ -9,6 +9,8 @@ from smsgw.lib.utils import get_sql_alchemy_db_uri, get_rabbitmq_uri
 
 WORKERS = multiprocessing.cpu_count() * 2 + 1
 
+SERVER_NAME = os.environ.get('HOSTNAME')
+
 DEBUG = os.environ.get('DEBUG', False)
 LOGGING = os.environ.get('LOGGING', False)
 TESTING = os.environ.get('TESTING', False)
@@ -38,16 +40,15 @@ RABBITMQ_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'guest')
 RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_DEFAULT_PASS', 'guest')
 
 # Mail
-# MAIL_SERVER = "localhost"
-# MAIL_PORT = 25
-# MAIL_USE_TLS = False
-# MAIL_USE_SSL = False
-# MAIL_USERNAME = None
-# MAIL_PASSWORD = None
-DEFAULT_MAIL_SENDER = "info@vojtechbartos.cz"
+MAIL_SERVER = os.environ.get('MAIL_SERVER', 'localhost')
+MAIL_PORT = os.environ.get('MAIL_PORT', 25)
+MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL', False)
+MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
+MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+DEFAULT_MAIL_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
 
 # CELERY
-CELERY_IMPORTS = ("smsgw.tasks.callback", "smsgw.tasks.mail")
+CELERY_IMPORTS = ("smsgw.tasks",)
 CELERY_TIMEZONE = 'UTC'
 CELERY_BROKER_URL = get_rabbitmq_uri(
     host=RABBITMQ_HOST,
