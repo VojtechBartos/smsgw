@@ -5,9 +5,21 @@ import uuid
 import pytz
 import random
 import string
+import importlib
 from flask import jsonify
 from dateutil.parser import parse as dtparse
 from smsgw.constants.http_status_codes import STATUS_CODES
+
+
+def register_module(app, module):
+    """
+    Registering module on fly
+    :param app: {Flask} instance
+    :param module: {str} module path
+    """
+    m = importlib.import_module('%s.%s' % (app.name, module))
+    if hasattr(m, 'register'):
+        m.register(app)
 
 
 def get_rabbitmq_uri(**kwargs):
