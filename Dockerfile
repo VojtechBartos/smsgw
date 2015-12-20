@@ -1,6 +1,8 @@
 FROM python:2.7-onbuild
 MAINTAINER Vojta Bartos <hi@vojtech.me>
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # default necessary packages
 RUN \
   apt-get update && \
