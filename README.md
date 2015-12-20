@@ -6,7 +6,6 @@ master thesis **IN DEVELOPMENT**
 
 ## TODO's
 
-- Docker
 - React
   - autobinding at the component
 - DevOps
