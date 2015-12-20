@@ -5,9 +5,10 @@ import os
 from flask import Flask
 from celery import Celery
 
-from smsgw import resources, config
-from smsgw.core import db, bcrypt, migrate, mail
-from smsgw.models import Gammu
+from . import config
+from .core import db, bcrypt, migrate, mail
+from .models import Gammu
+from .lib.utils import register_module
 
 
 def create_app(name='smsgw'):
@@ -25,7 +26,7 @@ def create_app(name='smsgw'):
     mail.init_app(app)
 
     # register resources
-    resources.register(app)
+    register_module(app, 'resources')
 
     return app
 

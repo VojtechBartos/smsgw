@@ -33,6 +33,7 @@ class OutboxResource(FlaskView):
 
         return response(groups)
 
+
     @route('/users/<uuid:user_uuid>/outbox/<string:group>/', methods=['GET'])
     @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/outbox/<string:group>/',
            methods=['GET'])
