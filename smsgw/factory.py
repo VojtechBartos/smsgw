@@ -11,12 +11,9 @@ from .models import Gammu
 from .lib.utils import register_module
 
 
-def create_app(name='smsgw'):
-    """
-    :param name: {str} name of package app
-    """
+def create_app():
     # flask app inicialization
-    app = Flask(name, static_url_path='')
+    app = Flask("smsgw", static_url_path='')
     app.config.from_object(settings)
 
     # extensions inicializatioon
