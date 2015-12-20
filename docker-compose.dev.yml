@@ -1,0 +1,14 @@
+app:
+  build: .
+  volumes:
+    - ./:/usr/src/app
+
+worker:
+  build: .
+  volumes:
+    - ./:/usr/src/app
+
+gammu:
+  build: .
+  volumes:
+    - ./:/usr/src/app

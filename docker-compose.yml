@@ -1,0 +1,53 @@
+app:
+  image: vojtechbartos/smsgw
+  links:
+    - db
+    - rabbitmq
+  env_file: .env
+
+worker:
+  image: vojtechbartos/smsgw
+  command: celery -A smsgw.tasks.celery worker
+  links:
+    - db
+    - rabbitmq
+  environment:
+    C_FORCE_ROOT: 1
+  env_file: .env
+
+gammu:
+  image: vojtechbartos/smsgw
+  command: ./bin/smsd
+  links:
+    - db
+    - rabbitmq
+  env_file: .env
+
+nginx:
+  image: vojtechbartos/nginx
+  ports:
+    - "80:80"
+  links:
+    - app
+
+db:
+  image: vojtechbartos/mariadb:5.5
+  ports:
+    - "3306:3306"
+  volumes_from:
+    - data
+  env_file: .env
+
+rabbitmq:
+  image: rabbitmq:3.5.6
+  ports:
+    - "5672:5672"
+  volumes_from:
+    - data
+  env_file: .env
+
+data:
+  image: ubuntu
+  volumes:
+    - /var/lib/mysql
+    - /var/lib/rabbitmq
