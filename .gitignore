@@ -64,3 +64,5 @@ node_modules/
 
 # Virtual env
 venv/
+
+.env
