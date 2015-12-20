@@ -3,7 +3,7 @@
 
 from datetime import datetime, timedelta
 
-from flask import request
+from flask import request, current_app as app
 from flask.ext.classy import FlaskView, route
 
 from sqlalchemy.exc import IntegrityError
@@ -14,6 +14,7 @@ from smsgw.resources import decorators
 from smsgw.resources.users.schemas import post, put
 from smsgw.resources.error.api import ErrorResource
 from smsgw.core import db
+from smsgw.tasks.mail import MailTask
 
 
 class UsersResource(FlaskView):
@@ -51,6 +52,15 @@ class UsersResource(FlaskView):
         user = User(**data)
         db.session.add(user)
         db.session.commit()
+
+        # scheduling registration email
+        MailTask.send(to=user.email,
+                      template="mail/welcome",
+                      params={
+                          'first_name': user.firstName,
+                          'last_name': user.lastName,
+                          'host_name': app.config['SERVER_NAME']
+                      })
 
         return response(user.to_dict(), status_code=201)
 
