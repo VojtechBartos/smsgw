@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# generating gammurc config file
+./manage.py gammu_generate_config -d /usr/src/gammurc
+
+# running smsgw deamon
+gammu-smsd -c /usr/src/gammurc
