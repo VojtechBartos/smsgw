@@ -35,6 +35,7 @@ class TagsResource(FlaskView):
 
         return response([tag.to_dict() for tag in tags.all()])
 
+
     @route('/<uuid:tag_uuid>/')
     @decorators.auth()
     def get(self, **kwargs):
@@ -43,6 +44,7 @@ class TagsResource(FlaskView):
         """
         tag = kwargs.get('tag')
         return response(tag.to_dict())
+
 
     @decorators.auth()
     @decorators.jsonschema_validate(post.schema)
@@ -62,6 +64,7 @@ class TagsResource(FlaskView):
 
         return response(tag.to_dict(), status_code=201)
 
+
     @route('/<uuid:tag_uuid>/', methods=['PUT'])
     @decorators.auth()
     @decorators.jsonschema_validate(put.schema)
@@ -79,6 +82,7 @@ class TagsResource(FlaskView):
             raise ErrorResource(409, message="Tag is already exists.")
 
         return response(tag.to_dict())
+
 
     @route('/<uuid:tag_uuid>/', methods=['DELETE'])
     @decorators.auth()
