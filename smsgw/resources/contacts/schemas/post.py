@@ -16,7 +16,7 @@ schema = {
             "minLength": 2,
             "maxLength": 16,
             "messages": {
-                "minLength": "Max length of first name is 2 characters.",
+                "minLength": "Min length of first name is 2 characters.",
                 "maxLength": "Max length of first name is 16 characters."
             }
         },
@@ -25,7 +25,7 @@ schema = {
             "minLength": 2,
             "maxLength": 16,
             "messages": {
-                "minLength": "Max length of last name is 2 characters.",
+                "minLength": "Min length of last name is 2 characters.",
                 "maxLength": "Max length of last name is 16 characters."
             }
         },

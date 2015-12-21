@@ -12,7 +12,11 @@ schema = {
     "properties": {
         "phoneNumber": {
             "type": "string",
-            "pattern": patterns.PHONE_NUMBER
+            "pattern": patterns.PHONE_NUMBER,
+            "messages": {
+                "type": "Phone number needs to be string.",
+                "pattern": "Phone number has invalid format. (+420736202512 as example.)"
+            }
         }
     }
 }
