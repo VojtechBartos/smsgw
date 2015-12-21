@@ -37,12 +37,6 @@ class View extends Component {
     if (get.pending || !outbox)
       return <Spinner fullscreen={true} />;
 
-    const message = outbox.message + outbox.multiparts.map(part => {
-      return part.text;
-    }).reduce((context, text) => {
-      return `${context}${text}`;
-    }, '');
-
     return (
       <div>
         <Subheader backTitle="Back" router={this.props.router} />
@@ -52,7 +46,7 @@ class View extends Component {
             <Row>
               <Col md={2}>
                 <h4>Message <small>({outbox.multiparts.length} parts)</small></h4>
-                {message}
+                {outbox.message}
               </Col>
               <Col md={1}>
                 <h4>Contacts <small>({outbox.contacts.length})</small></h4>

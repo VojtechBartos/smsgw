@@ -130,6 +130,7 @@ class Outbox(BaseModel, DateMixin):
         for identifier, appId, group, message, send, created, updated, respondents in groups:
             multiparts = OutboxMultipart.query.filter_by(id=identifier).all()
             app = Application.get_one(id=appId) if appId else None
+            message = "%s%s" % (message, "".join([m.text for m in multiparts]))
 
             payload.append({
                 'id': group,
@@ -163,18 +164,20 @@ class Outbox(BaseModel, DateMixin):
             return None
 
         app = items[0].application
-        multiparts = OutboxMultipart.query.filter_by(id=items[0].id).all()
         send = items[0].sent
         created = items[0].created
         updated = items[0].updated
         contacts =  [i.contact.to_dict() for i in items if i.contact]
         phone_numbers = [i.destinationNumber for i in items if not i.contact]
+        multiparts = OutboxMultipart.query.filter_by(id=items[0].id).all()
+        message = "%s%s" % (items[0].text, "".join([m.text for m in multiparts]))
 
         return {
             'id': group,
             'application': app.to_dict() if app else None,
             'contacts': contacts,
             'phoneNumbers': phone_numbers,
+            'message': message,
             'multiparts': [multipart.to_dict() for multipart in multiparts],
             'send': send.isoformat(sep=' ') if send else None,
             'countOfRespondents': len(contacts) + len(phone_numbers),

@@ -68,13 +68,9 @@ class List extends Component {
           </thead>
           <tbody>
             {groups.map((group, i) => {
-              let text = group.message;
-              if (text && group.multiparts.length > 0)
-                text += ' ...';
-
               return (
                 <tr key={i}>
-                  <td>{text}</td>
+                  <td>{group.message}</td>
                   <td>{group.countOfRespondents}</td>
                   <td>{group.multiparts.length + 1}</td>
                   <td>
