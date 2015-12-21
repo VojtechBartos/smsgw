@@ -119,7 +119,7 @@ def is_special_char(char):
     TODO(vojta) diacriticts and etc
     :param char: {str}
     """
-    char = str(char)
+    char = unicode(char)
     # GSM Default 7-bit special character (count as 2 char)
     special = ['^', '{', '}', '[', ']', '~', '|', '€', '\\']
 
