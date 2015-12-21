@@ -2,10 +2,8 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from datetime import datetime, timedelta
-
 from flask import request, current_app as app
 from flask.ext.classy import FlaskView, route
-
 from sqlalchemy.exc import IntegrityError
 
 from smsgw.models import User, UserForgotPassword
@@ -29,6 +27,7 @@ class UsersResource(FlaskView):
         """
         return response([user.to_dict() for user in User.query.all()])
 
+
     @route('/<uuid:user_uuid>/', methods=['GET'])
     @decorators.auth()
     def get(self, user, **kwargs):
@@ -36,6 +35,7 @@ class UsersResource(FlaskView):
         Getting user by uuid
         """
         return response(user.to_dict())
+
 
     @decorators.jsonschema_validate(post.schema)
     def post(self):
@@ -46,7 +46,7 @@ class UsersResource(FlaskView):
 
         # check existence of user by email
         if User.is_exists_by_email(data['email']):
-            raise ErrorResource(409, message="Email already exits.")
+            raise ErrorResource(409, message="Email is already in use.")
 
         # create user
         user = User(**data)
@@ -63,6 +63,7 @@ class UsersResource(FlaskView):
                       })
 
         return response(user.to_dict(), status_code=201)
+
 
     @route('/reset-password/', methods=['POST'])
     @route('/reset-password/<uuid:token>/', methods=['POST'])
@@ -161,6 +162,7 @@ class UsersResource(FlaskView):
             raise ErrorResource(409, message="Email already exits.")
 
         return response(user.to_dict())
+
 
     @route('/<uuid:user_uuid>/', methods=['DELETE'])
     @decorators.auth(User.ROLE_ADMIN)
