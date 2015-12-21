@@ -134,7 +134,7 @@ class Outbox(BaseModel, DateMixin):
 
             payload.append({
                 'id': group,
-                'message': message,
+                'text': message,
                 'multiparts': [multipart.to_dict() for multipart in multiparts],
                 'application': app.to_dict() if app else None,
                 'countOfRespondents': respondents,
@@ -177,7 +177,7 @@ class Outbox(BaseModel, DateMixin):
             'application': app.to_dict() if app else None,
             'contacts': contacts,
             'phoneNumbers': phone_numbers,
-            'message': message,
+            'text': message,
             'multiparts': [multipart.to_dict() for multipart in multiparts],
             'send': send.isoformat(sep=' ') if send else None,
             'countOfRespondents': len(contacts) + len(phone_numbers),

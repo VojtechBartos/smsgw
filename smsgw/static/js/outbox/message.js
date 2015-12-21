@@ -9,7 +9,7 @@ const MessageRecord = Record({
   application: null,
   contacts: [],
   phoneNumbers: [],
-  message: null,
+  text: null,
   multiparts: [],
   send: null,
   countOfRespondents: null,

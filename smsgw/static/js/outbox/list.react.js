@@ -70,7 +70,7 @@ class List extends Component {
             {groups.map((group, i) => {
               return (
                 <tr key={i}>
-                  <td>{group.message}</td>
+                  <td>{group.text}</td>
                   <td>{group.countOfRespondents}</td>
                   <td>{group.multiparts.length + 1}</td>
                   <td>

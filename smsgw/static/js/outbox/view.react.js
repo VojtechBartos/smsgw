@@ -46,7 +46,7 @@ class View extends Component {
             <Row>
               <Col md={2}>
                 <h4>Message <small>({outbox.multiparts.length} parts)</small></h4>
-                {outbox.message}
+                {outbox.text}
               </Col>
               <Col md={1}>
                 <h4>Contacts <small>({outbox.contacts.length})</small></h4>
