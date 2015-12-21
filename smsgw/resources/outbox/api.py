@@ -146,6 +146,7 @@ class OutboxResource(FlaskView):
         outbox = Outbox.send(
             user_id=application.userId,
             application_id=application.id,
+            group=random_string(8),
             destination_number=data.get('phoneNumber'),
             message=data.get('message'),
             send=str_to_datetime(data.get('send'))
