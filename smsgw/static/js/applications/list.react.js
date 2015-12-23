@@ -49,7 +49,7 @@ class List extends Component {
           Applications ({apps.size}) <Link to="application-add">Add</Link>
         </h1>
         <Table options={table.options}
-               items={apps}
+               items={apps.toArray()}
                actions={table.actions} />
       </div>
     );

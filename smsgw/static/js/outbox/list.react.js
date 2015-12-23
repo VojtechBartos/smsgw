@@ -67,36 +67,35 @@ class List extends Component {
             </tr>
           </thead>
           <tbody>
-            {groups.map((group, i) => {
-              return (
-                <tr key={i}>
-                  <td>{group.text}</td>
-                  <td>{group.countOfRespondents}</td>
-                  <td>{group.multiparts.length + 1}</td>
-                  <td>
-                    <div>
-                      {group.sendLocalized} {''}
-                      <small>
-                        (in {moment.duration(group.sendDatetime.diff(now)).humanize()})
-                      </small>
-                    </div>
-                  </td>
-                  <td>{group.createdLocalized} {''}</td>
-                  <td>
-                    <DropdownButton title="actions"
-                                    bsStyle="primary"
-                                    bsSize="xsmall">
-                      <MenuItem onClick={(e) => this.onViewAction(e, group)}>
-                        View
-                      </MenuItem>
-                      <MenuItem onClick={(e) => this.onDeleteAction(e, group)}>
-                        Delete
-                      </MenuItem>
-                    </DropdownButton>
-                  </td>
-                </tr>
-              );
-            })}
+            {groups.toArray().map((group, i) =>
+              <tr key={i}>
+                <td>{group.text}</td>
+                <td>{group.countOfRespondents}</td>
+                <td>{group.multiparts.length + 1}</td>
+                <td>
+                  <div>
+                    {group.sendLocalized} {''}
+                    <small>
+                      (in {moment.duration(group.sendDatetime.diff(now)).humanize()})
+                    </small>
+                  </div>
+                </td>
+                <td>{group.createdLocalized} {''}</td>
+                <td>
+                  <DropdownButton id="dropdown-1"
+                                  title="actions"
+                                  bsStyle="primary"
+                                  bsSize="xsmall">
+                    <MenuItem onClick={(e) => this.onViewAction(e, group)}>
+                      View
+                    </MenuItem>
+                    <MenuItem onClick={(e) => this.onDeleteAction(e, group)}>
+                      Delete
+                    </MenuItem>
+                  </DropdownButton>
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>

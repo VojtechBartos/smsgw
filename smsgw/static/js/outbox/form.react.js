@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import moment from 'moment';
 import {Map} from 'immutable';
 import LaddaButton from 'react-ladda';
@@ -34,7 +35,7 @@ class Form extends Component {
     const items = this.refs.respondents.getTags().map(el => el.props.tag);
     return {
       send: this.state.send.utc().format('YYYY-MM-DD HH:mm:ss'),
-      message: this.refs.text.getDOMNode().value,
+      message: findDOMNode(this.refs.text).value,
       tags: items.filter(i => i instanceof Tag),
       contacts: items.filter(i => i instanceof Contact),
       phoneNumbers: items.filter(i => typeof i === 'string' || i instanceof String)
@@ -175,7 +176,7 @@ class Form extends Component {
                      label='Use template'
                      onChange={(e) => this.onChangeTemplate(e)} >
                 <option>Choose template</option>
-                  {templates.map((template, index) => {
+                  {templates.toArray().map((template, index) => {
                     return (
                       <option key={index} value={index}>
                         {template.label}
@@ -209,10 +210,9 @@ class Form extends Component {
             </Col>
           </Row>
           <Row>
-            <LaddaButton
-              active={this.props.pending}
-              style="expand-right">
-              <button>{this.props.submitTitle}</button>
+            <LaddaButton loading={this.props.pending}
+                         buttonStyle="slide-right">
+              {this.props.submitTitle}
             </LaddaButton>
           </Row>
         </Grid>

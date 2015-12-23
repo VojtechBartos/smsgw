@@ -49,7 +49,7 @@ class List extends Component {
         <div id="context">
           <h1>Users ({users.size})</h1>
           <Table options={table.options}
-                 items={users}
+                 items={users.toArray()}
                  actions={table.actions} />
         </div>
       </div>

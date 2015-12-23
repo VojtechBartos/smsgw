@@ -46,7 +46,7 @@ class List extends Component {
       <div id="context">
         <h1>Tags ({tags.size}) <Link to="tag-add">Add</Link></h1>
         <Table options={table.options}
-               items={tags}
+               items={tags.toArray()}
                actions={table.actions} />
       </div>
     );

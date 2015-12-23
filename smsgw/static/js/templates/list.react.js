@@ -49,7 +49,7 @@ class List extends Component {
           </h1>
           <Table
               options={table.options}
-              items={templates}
+              items={templates.toArray()}
               actions={table.actions} />
         </div>
       </div>

@@ -58,7 +58,7 @@ class List extends Component {
             </tr>
           </thead>
           <tbody>
-            {sentItems.map((message, i) => {
+            {sentItems.toArray().map((message, i) => {
               const contact = () => {
                 if (!message.contact)
                   return message.destinationNumber;
@@ -88,7 +88,8 @@ class List extends Component {
                   </td>
                   <td>{message.createdLocalized}</td>
                   <td>
-                    <DropdownButton title="actions"
+                    <DropdownButton id="dropdown-1"
+                                    title="actions"
                                     bsStyle="primary"
                                     bsSize="xsmall">
                       <MenuItem eventKey="1"
