@@ -16,6 +16,7 @@ import '../applications/store';
 import '../sent/store';
 import '../phones/store';
 import '../inbox/store';
+import '../stats/store';
 
 export default class Main extends Component {
 
@@ -38,7 +39,8 @@ export default class Main extends Component {
       applications: appState.applicationsCursor(),
       sent: appState.sentCursor(),
       phones: appState.phonesCursor(),
-      inbox: appState.inboxCursor()
+      inbox: appState.inboxCursor(),
+      stats: appState.statsCursor()
     };
   }
 

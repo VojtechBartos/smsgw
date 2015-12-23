@@ -160,12 +160,18 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 .react-tagsinput-completion { margin-top: 10px; }
 .react-tagsinput-completion .react-tagsinput-tag { cursor: pointer; }
 
+/* React D3 */
+
+.rd3-basic-chart .no-legend text { display: none; }
+
+
+/* Responsibility */
+
 @media only screen and (min-width: 601px) and (max-width: 1250px) {
 
   .navbar-nav > li > a { font-size: 22px;  padding: 18px 5px; }
   .navbar-nav.navbar-right > li.dropdown > a { padding: 9px 15px 0 0; }
   .table-responsive { overflow: auto; }
-
 
 }
 
@@ -173,6 +179,5 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 
   .container-fluid { padding-left: 0px; padding-right: 0px; }
   .table-responsive { overflow: auto; }
-
 
 }
