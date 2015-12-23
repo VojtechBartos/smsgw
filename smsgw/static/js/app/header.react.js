@@ -13,14 +13,6 @@ class Header extends Component {
     this.state = { menu: false };
   }
 
-  componentDidMount() {
-    document.body.addEventListener('click', this.onClickOutside.bind(this));
-  }
-
-  componentWillUnmount() {
-    document.body.removeEventListener('click', this.onClickOutside);
-  }
-
   signOut() {
     signOut();
 
@@ -32,10 +24,6 @@ class Header extends Component {
   onClick(e) {
     e.preventDefault();
     this.setState({ menu: !this.state.menu });
-  }
-
-  onClickOutside() {
-    this.setState({ menu: false });
   }
 
   render() {
