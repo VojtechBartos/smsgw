@@ -46,7 +46,7 @@ class List extends Component {
       <div id="context">
         <h1>Sent ({sentItems.size})</h1>
 
-        <Table>
+        <Table responsive>
           <thead>
             <tr>
               <th>To</th>

@@ -34,7 +34,7 @@ class List extends Component {
 
         <FlashMessages messages={flashMessages} />
 
-        <Table>
+        <Table responsive>
           <thead>
             <tr>
               <th>Hostname</th>
