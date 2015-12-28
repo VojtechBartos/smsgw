@@ -1,4 +1,9 @@
 machine:
+  node:
+    version: 4.2.4
+  python:
+    version: 2.7
+
   environment:
     TESTING: 1
     DEBUG: 1
