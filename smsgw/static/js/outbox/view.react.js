@@ -45,7 +45,7 @@ class View extends Component {
           <Grid fluid={true}>
             <Row>
               <Col md={2}>
-                <h4>Message <small>({outbox.multiparts.length} parts)</small></h4>
+                <h4>Message <small>({outbox.multiparts.length + 1} parts)</small></h4>
                 {outbox.text}
               </Col>
               <Col md={1}>
