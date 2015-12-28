@@ -49,7 +49,7 @@ def get_sql_alchemy_db_uri(**kwargs):
     return uri.format(**kwargs)
 
 
-def response(payload, status_code=200, message='OK.'):
+def response(payload, status_code=200, message=None):
     """
 
     :param payload: {list|dict|str} response payload
