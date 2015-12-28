@@ -38,8 +38,10 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
 
         # import base datesets
         self.user = User(**datasets.user.USER)
-        self.user.tokens = [UserToken(agent="Command-line")]
         db.session.add(self.user)
+        db.session.commit()
+        token = UserToken(agent="Command-line", userId=self.user.id)
+        db.session.add(token)
         db.session.commit()
 
     def tearDown(self):
