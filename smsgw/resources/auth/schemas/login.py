@@ -13,10 +13,10 @@ schema = {
     "properties": {
         "email": {
             "type": "string",
-            "format": "email",
+            "pattern": patterns.EMAIL,
             "messages": {
                 "type": "E-mail needs to be string type.",
-                "format": "E-mail is in wrong format."
+                "pattern": "E-mail is in wrong format."
             }
         },
         "password": {

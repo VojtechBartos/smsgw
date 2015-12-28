@@ -31,7 +31,7 @@ schema = {
         "callbackUrl": {
             "type": ["string", "null"],
             "maxLanegth": 128,
-            "pattern": "(%s)?" % patterns.URL,
+            "pattern": "^(%s)?$" % patterns.URL,
             "messages": {
                 "pattern": "Callback url should be valid URL.",
                 "maxLength": "Max length of callback url is 128 characters."

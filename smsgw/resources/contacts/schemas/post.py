@@ -31,7 +31,7 @@ schema = {
         },
         "email": {
             "type": ["string", "null"],
-            "pattern": "(%s)?" % patterns.EMAIL,
+            "pattern": "^(%s)?$" % patterns.EMAIL,
             "messages": {
                 "pattern": "E-mail is in wrong format."
             }
