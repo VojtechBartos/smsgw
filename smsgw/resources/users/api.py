@@ -145,12 +145,13 @@ class UsersResource(FlaskView):
         """
         Updating exiting user
         """
-        user = request.user
+        admin_user = request.user
         data = request.json
 
         role = data.get('role')
         is_active = data.get('isActive')
-        if (role is not None or is_active is not None) and user.role != user.ROLE_ADMIN:
+        if (role is not None or is_active is not None) and \
+            admin_user.role != admin_user.ROLE_ADMIN:
             raise ErrorResource(403, message="Don't have permissions.")
 
         try:

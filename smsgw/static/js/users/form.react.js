@@ -48,10 +48,10 @@ class Form extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    const {user} = this.props;
+    const {data} = this.props;
 
     if (this.isValid())
-      update(user.uuid, this.getData()).then(() => {
+      update(data.uuid, this.getData()).then(() => {
         flash('Successfully saved.');
       });
   }
@@ -204,6 +204,7 @@ Form.defaultProps = {
 
 Form.propTypes = {
   user: React.PropTypes.instanceOf(User).isRequired,
+  data: React.PropTypes.instanceOf(User).isRequired,
   adminVersion: React.PropTypes.bool
 };
 
