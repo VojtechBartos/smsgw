@@ -27,11 +27,10 @@ class Header extends Component {
   }
 
   closeMenu() {
-    if (this.isMounted)
-      this.setState({
-        menu: false,
-        mobileMenu: false
-      });
+    this.setState({
+      menu: false,
+      mobileMenu: false
+    });
   }
 
   signOut() {
