@@ -2,6 +2,8 @@ FROM python:2.7-onbuild
 MAINTAINER Vojta Bartos <hi@vojtech.me>
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV SHELL /bin/bash
+ENV TERM xterm
 
 # default necessary packages
 RUN \
