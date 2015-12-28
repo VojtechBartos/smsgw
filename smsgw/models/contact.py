@@ -3,7 +3,7 @@
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.lib.utils import generate_uuid
 from smsgw.models import BaseModel, Tag, relations, DateMixin
 

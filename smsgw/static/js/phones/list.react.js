@@ -34,7 +34,7 @@ class List extends Component {
 
         <FlashMessages messages={flashMessages} />
 
-        <Table>
+        <Table responsive>
           <thead>
             <tr>
               <th>Hostname</th>
@@ -49,36 +49,35 @@ class List extends Component {
             </tr>
           </thead>
           <tbody>
-            {phones.map((phone, i) => {
-              return (
-                <tr key={i}>
-                  <td>{phone.hostname}</td>
-                  <td>{phone.netName}</td>
-                  <td>{phone.battery}%</td>
-                  <td>{phone.signal}%</td>
-                  <td>{phone.sent}</td>
-                  <td>{phone.received}</td>
-                  <td>
-                    <div>
-                      {phone.lastActivityLocalized} {' '}
-                      <small>
-                        ({moment.duration(phone.lastActivityDatetime.diff(now)).humanize()} ago)
-                      </small>
-                    </div>
-                  </td>
-                  <td>{phone.createdLocalized}</td>
-                  <td>
-                    <DropdownButton title="actions"
-                                    bsStyle="primary"
-                                    bsSize="xsmall">
-                      <MenuItem onClick={() => this.onShowAction(phone)}>
-                        Show
-                      </MenuItem>
-                    </DropdownButton>
-                  </td>
-                </tr>
-              );
-            })}
+            {phones.toArray().map((phone, i) =>
+              <tr key={i}>
+                <td>{phone.hostname}</td>
+                <td>{phone.netName}</td>
+                <td>{phone.battery}%</td>
+                <td>{phone.signal}%</td>
+                <td>{phone.sent}</td>
+                <td>{phone.received}</td>
+                <td>
+                  <div>
+                    {phone.lastActivityLocalized} {' '}
+                    <small>
+                      ({moment.duration(phone.lastActivityDatetime.diff(now)).humanize()} ago)
+                    </small>
+                  </div>
+                </td>
+                <td>{phone.createdLocalized}</td>
+                <td>
+                  <DropdownButton id="dropdown-1"
+                                  title="actions"
+                                  bsStyle="primary"
+                                  bsSize="xsmall">
+                    <MenuItem onClick={() => this.onShowAction(phone)}>
+                      Show
+                    </MenuItem>
+                  </DropdownButton>
+                </td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>

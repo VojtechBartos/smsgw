@@ -9,9 +9,10 @@ import Main from './app/main.react';
 import Signin from './users/signin.react';
 import Signup from './users/signup.react';
 import App from './app/app.react';
-import Dashboard from './pages/dashboard.react';
 import Settings from './users/settings.react';
 import Directory from './pages/directory.react';
+// stats
+import Stats from './stats/stats.react';
 // templates
 import Templates from './templates/list.react';
 import TemplatesAdd from './templates/add.react';
@@ -36,7 +37,6 @@ import Applications from './applications/list.react';
 import ApplicationsAdd from './applications/add.react';
 import ApplicationsWrapper from './applications/wrapper.react';
 import ApplicationsSettings from './applications/settings.react';
-import ApplicationsOverview from './applications/overview.react';
 // admin
 import Admin from './pages/admin.react';
 import Users from './users/list.react';
@@ -56,13 +56,13 @@ export default (
     <Route name="signup" path="sign/up" handler={Signup} />
 
     <Route handler={App}>
-      <Route name="dashboard" handler={Dashboard} />
+      <Route name="dashboard" handler={Stats} />
 
       <Route name="applications" handler={Wrapper}>
         <DefaultRoute handler={Applications} />
         <Route name="application-add" path="add" handler={ApplicationsAdd} />
         <Route name="application" path=":uuid" handler={ApplicationsWrapper}>
-          <Route name="application-overview" path="overview" handler={ApplicationsOverview} />
+          <Route name="application-overview" path="overview" handler={Stats} />
           <Route name="application-settings" path="settings" handler={ApplicationsSettings} />
           <Route name="application-outbox" path="outbox" handler={Outbox} />
           <Route name="application-outbox-view" path="outbox/:group" handler={OutboxView} />

@@ -50,7 +50,8 @@ class CustomTable extends React.Component {
                 return <td key={option.key}>{content}</td>;
               })}
               <td key="actions">
-                <DropdownButton title="actions"
+                <DropdownButton id="dropdown-1"
+                                title="actions"
                                 bsStyle="primary"
                                 bsSize="xsmall">
                   {actions.map((action, j) => {

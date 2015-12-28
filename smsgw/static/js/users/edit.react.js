@@ -24,15 +24,6 @@ class Edit extends Component {
     return this.props.router.getCurrentParams().uuid;
   }
 
-  onFormSubmit(e) {
-    e.preventDefault();
-    const form = this.refs.userForm;
-    if (form.isValid())
-      update(this.uuid(), form.getData()).then(() => {
-        flash('Successfuly saved.');
-      });
-  }
-
   redirectToList() {
     this.props.router.transitionTo('users');
   }
@@ -53,8 +44,7 @@ class Edit extends Component {
         <div id="context">
           <FlashMessages messages={flashMessages} />
 
-          <Form onSubmit={(e) => this.onFormSubmit(e)}
-                ref="userForm"
+          <Form ref="userForm"
                 pending={update.pending}
                 submitTitle="Edit"
                 data={user}

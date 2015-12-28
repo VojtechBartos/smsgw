@@ -7,7 +7,7 @@ import jsonschema
 from functools import update_wrapper
 from flask import request, abort
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.models import User, UserToken, Template, Contact, Tag, Application, \
     Outbox, SentItem, Inbox, Phone
 

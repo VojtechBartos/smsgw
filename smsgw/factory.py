@@ -5,21 +5,16 @@ import os
 from flask import Flask
 from celery import Celery
 
-from smsgw import resources
-from smsgw.extensions import db, bcrypt, migrate, mail
-from smsgw.config import environments
+from . import settings, converters
+from .core import db, bcrypt, migrate, mail
+from .models import Gammu
+from .lib.utils import register_module
 
 
-def create_app(name='smsgw', env=None):
-    """
-    :param name: {str} name of package app
-    """
-    if env is None:
-        env = os.environ.get('SMSGW_ENV') or 'development'
-
+def create_app():
     # flask app inicialization
-    app = Flask(name, static_url_path='')
-    app.config.from_object(environments[env])
+    app = Flask("smsgw", static_url_path='')
+    app.config.from_object(settings)
 
     # extensions inicializatioon
     db.init_app(app)
@@ -28,7 +23,10 @@ def create_app(name='smsgw', env=None):
     mail.init_app(app)
 
     # register resources
-    resources.register(app)
+    register_module(app, 'resources')
+
+    # register converters
+    converters.register(app)
 
     return app
 

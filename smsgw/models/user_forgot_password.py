@@ -6,7 +6,7 @@ from sqlalchemy.dialects import mysql
 
 from smsgw.lib.utils import generate_uuid
 from smsgw.models import BaseModel, DateMixin
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class UserForgotPassword(BaseModel, DateMixin):

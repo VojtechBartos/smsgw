@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
-from smsgw.extensions import db
+from smsgw.core import db
 from sqlalchemy.dialects.mysql import INTEGER
 
 contact_on_tags = db.Table(

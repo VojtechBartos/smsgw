@@ -4,11 +4,12 @@
 import json
 import os
 from unittest import TestCase as UnitTestCase
+from mock import MagicMock
 from flask.ext.testing import TestCase as FlaskTestCase
 
 from smsgw import factory
 from smsgw.models import User, UserToken
-from smsgw.extensions import db
+from smsgw.core import db, mail
 from smsgw.tests import datasets
 
 
@@ -19,8 +20,7 @@ class SmsgwUnitTestCase(UnitTestCase):
 class SmsgwIntegrationTestCase(FlaskTestCase):
 
     def create_app(self):
-        return factory.create_app(name="smsgw_testing",
-                                  env=os.environ.get('SMSGW_ENV'))
+        return factory.create_app()
 
     def setUp(self):
         super(SmsgwIntegrationTestCase, self).setUp()
@@ -33,12 +33,16 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         db.drop_all()
         db.create_all()
 
+        # mocking
+        mail = MagicMock()
+
         # import base datesets
         self.user = User(**datasets.user.USER)
-        self.user.tokens = [UserToken(agent="Command-line")]
         db.session.add(self.user)
         db.session.commit()
-        db.session.refresh(self.user)
+        token = UserToken(agent="Command-line", userId=self.user.id)
+        db.session.add(token)
+        db.session.commit()
 
     def tearDown(self):
         super(SmsgwIntegrationTestCase, self).tearDown()
@@ -49,8 +53,10 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         data = kwargs.get('data')
         if headers.get('content-type') == 'application/json' and data:
             kwargs['data'] = json.dumps(data)
-        if headers.get('Authorization') is None:
-            headers['Authorization'] = "Token {0}".format(self.user.tokens[0].token)
+        if headers.get('Authorization') is None and self.user.tokens.first():
+            headers['Authorization'] = "Token {0}".format(
+                self.user.tokens.first().token
+            )
         kwargs['headers'] = headers
         return method(path=path, **kwargs)
 

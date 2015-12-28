@@ -9,7 +9,7 @@ from smsgw.lib.utils import response
 from smsgw.resources import decorators
 from smsgw.resources.templates.schemas import post, put
 from smsgw.resources.error.api import ErrorResource
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class TemplatesResource(FlaskView):
@@ -26,6 +26,7 @@ class TemplatesResource(FlaskView):
 
         return response([template.to_dict() for template in user.templates.all()])
 
+
     @route('/<uuid:template_uuid>/')
     @decorators.auth()
     def get(self, **kwargs):
@@ -34,6 +35,7 @@ class TemplatesResource(FlaskView):
         """
         template = kwargs.get('template')
         return response(template.to_dict())
+
 
     @decorators.auth()
     @decorators.jsonschema_validate(post.schema)
@@ -51,6 +53,7 @@ class TemplatesResource(FlaskView):
 
         return response(template.to_dict(), status_code=201)
 
+
     @route('/<uuid:template_uuid>/', methods=['PUT'])
     @decorators.auth()
     @decorators.jsonschema_validate(put.schema)
@@ -63,6 +66,7 @@ class TemplatesResource(FlaskView):
         db.session.commit()
 
         return response(template.to_dict())
+
 
     @route('/<uuid:template_uuid>/', methods=['DELETE'])
     @decorators.auth()

@@ -15,11 +15,11 @@ export const dispatchToken = Dispatcher.register(({action, data}) => {
         // to remove item at specific index/hash
         setTimeout(() => {
           flashMessagesCursor(messages => {
-            return messages.delete(0);
+            return messages.clear();
           });
         }, 5000);
 
-        return messages.push(data);
+        return messages.clear().push(data);
       });
       break;
   }

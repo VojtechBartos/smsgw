@@ -47,7 +47,7 @@ class List extends Component {
       <div id="context">
         <h1>Contacts ({contacts.size}) <Link to="contact-add">Add</Link></h1>
         <Table options={table.options}
-               items={contacts}
+               items={contacts.toArray()}
                actions={table.actions} />
       </div>
     );

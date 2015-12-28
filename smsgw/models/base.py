@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
-from smsgw.extensions import db
+from smsgw.core import db
 from datetime import datetime
 from sqlalchemy.sql.expression import text
 from sqlalchemy.ext.declarative import AbstractConcreteBase

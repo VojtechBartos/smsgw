@@ -9,7 +9,7 @@ from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from smsgw.models import BaseModel, DateMixin
 from smsgw.lib.utils import generate_uuid
-from smsgw.extensions import bcrypt, db
+from smsgw.core import bcrypt, db
 
 
 class User(BaseModel, DateMixin):
@@ -33,7 +33,7 @@ class User(BaseModel, DateMixin):
                      nullable=False)
     isActive = db.Column(db.Boolean, default=True)
 
-    tokens = relationship("UserToken", backref='user')
+    tokens = relationship("UserToken", backref='user', lazy='dynamic')
     templates = relationship("Template", backref='user', lazy='dynamic')
     contacts = relationship("Contact", backref='user', lazy='dynamic')
     tags = relationship("Tag", backref='user', lazy='dynamic')

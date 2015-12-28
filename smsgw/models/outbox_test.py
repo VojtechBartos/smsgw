@@ -4,7 +4,7 @@
 import datetime
 
 from smsgw.tests import SmsgwIntegrationTestCase
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.models import Outbox
 from smsgw.models.datasets import outbox as datasets
 

@@ -6,15 +6,3 @@
       apt: upgrade=dist update_cache=yes
 
     - include: tasks/common.yml
-    - include: tasks/nginx.yml
-    - include: tasks/rabbitmq.yml
-    - include: tasks/supervisor.yml
-    - include: tasks/mariadb.yml
-    - include: tasks/python.yml
-    - include: tasks/gammu.yml
-
-  handlers:
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted

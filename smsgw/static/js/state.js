@@ -48,3 +48,4 @@ export const tagsSearchCursor = state.cursor(['tagsSearch']);
 export const sentCursor = state.cursor(['sent']);
 export const phonesCursor = state.cursor(['phones']);
 export const inboxCursor = state.cursor(['inbox']);
+export const statsCursor = state.cursor(['stats']);

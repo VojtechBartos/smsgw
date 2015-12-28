@@ -11,7 +11,7 @@ from smsgw.lib.utils import response
 from smsgw.resources import decorators
 from smsgw.resources.applications.schemas import post, put
 from smsgw.resources.error.api import ErrorResource
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class ApplicationsResource(FlaskView):
@@ -29,6 +29,7 @@ class ApplicationsResource(FlaskView):
         return response([app.to_dict()
                          for app in user.applications.all()])
 
+
     @route('/<uuid:application_uuid>/')
     @decorators.auth()
     def get(self, **kwargs):
@@ -37,6 +38,7 @@ class ApplicationsResource(FlaskView):
         """
         application = kwargs.get('application')
         return response(application.to_dict())
+
 
     @decorators.auth()
     @decorators.jsonschema_validate(post.schema)
@@ -53,9 +55,10 @@ class ApplicationsResource(FlaskView):
             db.session.commit()
         except IntegrityError, e:
             db.session.rollback()
-            raise ErrorResource(409, message="Prefix  is already exists.")
+            raise ErrorResource(409, message="Prefix is already exists.")
 
         return response(application.to_dict(), status_code=201)
+
 
     @route('/<uuid:application_uuid>/', methods=['PUT'])
     @decorators.auth()
@@ -70,9 +73,10 @@ class ApplicationsResource(FlaskView):
             db.session.commit()
         except IntegrityError, e:
             db.session.rollback()
-            raise ErrorResource(409, message="Prefix  is already exists.")
+            raise ErrorResource(409, message="Prefix is already exists.")
 
         return response(application.to_dict())
+
 
     @route('/<uuid:application_uuid>/regenerate/', methods=['PUT'])
     @decorators.auth()
@@ -85,6 +89,7 @@ class ApplicationsResource(FlaskView):
         db.session.commit()
 
         return response(application.to_dict(['uuid', 'token']))
+
 
     @route('/<uuid:application_uuid>/', methods=['DELETE'])
     @decorators.auth()

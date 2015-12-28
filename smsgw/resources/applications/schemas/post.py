@@ -8,26 +8,42 @@ schema = {
     "type": "object",
     "method": "POST",
     "required": ["label"],
-    "additionalProperties": False, 
+    "additionalProperties": False,
     "properties": {
         "label": {
             "type": "string",
             "minLength": 3,
-            "maxLength": 32
+            "maxLength": 32,
+            "messages": {
+                "type": "Label needs to be string type",
+                "minLength": "Min length of label is 2 characters.",
+                "maxLength": "Max length of label is 32 characters."
+            }
         },
         "prefix": {
-            "type": ["string", "null"],
+            "type": "string",
             "minLength": 2,
-            "maxLength": 5
+            "maxLength": 5,
+            "messages": {
+                "minLength": "Min length of prefix is 2 characters.",
+                "maxLength": "Max length of prefix is 5 characters."
+            }
         },
-        "callbackUrl": {            
+        "callbackUrl": {
             "type": ["string", "null"],
             "maxLanegth": 128,
-            "pattern": patterns.URL
+            "pattern": "^(%s)?$" % patterns.URL,
+            "messages": {
+                "pattern": "Callback url should be valid URL.",
+                "maxLength": "Max length of callback url is 128 characters."
+            }
         },
-        "note": {            
+        "note": {
             "type": ["string", "null"],
-            "maxLanegth": 255
+            "maxLength": 255,
+            "messages": {
+                "maxLength": "Max length of note is 255 characters."
+            }
         }
     }
 }

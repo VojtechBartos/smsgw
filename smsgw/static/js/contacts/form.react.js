@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import LaddaButton from 'react-ladda';
 import ReactTagsInput from 'react-tagsinput';
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -26,11 +27,11 @@ class Form extends Component {
 
   getData() {
     return {
-      firstName: this.refs.firstName.getDOMNode().value,
-      lastName: this.refs.lastName.getDOMNode().value,
-      phoneNumber: this.refs.phoneNumber.getDOMNode().value,
-      email: this.refs.email.getDOMNode().value,
-      note: this.refs.note.getDOMNode().value,
+      firstName: findDOMNode(this.refs.firstName).value,
+      lastName: findDOMNode(this.refs.lastName).value,
+      phoneNumber: findDOMNode(this.refs.phoneNumber).value,
+      email: findDOMNode(this.refs.email).value,
+      note: findDOMNode(this.refs.note).value,
       tags: this.refs.tags.getTags().map(el => {
         const tag = el.props.tag;
         return (tag instanceof Tag) ? tag.label : tag;
@@ -167,7 +168,7 @@ class Form extends Component {
                                   renderTag={(...props) => this.renderTag(...props)}
                                   onChangeInput={tag => this.complete(tag)} />
                   <div className="react-tagsinput-completion">
-                    {this.state.completions.map((item, index) => {
+                    {this.state.completions.toArray().map((item, index) => {
                       return React.cloneElement(
                         this.renderTag(index, this.transform(item)),
                         { onClick: () => this.addTag(item) }
@@ -179,9 +180,9 @@ class Form extends Component {
           </Row>
           <Row>
             <Col md={3}>
-              <LaddaButton active={this.props.pending}
-                           style="expand-right">
-                <button>{this.props.submitTitle}</button>
+              <LaddaButton loading={this.props.pending}
+                           buttonStyle="slide-right">
+                {this.props.submitTitle}
               </LaddaButton>
             </Col>
           </Row>

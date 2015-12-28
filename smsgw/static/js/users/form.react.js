@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import LaddaButton from 'react-ladda';
 import {Grid, Row, Col, Input, Table} from 'react-bootstrap';
 import Component from '../components/component.react';
@@ -11,28 +12,28 @@ import {flash} from '../flashMessages/actions';
 class Form extends Component {
 
   isValid() {
-    let isValid = true;
-    let password = this.refs.password.getDOMNode().value;
-    let passwordVerify = this.refs.password.getDOMNode().value;
+    let valid = true;
+    let password = findDOMNode(this.refs.password).value;
+    let passwordVerify = findDOMNode(this.refs.password).value;
 
     if (password || password.length > 0)
       if (password !== passwordVerify) {
-        isValid = false;
+        valid = false;
 
         flash('Password and verify password needs to be same.');
       }
 
-    return isValid;
+    return valid;
   }
 
   getData() {
     const { adminVersion } = this.props;
-    const password = this.refs.password.getDOMNode().value;
+    const password = findDOMNode(this.refs.password).value;
     let data = {
-      firstName: this.refs.firstName.getDOMNode().value,
-      lastName: this.refs.lastName.getDOMNode().value,
-      email: this.refs.email.getDOMNode().value,
-      company: this.refs.company.getDOMNode().value,
+      firstName: findDOMNode(this.refs.firstName).value,
+      lastName: findDOMNode(this.refs.lastName).value,
+      email: findDOMNode(this.refs.email).value,
+      company: findDOMNode(this.refs.company).value,
       password: (password.length === 0) ? null : password
     };
 
@@ -47,10 +48,10 @@ class Form extends Component {
   onFormSubmit(e) {
     e.preventDefault();
 
-    const {user} = this.props;
+    const {data} = this.props;
 
     if (this.isValid())
-      update(user.uuid, this.getData()).then(() => {
+      update(data.uuid, this.getData()).then(() => {
         flash('Successfully saved.');
       });
   }
@@ -183,9 +184,9 @@ class Form extends Component {
           </Row>
           <Row>
             <Col>
-              <LaddaButton active={pending}
-                           style="expand-right">
-                  <button>Save</button>
+              <LaddaButton loading={pending}
+                           buttonStyle="slide-right">
+                  Save
               </LaddaButton>
             </Col>
           </Row>
@@ -203,6 +204,7 @@ Form.defaultProps = {
 
 Form.propTypes = {
   user: React.PropTypes.instanceOf(User).isRequired,
+  data: React.PropTypes.instanceOf(User).isRequired,
   adminVersion: React.PropTypes.bool
 };
 

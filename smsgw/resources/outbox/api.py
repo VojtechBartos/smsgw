@@ -10,7 +10,7 @@ from smsgw.lib.utils import response, str_to_datetime, random_string
 from smsgw.resources import decorators
 from smsgw.resources.outbox.schemas import post, external, validate
 from smsgw.resources.error.api import ErrorResource
-from smsgw.extensions import db
+from smsgw.core import db
 
 
 class OutboxResource(FlaskView):
@@ -32,6 +32,7 @@ class OutboxResource(FlaskView):
                                 application_id=app.id if app else None)
 
         return response(groups)
+
 
     @route('/users/<uuid:user_uuid>/outbox/<string:group>/', methods=['GET'])
     @route('/users/<uuid:user_uuid>/applications/<uuid:application_uuid>/outbox/<string:group>/',
@@ -145,6 +146,7 @@ class OutboxResource(FlaskView):
         outbox = Outbox.send(
             user_id=application.userId,
             application_id=application.id,
+            group=random_string(8),
             destination_number=data.get('phoneNumber'),
             message=data.get('message'),
             send=str_to_datetime(data.get('send'))

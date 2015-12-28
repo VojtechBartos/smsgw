@@ -1,7 +1,0 @@
----
-- shell: curl -sL https://deb.nodesource.com/setup | bash -
-- apt: name=nodejs
-- npm: name=webpack global=yes
-- npm: name=jest-cli global=yes
-- npm: name=babel global=yes
-- npm: name=gulp global=yes

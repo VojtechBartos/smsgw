@@ -1,0 +1,22 @@
+machine:
+  node:
+    version: 5.3.0
+
+  python:
+    version: 2.7.11
+
+  environment:
+    TESTING: 1
+    DEBUG: 1
+    DATABASE_HOST: localhost
+    DATABASE_NAME: circle_test
+    DATABASE_USERNAME: ubuntu
+    DATABASE_PASSWORD: ""
+
+dependencies:
+  pre:
+    - pip install setuptools==19.2
+
+test:
+  override:
+    - nosetests

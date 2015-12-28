@@ -10,7 +10,7 @@ from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
 from sqlalchemy.schema import Index
 
-from smsgw.extensions import db
+from smsgw.core import db
 from smsgw.models import BaseModel, DateMixin
 from smsgw.models.application import Application
 from smsgw.models.outbox_multipart import OutboxMultipart
@@ -130,10 +130,11 @@ class Outbox(BaseModel, DateMixin):
         for identifier, appId, group, message, send, created, updated, respondents in groups:
             multiparts = OutboxMultipart.query.filter_by(id=identifier).all()
             app = Application.get_one(id=appId) if appId else None
+            message = "%s%s" % (message, "".join([m.text for m in multiparts]))
 
             payload.append({
                 'id': group,
-                'message': message,
+                'text': message,
                 'multiparts': [multipart.to_dict() for multipart in multiparts],
                 'application': app.to_dict() if app else None,
                 'countOfRespondents': respondents,
@@ -163,18 +164,20 @@ class Outbox(BaseModel, DateMixin):
             return None
 
         app = items[0].application
-        multiparts = OutboxMultipart.query.filter_by(id=items[0].id).all()
         send = items[0].sent
         created = items[0].created
         updated = items[0].updated
         contacts =  [i.contact.to_dict() for i in items if i.contact]
         phone_numbers = [i.destinationNumber for i in items if not i.contact]
+        multiparts = OutboxMultipart.query.filter_by(id=items[0].id).all()
+        message = "%s%s" % (items[0].text, "".join([m.text for m in multiparts]))
 
         return {
             'id': group,
             'application': app.to_dict() if app else None,
             'contacts': contacts,
             'phoneNumbers': phone_numbers,
+            'text': message,
             'multiparts': [multipart.to_dict() for multipart in multiparts],
             'send': send.isoformat(sep=' ') if send else None,
             'countOfRespondents': len(contacts) + len(phone_numbers),

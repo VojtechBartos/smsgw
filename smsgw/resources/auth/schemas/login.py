@@ -9,15 +9,21 @@ schema = {
     "type": "object",
     "method": "POST",
     "required": ["email", "password"],
-    "additionalProperties": False, 
+    "additionalProperties": False,
     "properties": {
         "email": {
             "type": "string",
             "pattern": patterns.EMAIL,
-            "message": "Email does not have right format."
+            "messages": {
+                "type": "E-mail needs to be string type.",
+                "pattern": "E-mail is in wrong format."
+            }
         },
         "password": {
-            "type": "string"
+            "type": "string",
+            "messages": {
+                "type": "Password needs to be string type.",
+            }
         }
     }
 }

@@ -2,10 +2,8 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from datetime import datetime, timedelta
-
-from flask import request
+from flask import request, current_app as app
 from flask.ext.classy import FlaskView, route
-
 from sqlalchemy.exc import IntegrityError
 
 from smsgw.models import User, UserForgotPassword
@@ -13,7 +11,8 @@ from smsgw.lib.utils import response
 from smsgw.resources import decorators
 from smsgw.resources.users.schemas import post, put
 from smsgw.resources.error.api import ErrorResource
-from smsgw.extensions import db
+from smsgw.core import db
+from smsgw.tasks.mail import MailTask
 
 
 class UsersResource(FlaskView):
@@ -28,6 +27,7 @@ class UsersResource(FlaskView):
         """
         return response([user.to_dict() for user in User.query.all()])
 
+
     @route('/<uuid:user_uuid>/', methods=['GET'])
     @decorators.auth()
     def get(self, user, **kwargs):
@@ -35,6 +35,7 @@ class UsersResource(FlaskView):
         Getting user by uuid
         """
         return response(user.to_dict())
+
 
     @decorators.jsonschema_validate(post.schema)
     def post(self):
@@ -45,14 +46,24 @@ class UsersResource(FlaskView):
 
         # check existence of user by email
         if User.is_exists_by_email(data['email']):
-            raise ErrorResource(409, message="Email already exits.")
+            raise ErrorResource(409, message="Email is already in use.")
 
         # create user
         user = User(**data)
         db.session.add(user)
         db.session.commit()
 
+        # scheduling registration email
+        MailTask.send(to=user.email,
+                      template="mail/welcome",
+                      params={
+                          'first_name': user.firstName,
+                          'last_name': user.lastName,
+                          'host_name': app.config['SERVER_NAME']
+                      })
+
         return response(user.to_dict(), status_code=201)
+
 
     @route('/reset-password/', methods=['POST'])
     @route('/reset-password/<uuid:token>/', methods=['POST'])
@@ -134,12 +145,13 @@ class UsersResource(FlaskView):
         """
         Updating exiting user
         """
-        user = request.user
+        admin_user = request.user
         data = request.json
 
         role = data.get('role')
         is_active = data.get('isActive')
-        if (role is not None or is_active is not None) and user.role != user.ROLE_ADMIN:
+        if (role is not None or is_active is not None) and \
+            admin_user.role != admin_user.ROLE_ADMIN:
             raise ErrorResource(403, message="Don't have permissions.")
 
         try:
@@ -151,6 +163,7 @@ class UsersResource(FlaskView):
             raise ErrorResource(409, message="Email already exits.")
 
         return response(user.to_dict())
+
 
     @route('/<uuid:user_uuid>/', methods=['DELETE'])
     @decorators.auth(User.ROLE_ADMIN)

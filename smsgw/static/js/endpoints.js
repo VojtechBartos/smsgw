@@ -150,3 +150,18 @@ export var inbox = {
       return `${BASE}/inbox/${uuid}/`;
   }
 };
+
+/**
+ * Stats resource
+ * @type {Function}
+ */
+export function stats(application = null, range = null) {
+  let url = `${BASE}/users/@me/stats/`;
+  if (application)
+    url = `${BASE}/users/@me/applications/${application}/stats/`;
+
+  if (range)
+    url = `${url}${range}/`;
+    
+  return url;
+};

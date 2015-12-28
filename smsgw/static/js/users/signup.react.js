@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import {findDOMNode} from 'react-dom';
 import {Link} from 'react-router';
 import LaddaButton from 'react-ladda';
 import Immutable from 'immutable';
@@ -19,11 +20,11 @@ class SignUp extends Component {
     e.preventDefault();
 
     const data = {
-      email: this.refs.email.getDOMNode().value,
-      password: this.refs.password.getDOMNode().value,
-      firstName: this.refs.firstName.getDOMNode().value,
-      lastName: this.refs.lastName.getDOMNode().value,
-      company: this.refs.company.getDOMNode().value
+      email: findDOMNode(this.refs.email).value,
+      password: findDOMNode(this.refs.password).value,
+      firstName: findDOMNode(this.refs.firstName).value,
+      lastName: findDOMNode(this.refs.lastName).value,
+      company: findDOMNode(this.refs.company).value
     };
 
     signUp(data).then(() => {
@@ -99,10 +100,9 @@ class SignUp extends Component {
                    disabled={pending}
                    placeholder="Company" />
           </div>
-          <LaddaButton
-              active={pending}
-              style="expand-right">
-              <button>Sign up</button>
+          <LaddaButton loading={pending}
+                       buttonStyle="slide-right">
+              Sign up
           </LaddaButton>
         </form>
 

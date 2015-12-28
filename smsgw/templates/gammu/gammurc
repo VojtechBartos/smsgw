@@ -1,23 +1,23 @@
 [gammu]
 
-device = /dev/ttyUSB0
+device = /dev/usbmodem
 connection = at
 
 [smsd]
 
-phoneid = tmobile-huawei
-PIN = 1234
+phoneid = {{GAMMU_DEVICE_ID}}
+PIN = {{GAMMU_DEVICE_PIN}}
 
 service = sql
 driver = native_mysql
-user = root
-password = root
-pc = 192.168.50.30
-database = smsgw
+user = {{DATABASE_USERNAME}}
+password = {{DATABASE_PASSWORD}}
+pc = {{DATABASE_HOST}}
+database = {{DATABASE_NAME}}
 
 deliveryreport = yes
 
-logfile = /home/vagrant/.smsdlog
+logfile = /var/log/gammu/.smsdlog
 debuglevel = 2
 
 [sql]

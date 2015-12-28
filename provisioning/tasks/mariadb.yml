@@ -1,6 +1,0 @@
----
-- apt_key: keyserver=keyserver.ubuntu.com id=0xcbcb082a1bb943db
-- apt_repository: repo='deb http://mirror.vpsfree.cz/mariadb/repo/5.5/debian wheezy main'
-- apt: update_cache=yes
-- apt: name=mariadb-server
-- apt: name=libmariadbclient-dev

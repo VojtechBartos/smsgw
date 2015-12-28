@@ -1,3 +1,0 @@
----
-- name: install rabbitmq
-  apt: name=rabbitmq-server
