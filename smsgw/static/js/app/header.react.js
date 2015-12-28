@@ -16,6 +16,22 @@ class Header extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.router.getLocation()
+                     .addChangeListener(this.closeMenu.bind(this));
+  }
+  componentWillUnmount() {
+    this.props.router.getLocation()
+                     .removeChangeListener(this.closeMenu.bind(this));
+  }
+
+  closeMenu() {
+    this.setState({
+      menu: false,
+      mobileMenu: false
+    });
+  }
+
   signOut() {
     signOut();
 
