@@ -1,0 +1,8 @@
+machine:
+  environment:
+    TESTING: 1
+    DEBUG: 1
+    DATABASE_HOST: localhost
+    DATABASE_NAME: circle_test
+    DATABASE_USERNAME: ubuntu
+    DATABASE_PASSWORD: ""
