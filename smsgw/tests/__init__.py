@@ -41,7 +41,6 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         self.user.tokens = [UserToken(agent="Command-line")]
         db.session.add(self.user)
         db.session.commit()
-        db.session.refresh(self.user)
 
     def tearDown(self):
         super(SmsgwIntegrationTestCase, self).tearDown()
