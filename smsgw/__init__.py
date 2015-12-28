@@ -4,6 +4,6 @@
 from .factory import create_app
 
 
-__VERSION__ = '0.0.1'
+__VERSION__ = '1.0.0'
 
 app = create_app()
