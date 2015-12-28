@@ -167,7 +167,7 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 
 /* Responsibility */
 
-@media only screen and (min-width: 601px) and (max-width: 1250px) {
+@media only screen and (min-width: 768px) and (max-width: 1250px) {
 
   .navbar-nav > li > a { font-size: 22px;  padding: 18px 5px; }
   .navbar-nav.navbar-right > li.dropdown > a { padding: 9px 15px 0 0; }
@@ -175,9 +175,28 @@ table.table > tbody > tr > td { text-align: left; padding: 10px 15px 10px 15px; 
 
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
 
   .container-fluid { padding-left: 0px; padding-right: 0px; }
   .table-responsive { overflow: auto; }
+
+  .navbar-collapse.collapse.in { position: absolute; top: 51px; background: #ffffff; }
+  .navbar-nav { list-style: none; width: 100%; padding: 0; margin: 0; }
+  .navbar-nav > li { float: left; width: 100%; border-bottom: 1px solid #e5e5e5; }
+  .navbar-nav > li > a { padding: 15px; }
+
+  .navbar-nav.navbar-right > li.dropdown.open { position: relative; top: 0; border: 0;}
+  .navbar-nav.navbar-right > li.dropdown.open > a { padding: 0; }
+  .navbar-nav.navbar-right > li.dropdown.open { padding-top: 5px; background: #e5e5e5; }
+  .navbar-nav.navbar-right > li.dropdown.open > a.dropdown-toggle { display: block; }
+  .navbar-nav.navbar-right > li.dropdown.open > a.dropdown-toggle .caret { display: none; }
+  .navbar-nav.navbar-right > li.dropdown.open > a.dropdown-toggle .info { float: none; width: 100%; padding: 10px 0 0 0; background: #ffffff; }
+  .navbar-nav.navbar-right > li.dropdown.open > a.dropdown-toggle .info .name { float: left; margin-left: 15px; }
+  .navbar-nav.navbar-right > li.dropdown.open > a.dropdown-toggle .info .company { float: right; margin-right: 15px; }
+  .navbar-nav.navbar-right > li.dropdown.open > ul.dropdown-menu { margin: 0; background: #ffffff; }
+  .navbar-nav.navbar-right > li.dropdown.open > ul.dropdown-menu > li { margin: 0; padding: 0;  }
+  .navbar-nav.navbar-right > li.dropdown.open > ul.dropdown-menu > li.dropdown-header { padding: 0 0 10px 15px; }
+  .navbar-nav.navbar-right > li.dropdown.open > ul.dropdown-menu > li.divider { display: none; }
+  .navbar-nav.navbar-right > li.dropdown.open > ul.dropdown-menu > li > a { padding: 15px; border-bottom: 1px solid #e5e5e5; font-size: 20px; }
 
 }

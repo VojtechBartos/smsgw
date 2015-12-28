@@ -10,7 +10,10 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { menu: false };
+    this.state = {
+      menu: false,
+      mobileMenu: false
+    };
   }
 
   signOut() {
@@ -21,15 +24,30 @@ class Header extends Component {
     this.props.router.transitionTo('signin');
   }
 
-  onClick(e) {
+  onDesktopMenuClick(e) {
     e.preventDefault();
-    this.setState({ menu: !this.state.menu });
+    if (!this.state.mobileMenu)
+      this.setState({
+        menu: !this.state.menu,
+        mobileMenu: false
+      });
+  }
+
+  onMobileMenuClick(e) {
+    e.preventDefault();
+    this.setState({
+      menu: !this.state.mobileMenu,
+      mobileMenu: !this.state.mobileMenu
+    });
   }
 
   render() {
     let className = ['dropdown'];
+    let mobileClassName = ['navbar-collapse', 'collapse'];
     if (this.state.menu)
       className.push('open');
+    if (this.state.mobileMenu)
+      mobileClassName.push('in');
 
     let menu = [
       'dashboard', 'applications', 'messages',
@@ -52,14 +70,16 @@ class Header extends Component {
               <strong>sms</strong>gw
             </Link>
 
-            <button type="button" className="navbar-toggle collapsed">
+            <button type="button"
+                    className="navbar-toggle collapsed"
+                    onClick={e => this.onMobileMenuClick(e)}>
               <span className="sr-only">Toggle navigation</span>
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
 
-            <div className="navbar-collapse collapse">
+            <div className={mobileClassName.join(' ')}>
               <ul className="nav navbar-nav">
                 {menu.map(item => {
                   return <li key={item}><Link to={item}>{item}</Link></li>;
@@ -67,7 +87,7 @@ class Header extends Component {
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 <li className={className.join(' ')}>
-                  <a onClick={(e) => this.onClick(e)}
+                  <a onClick={(e) => this.onDesktopMenuClick(e)}
                      className="dropdown-toggle"
                      role="button"
                      aria-expanded="false">
@@ -75,6 +95,7 @@ class Header extends Component {
                     <div className="info">
                       <div className="name">{user.firstName} {user.lastName}</div>
                       <div className="company">{user.company}</div>
+                      <div className="cleaner" />
                     </div>
                   </a>
                   <ul className="dropdown-menu" role="menu">
