@@ -45,7 +45,9 @@ MAIL_PORT = os.environ.get('MAIL_PORT', 25)
 MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL', False)
 MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
 MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-DEFAULT_MAIL_SENDER = os.environ.get('MAIL_DEFAULT_SENDER')
+DEFAULT_MAIL_SENDER = os.environ.get('MAIL_DEFAULT_SENDER', "info@{0}".format(
+    SERVER_NAME
+))
 
 # CELERY
 CELERY_IMPORTS = ("smsgw.tasks",)
