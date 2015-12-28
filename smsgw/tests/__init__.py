@@ -4,11 +4,12 @@
 import json
 import os
 from unittest import TestCase as UnitTestCase
+from mock import MagicMock
 from flask.ext.testing import TestCase as FlaskTestCase
 
 from smsgw import factory
 from smsgw.models import User, UserToken
-from smsgw.core import db
+from smsgw.core import db, mail
 from smsgw.tests import datasets
 
 
@@ -31,6 +32,9 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         # state
         db.drop_all()
         db.create_all()
+
+        # mocking
+        mail = MagicMock()
 
         # import base datesets
         self.user = User(**datasets.user.USER)

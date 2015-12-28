@@ -1,4 +1,3 @@
-
 default:
 	docker-compose up
 
