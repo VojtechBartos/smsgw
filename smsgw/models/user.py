@@ -33,7 +33,7 @@ class User(BaseModel, DateMixin):
                      nullable=False)
     isActive = db.Column(db.Boolean, default=True)
 
-    tokens = relationship("UserToken", backref='user')
+    tokens = relationship("UserToken", backref='user', lazy='dynamic')
     templates = relationship("Template", backref='user', lazy='dynamic')
     contacts = relationship("Contact", backref='user', lazy='dynamic')
     tags = relationship("Tag", backref='user', lazy='dynamic')

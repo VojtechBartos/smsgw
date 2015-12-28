@@ -54,7 +54,9 @@ class SmsgwIntegrationTestCase(FlaskTestCase):
         if headers.get('content-type') == 'application/json' and data:
             kwargs['data'] = json.dumps(data)
         if headers.get('Authorization') is None:
-            headers['Authorization'] = "Token {0}".format(self.user.tokens[0].token)
+            headers['Authorization'] = "Token {0}".format(
+                self.user.tokens.first().token
+            )
         kwargs['headers'] = headers
         return method(path=path, **kwargs)
 
