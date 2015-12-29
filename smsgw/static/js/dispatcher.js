@@ -30,7 +30,7 @@ class Dispatcher extends flux.Dispatcher {
       super.dispatch({action, data, meta});
 
       return body;
-    }).error(err => {
+    }).catch(err => {
       this.setPending(name, false);
 
       super.dispatch({
