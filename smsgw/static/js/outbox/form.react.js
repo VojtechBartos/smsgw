@@ -46,6 +46,7 @@ class Form extends Component {
 
   onChangeTemplate(e) {
     const template = this.props.templates.get(e.target.value);
+
     if (template)
       this.setState({ message: template.text });
   }
@@ -178,7 +179,7 @@ class Form extends Component {
                 <option>Choose template</option>
                   {templates.toArray().map((template, index) => {
                     return (
-                      <option key={index} value={index}>
+                      <option key={index} value={template.uuid}>
                         {template.label}
                       </option>
                     );
