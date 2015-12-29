@@ -1,0 +1,5 @@
+---
+- name: docker compose up
+  command: docker-compose up -d
+  args:
+    chdir: /usr/src/smsgw/

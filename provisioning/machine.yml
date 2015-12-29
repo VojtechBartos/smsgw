@@ -1,8 +1,6 @@
 ---
 - hosts: all
   sudo: true
-  tasks:
-    - name: upgrade all packages to latest version and update cache
-      apt: upgrade=dist update_cache=yes
-
-    - include: tasks/common.yml
+  sudo_user: root
+  roles:
+    - smsgw

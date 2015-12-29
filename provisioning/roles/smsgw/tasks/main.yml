@@ -1,0 +1,13 @@
+---
+- name: pull smsgw project
+  git:
+    repo: git@github.com:VojtechBartos/smsgw.git
+    dest: /usr/src/smsgw/
+    accept_hostkey: True
+
+- name: creating env file
+  template:
+    src: ../../../../.env.sample
+    dest: /usr/src/smsgw/.env
+  notify:
+    - docker compose up

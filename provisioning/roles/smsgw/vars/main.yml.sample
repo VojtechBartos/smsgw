@@ -1,0 +1,20 @@
+---
+
+debug: 1
+
+hostname: smsgw.cz
+
+database_name: smsgw
+database_user: smsgw
+database_password: smsgw
+
+rabbitmq_vhost: smsgw
+rabbitmq_user: smsgw
+rabbitmq_password: smsgw
+
+mail_server: smtp.smsgw.cz
+mail_port: 465
+mail_use_ssl: 1
+mail_username: smsgw@smsgw.cz
+mail_password: password
+mail_default_sender: info@smsgw.cz
