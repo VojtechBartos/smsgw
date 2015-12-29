@@ -39,7 +39,7 @@ class OutboxModelTest(SmsgwIntegrationTestCase):
         #
 
         # basic message
-        outbox = Outbox.send(user_id=self.user.id, **datasets.SEND_BASIC)
+        outbox = Outbox.send(user=self.user, **datasets.SEND_BASIC)
         self.assertIsNotNone(outbox)
         self.assertIsNotNone(outbox.id)
         self.assertEqual(outbox.userId, self.user.id)
@@ -56,7 +56,7 @@ class OutboxModelTest(SmsgwIntegrationTestCase):
         self.assertEqual(outbox.sendAfter, datetime.time(00, 00, 00))
 
         # flash message
-        outbox = Outbox.send(user_id=self.user.id, **datasets.SEND_FLASH)
+        outbox = Outbox.send(user=self.user, **datasets.SEND_FLASH)
         self.assertIsNotNone(outbox)
         self.assertIsNotNone(outbox.id)
         self.assertEqual(outbox.userId, self.user.id)
@@ -78,7 +78,7 @@ class OutboxModelTest(SmsgwIntegrationTestCase):
 
         # basic multipart message
         dataset = datasets.MULTIPART_MESSAGES[0]
-        outbox = Outbox.send(user_id=self.user.id, **dataset)
+        outbox = Outbox.send(user=self.user, **dataset)
         multiparts = outbox.multiparts
         message = "{0}{1}{2}".format(
             outbox.text, multiparts[0].text, multiparts[1].text
@@ -102,7 +102,7 @@ class OutboxModelTest(SmsgwIntegrationTestCase):
 
         # flash multipart message
         dataset = datasets.MULTIPART_MESSAGES[1]
-        outbox = Outbox.send(user_id=self.user.id, **dataset)
+        outbox = Outbox.send(user=self.user, **dataset)
         multiparts = outbox.multiparts
         print multiparts
         message = "{0}{1}{2}{3}".format(

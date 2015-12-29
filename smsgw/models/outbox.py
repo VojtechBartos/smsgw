@@ -12,6 +12,7 @@ from sqlalchemy.schema import Index
 
 from smsgw.core import db
 from smsgw.models import BaseModel, DateMixin
+from smsgw.models.user import User
 from smsgw.models.application import Application
 from smsgw.models.outbox_multipart import OutboxMultipart
 from smsgw.lib.utils import is_special_char, generate_uuid
@@ -187,7 +188,7 @@ class Outbox(BaseModel, DateMixin):
 
 
     @classmethod
-    def send(cls, destination_number, message, user_id=None, application_id=None,
+    def send(cls, destination_number, message, user=None, application_id=None,
              group=None, send=datetime.utcnow(), send_timeout=None,
              send_before=None, send_after=None,
              flash=False, coding=DEFAULT_NO_COMPRESSION):
@@ -195,7 +196,7 @@ class Outbox(BaseModel, DateMixin):
         Put to queue message to send
         :param destination_number: {str} phone number
         :param message: {str} body of text message
-        :param user_id: {int} user identifier
+        :param user: {server.models.User} user instance
         :param application_id: {int} application identifier
         :param send: {datetime.datetime} when message should be dispatched
         :param send_timeout: {datetime.datetime} datetime for how long it should
@@ -238,7 +239,7 @@ class Outbox(BaseModel, DateMixin):
             part = str(len(multiparts)).rjust(2, "0")
 
             outbox = Outbox(
-                userId=user_id,
+                userId=user.id if user else None,
                 applicationId=application_id,
                 group=group,
                 coding=coding,
@@ -249,7 +250,7 @@ class Outbox(BaseModel, DateMixin):
                 deliveryReport="no",
                 destinationNumber=destination_number,
                 relativeValidity=-1,
-                creator=user_id if user_id is not None else '',
+                creator=user.id if user is not None else '',
                 sent=send,
                 sendTimeout=send_timeout,
                 sendBefore=send_before,
@@ -281,7 +282,7 @@ class Outbox(BaseModel, DateMixin):
 
         else:
             # message with length lower or equal max length
-            outbox = Outbox(userId=user_id,
+            outbox = Outbox(userId=user.id if user else None,
                             applicationId=application_id,
                             group=group,
                             coding=coding,
@@ -291,7 +292,7 @@ class Outbox(BaseModel, DateMixin):
                             destinationNumber=destination_number,
                             relativeValidity=-1,
                             sent=send,
-                            creator=user_id if user_id is not None else '',
+                            creator=user.id if user is not None else '',
                             sendTimeout=send_timeout,
                             sendBefore=send_before,
                             sendAfter=send_after)

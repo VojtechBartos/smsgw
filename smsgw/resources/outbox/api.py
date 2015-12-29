@@ -109,7 +109,7 @@ class OutboxResource(FlaskView):
                 )
 
             outbox = Outbox.send(
-                user_id=user.id,
+                user=user,
                 group=group,
                 destination_number=phone_number,
                 message=message,
@@ -144,7 +144,7 @@ class OutboxResource(FlaskView):
 
         # put message to queue
         outbox = Outbox.send(
-            user_id=application.userId,
+            user=application.user,
             application_id=application.id,
             group=random_string(8),
             destination_number=data.get('phoneNumber'),
