@@ -4,6 +4,7 @@ debug: 1
 
 hostname: smsgw.cz
 
+database_root_password: smsgw
 database_name: smsgw
 database_user: smsgw
 database_password: smsgw

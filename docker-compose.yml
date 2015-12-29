@@ -31,7 +31,7 @@ nginx:
     - app
 
 db:
-  image: vojtechbartos/mariadb:5.5
+  image: mariadb:5.5
   ports:
     - "3306:3306"
   volumes_from:
