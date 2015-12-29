@@ -47,7 +47,8 @@ rabbitmq:
   env_file: .env
 
 data:
-  image: ubuntu
+  image: cogniteev/echo
+  command: echo 'Data Container for MariaDB/RabbitMQ'
   volumes:
     - /var/lib/mysql
     - /var/lib/rabbitmq
