@@ -9,5 +9,10 @@
   template:
     src: ../../../../.env.sample
     dest: /usr/src/smsgw/.env
+
+- name: pulling images
+  command: docker-compose pull
+  args:
+    chdir: /usr/src/smsgw/
   notify:
     - docker compose up
