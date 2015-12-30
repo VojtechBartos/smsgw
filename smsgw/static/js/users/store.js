@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 import * as actions from './actions';
-import {usersCursor} from '../state';
+import {usersCursor, state} from '../state';
 import Dispatcher from '../dispatcher';
 import User from './user';
 
@@ -20,6 +20,10 @@ export function getLoggedIn() {
  */
 export const dispatchToken = Dispatcher.register(({action, data}) => {
   switch (action) {
+    case actions.signOut:
+      state.clear();
+      break;
+
     case actions.getAll:
       usersCursor(users => {
         return users.withMutations(items => {

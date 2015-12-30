@@ -10,6 +10,10 @@ class State extends EventListener {
     this._state = Map();
   }
 
+  clear() {
+    this._state = this._state.map(cursor => cursor.clear());
+  }
+
   set(state) {
     if (this._state === state) return;
     this._state = state;

@@ -131,6 +131,8 @@ export function signUp(data) {
 export function signOut() {
   _token = null;
   localStorage.removeItem('token');
+
+  return Dispatcher.dispatch(signOut);
 }
 
 // Override toString methods. Pretty useful for dispatched actions monitoring.
