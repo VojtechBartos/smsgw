@@ -189,7 +189,7 @@ class Outbox(BaseModel, DateMixin):
 
     @classmethod
     def send(cls, destination_number, message, user=None, application_id=None,
-             group=None, send=datetime.utcnow(), send_timeout=None,
+             group=None, send=datetime.utcnow(), send_timeout=None, contact=None,
              send_before=None, send_after=None,
              flash=False, coding=DEFAULT_NO_COMPRESSION):
         """
@@ -222,6 +222,11 @@ class Outbox(BaseModel, DateMixin):
             max_msg_length = 60
         else:
             raise Exception('Not supported coding') # TODO(vojta) better exp
+
+        # replacing first name and last name in message
+        message = message \
+                    .replace('{firstName}', contact.firstName if contact else '') \
+                    .replace('{lastName}', contact.lastName if contact else '')
 
         # get message length depends by coding
         msg_length = cls.get_message_length(message, coding)

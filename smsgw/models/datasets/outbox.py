@@ -5,7 +5,7 @@ from smsgw.models import Outbox
 
 SEND_BASIC = {
     'destination_number': '+420736202560',
-    'message': 'basic message',
+    'message': 'basic message with {{firstName}} and {{lastName}}',
     'coding': Outbox.DEFAULT_NO_COMPRESSION
 }
 
