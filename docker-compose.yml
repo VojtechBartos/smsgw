@@ -18,6 +18,9 @@ worker:
 gammu:
   image: vojtechbartos/smsgw
   command: ./bin/smsd
+  # privileged: true
+  # devices:
+  #   - "/dev/bus/usb:/dev/bus/usb"
   links:
     - db
     - rabbitmq
@@ -31,7 +34,7 @@ nginx:
     - app
 
 db:
-  image: vojtechbartos/mariadb:5.5
+  image: mariadb:5.5
   ports:
     - "3306:3306"
   volumes_from:
