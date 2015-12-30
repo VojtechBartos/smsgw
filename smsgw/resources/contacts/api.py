@@ -59,6 +59,7 @@ class ContactsResource(FlaskView):
         # create and save contact
         # TODO(vojta) handling unique contacts ?
         contact = Contact(userId=user.id, **request.json)
+        contact.tags = request.json.get('tags')
         db.session.add(contact)
         db.session.commit()
 
