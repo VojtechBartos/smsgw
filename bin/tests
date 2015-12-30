@@ -5,7 +5,7 @@ DEBUG=1
 
 DATABASE_HOST="db"
 DATABASE_NAME="smsgw_test"
-DATABASE_USERNAME="smsgw_test"
-DATABASE_PASSWORD="smsgw_test"
+DATABASE_USERNAME="root"
+DATABASE_PASSWORD="smsgw"
 
 nosetests $1
