@@ -51,7 +51,10 @@ class View extends Component {
               <Col md={1}>
                 <h4>Contacts <small>({outbox.contacts.length})</small></h4>
                 {outbox.contacts.map((contact, i) => {
-                  const tooltip = <Tooltip>{contact.phoneNumber}</Tooltip>;
+                  const tooltip = (
+                    <Tooltip id="tooltip">{contact.phoneNumber}</Tooltip>
+                  );
+
                   return (
                     <OverlayTrigger key={i} placement='right' overlay={tooltip}>
                       <Link to="contact-edit" params={{uuid: contact.uuid}}>

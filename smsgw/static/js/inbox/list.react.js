@@ -66,7 +66,12 @@ class List extends Component {
                 if (!message.contact)
                   return message.senderNumber;
 
-                const tooltip = <Tooltip>{message.contact.phoneNumber}</Tooltip>;
+                const tooltip = (
+                  <Tooltip id="tooltip">
+                    {message.contact.phoneNumber}
+                  </Tooltip>
+                );
+                
                 return (
                   <OverlayTrigger placement='right' overlay={tooltip}>
                     <Link to="contact-edit" params={{uuid: message.contact.uuid}}>
