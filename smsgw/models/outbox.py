@@ -319,14 +319,14 @@ class Outbox(BaseModel, DateMixin):
         multiparts = []
 
         if coding == cls.DEFAULT_NO_COMPRESSION:
-            multiparts = [""]
+            multiparts = [u""]
             part = 0
             char_left = length
 
             for char in message:
                 value = 2 if is_special_char(char) else 1
                 if value <= char_left:
-                    multiparts[part] = "{0}{1}".format(multiparts[part], char)
+                    multiparts[part] = u"{0}{1}".format(multiparts[part], char)
                     char_left = char_left - value
                 else:
                     part = part + 1
