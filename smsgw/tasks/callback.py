@@ -51,6 +51,6 @@ class CallbackTask(BaseTask):
                 'status_code': status_code,
                 'attempt': attempt
             },
-            'schedule_next': task.id,
+            'scheduled_next': task.id if task else None,
             'inbox_id': None
         }

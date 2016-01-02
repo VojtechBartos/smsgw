@@ -121,7 +121,7 @@ class SentItem(BaseModel, DateMixin):
         payload = []
         for i, uuid, number, s, c, text, multiparts, cuuid, fn, ln in query.all():
             contact = None
-            if uuid is not None:
+            if cuuid is not None:
                 contact = {
                     'uuid': cuuid,
                     'phoneNumber': number,

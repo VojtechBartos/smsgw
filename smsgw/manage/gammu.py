@@ -5,6 +5,7 @@ import re
 import os
 from flask import render_template, current_app
 from flask.ext.script import Command, Option
+from sqlalchemy import func
 
 from smsgw.core import db
 from smsgw.models import Inbox, Application
@@ -20,16 +21,18 @@ class ReceiveHookCommand(Command):
         for message in inbox:
             # find prefix
             m = re.search("^([a-zA-Z0-9]{2,5}).*$", message.text)
-            prefix = m.group(1)
-            if prefix is None:
+            if not m or m.group(1) is None:
                 # if prefix does not found we can continue
                 # nothing to parse
                 message.processed = True
                 continue
 
+            # first match is prefix, keeping prefix upper case
+            prefix = m.group(1).upper()
+
             # find application by prefix
             application = Application.query \
-                            .filter_by(prefix=prefix) \
+                            .filter(func.lower(Application.prefix)==prefix) \
                             .first()
             if application is not None:
                 # assign user id and application id

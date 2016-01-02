@@ -50,7 +50,7 @@ DEFAULT_MAIL_SENDER = os.environ.get('MAIL_DEFAULT_SENDER', "info@{0}".format(
 ))
 
 # CELERY
-CELERY_IMPORTS = ("smsgw.tasks",)
+CELERY_IMPORTS = ("smsgw.tasks.callback", "smsgw.tasks.mail")
 CELERY_TIMEZONE = 'UTC'
 CELERY_BROKER_URL = get_rabbitmq_uri(
     host=RABBITMQ_HOST,
@@ -71,4 +71,4 @@ CELERY_EAGER_PROPAGATES_EXCEPTIONS = TESTING
 GAMMU_VERSION = os.environ.get('GAMMU_VERSION', "1.34.0")
 GAMMU_DATABASE_VERSION = os.environ.get('GAMMU_DATABASE_VERSION', 14)
 GAMMU_DEVICE_ID = os.environ.get('GAMMU_DEVICE_ID', 'tmobile-huawei')
-GAMMU_DEVICE_PIN = os.environ.get('GAMMU_DEVICE_PIN', '1234')
+GAMMU_DEVICE_PIN = os.environ.get('GAMMU_DEVICE_PIN', '')
