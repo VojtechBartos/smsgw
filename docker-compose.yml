@@ -18,9 +18,7 @@ worker:
 gammu:
   image: vojtechbartos/smsgw
   command: ./bin/smsd
-  # privileged: true
-  # devices:
-  #   - "/dev/bus/usb:/dev/bus/usb"
+  privileged: true
   links:
     - db
     - rabbitmq
