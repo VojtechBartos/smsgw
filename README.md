@@ -27,7 +27,7 @@ SMSGW is open source web-based SMS (Short Message Service) management system, it
   - upgrade `react-router`
   - upgrade `react-tagsinput`
 - Functionality
-  - verifying passwords during change in settings and admin page
+  - ~~verifying passwords during change in settings and admin page~~
 - DevOps
   - write installation steps
   - build image on CircleCI and pushing to Docker Hub

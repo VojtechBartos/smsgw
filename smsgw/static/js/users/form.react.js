@@ -14,13 +14,13 @@ class Form extends Component {
   isValid() {
     let valid = true;
     let password = findDOMNode(this.refs.password).value;
-    let passwordVerify = findDOMNode(this.refs.password).value;
+    let passwordVerify = findDOMNode(this.refs.passwordVerify).value;
 
     if (password || password.length > 0)
       if (password !== passwordVerify) {
         valid = false;
 
-        flash('Password and verify password needs to be same.');
+        flash('Password and verify password needs to be same.', 'danger');
       }
 
     return valid;
