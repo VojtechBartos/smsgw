@@ -10,19 +10,6 @@ import {getStats, getStatsForMonth, getStatsForWeek} from './actions';
 
 class Stats extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-      lastMonth: Array.from(Array(100).keys()).map(() => {
-        return {
-          value: Math.floor((Math.random() * 190) + 1)
-        };
-      })
-    };
-  }
-
   componentDidMount() {
     const { application } = this.props;
     const appUUID = (application) ? application.uuid : null;
