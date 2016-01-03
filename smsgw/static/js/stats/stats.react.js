@@ -23,7 +23,7 @@ class Stats extends Component {
     const count = _.values(data).reduce((a, b) => a + b);
 
     return Object.keys(data).map(key => {
-      const value = (data[key]/count)*100;
+      const value = Math.round((data[key]/count)*1000) / 10;
 
       return {
         label: `${key.toUpperCase()} (${data[key]})`,
