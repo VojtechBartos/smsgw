@@ -6,3 +6,6 @@ dev:
 
 stop:
 	docker-compose stop
+
+deploy:
+	ansible-playbook provisioning/machine.yml -i provisioning/hosts -vvvv
