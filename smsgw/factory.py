@@ -5,7 +5,7 @@ import os
 from flask import Flask
 from celery import Celery
 
-from . import settings, converters
+from . import settings
 from .core import db, bcrypt, migrate, mail
 from .models import Gammu
 from .lib.utils import register_module
@@ -24,9 +24,6 @@ def create_app():
 
     # register resources
     register_module(app, 'resources')
-
-    # register converters
-    converters.register(app)
 
     return app
 
