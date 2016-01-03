@@ -4,7 +4,9 @@
 
 SMSGW is open source web-based SMS (Short Message Service) management system, it use gammu-smsd (part of gammu family) as SMS gateway engine to deliver and retrieve messages from your phone/modem.
 
-**NOTICE: still in development as part of the master thesis**
+**NOTICE: still in active development as part of the master thesis**
+
+![SMSGW Dashboard](https://raw.githubusercontent.com/VojtechBartos/smsgw/master/docs/_static/images/screen-dashboard.png "SMSGW Dashboard")
 
 ## Requirements
 
