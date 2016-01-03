@@ -18,10 +18,15 @@ master thesis **IN DEVELOPMENT**
 7. Access page on set up domain
 8. It works!
 
-
 ## TODO's
 
-- React
-  - autobinding at the component
+- Better tests coverage
+- Packages
+  - upgrade `react-router`
+  - upgrade `react-tagsinput`
+- Functionality
+  - verifying passwords during change in settings and admin page
 - DevOps
   - write installation steps
+  - build image on CircleCI and pushing to Docker Hub
+  - after success push to Docker Hub run ansible provisioning script to deploy and update server
