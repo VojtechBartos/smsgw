@@ -12,6 +12,8 @@ SMSGW is open source web-based SMS (Short Message Service) management system, it
 
 - [docker](https://github.com/docker/docker) >= 1.9.0
 - [docker-compose](https://github.com/docker/compose) >= 1.5.2
+- for deployment and provisioning
+  - [ansible](http://www.ansible.com/) >= 1.8.2
 - for development
   - [node.js](https://nodejs.org/en/) >= 5.1.0
   - [gulp](https://www.npmjs.com/package/gulp) >= 3.9.0
@@ -53,7 +55,7 @@ cp provisioning/roles/smsgw/vars/main.yml.sample provisioning/roles/smsgw/vars/m
 vim provisioning/roles/smsgw/vars/main.yml
 
 # run ansible provisioning which will prepare and start SMSGW project on your machine
-ansible-playbook provisioning/machine.yml -i provisioning/hosts -vvvv
+make deploy
 
 # open browser on hostname, if your DNS pointing to right machine you should
 # see SMSGW sign in page
@@ -70,5 +72,5 @@ ansible-playbook provisioning/machine.yml -i provisioning/hosts -vvvv
   - ~~verifying passwords during change in settings and admin page~~
 - DevOps
   - ~~write installation steps~~
-  - build image on CircleCI and pushing to Docker Hub
+  - build image on CircleCI and pushing to Docker Hub [via rarous](https://github.com/rarous/rarousnet/blob/master/circle.yml)
   - after success push to Docker Hub run ansible provisioning script to deploy and update server
