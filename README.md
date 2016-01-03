@@ -59,6 +59,7 @@ ansible-playbook provisioning/machine.yml -i provisioning/hosts -vvvv
 
 ## TODO's
 
+- Documentation
 - Better tests coverage
 - Packages
   - upgrade `react-router`
