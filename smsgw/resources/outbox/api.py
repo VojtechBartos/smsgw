@@ -109,9 +109,8 @@ class OutboxResource(FlaskView):
                 )
 
             # find contact for specific phone number
-            contacts = [contact for contact in contacts
-                        if contact.phoneNumber == phone_number]
-            contact = contacts[0] if len(contacts) else None
+            cts = [ct for ct in contacts if ct.phoneNumber == phone_number]
+            contact = cts[0] if len(cts) else None
 
             # adding message to outbox queue
             outbox = Outbox.send(
