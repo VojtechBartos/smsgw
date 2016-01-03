@@ -2,7 +2,9 @@
 [![Circle CI](https://circleci.com/gh/VojtechBartos/smsgw/tree/master.svg?style=svg)](https://circleci.com/gh/VojtechBartos/smsgw/tree/master)
 [![Dependency Status](https://david-dm.org/VojtechBartos/smsgw.png)](https://david-dm.org/VojtechBartos/smsgw) [![devDependency Status](https://david-dm.org/VojtechBartos/smsgw/dev-status.png)](https://david-dm.org/VojtechBartos/smsgw#info=devDependencies)
 
-master thesis **IN DEVELOPMENT**
+SMSGW is open source web-based SMS (Short Message Service) management system, it use gammu-smsd (part of gammu family) as SMS gateway engine to deliver and retrieve messages from your phone/modem.
+
+**NOTICE: still in development as part of the master thesis**
 
 ## Provisioning new machine
 
