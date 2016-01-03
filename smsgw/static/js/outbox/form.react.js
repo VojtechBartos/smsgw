@@ -5,7 +5,7 @@ import {findDOMNode} from 'react-dom';
 import moment from 'moment';
 import {Map} from 'immutable';
 import LaddaButton from 'react-ladda';
-import {Grid, Row, Col, Input} from 'react-bootstrap';
+import {Grid, Row, Col, Input, Well} from 'react-bootstrap';
 import DateTimeField from 'react-bootstrap-datetimepicker';
 import ReactTagsInput from 'react-tagsinput';
 import Component from '../components/component.react';
@@ -208,6 +208,13 @@ class Form extends Component {
                                inputFormat="HH:mm DD/MM/YYYY"
                                inputProps={dateTimeOptions}/>
               </div>
+              <Well bsSize="large" className="margin-top-25">
+                You can use some constant wich will be replaced by
+                real value. We are
+                supporting <strong>{'{firstName} '}</strong>
+                 or <strong>{'{lastName} '}</strong> for
+                user first name and last name.
+              </Well>
             </Col>
           </Row>
           <Row>
