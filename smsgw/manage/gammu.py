@@ -15,7 +15,11 @@ from smsgw.tasks.callback import CallbackTask
 class ReceiveHookCommand(Command):
     """ Receive hook for gammu """
 
-    def run(self, **kwargs):
+    def run(self):
+        # converting multipat messages to single one
+        Inbox.convert_multipart_messages()
+        db.session.commit()
+
         # getting all text messages which they have not been processed
         inbox = Inbox.query.filter_by(processed=False).all()
         for message in inbox:

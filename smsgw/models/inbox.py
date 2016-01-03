@@ -2,7 +2,7 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from datetime import datetime
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func
 from sqlalchemy.dialects import mysql
 from sqlalchemy.ext.declarative import AbstractConcreteBase
 from sqlalchemy.sql.expression import text as dbtext
@@ -66,3 +66,42 @@ class Inbox(BaseModel, DateMixin):
             properties = dict.keys()
 
         return {key: dict.get(key) for key in properties}
+
+
+    @classmethod
+    def convert_multipart_messages(cls):
+        """
+        Converting multipart messages to single row in table
+        """
+        # looking for distinct UDHs
+        udhs = db.session.query(func.substr(cls.udh, 1, 10)) \
+                         .filter(cls.udh.like("%01")) \
+                         .filter(cls.processed==False) \
+                         .all()
+        udhs = [udh[0] for udh in udhs]
+
+        # iterating over UDHs, looking for messages and merging that to single
+        # one row
+        for udh in udhs:
+            messages = cls.query.filter(cls.udh.like("%s%%" % udh)) \
+                                .filter(cls.processed==False) \
+                                .order_by(cls.udh.asc()) \
+                                .all()
+            if not len(messages):
+                break
+
+            # creating new single message instead of multiple messages
+            inbox = cls(text="".join([m.text for m in messages]),
+                        textEncoded="".join([m.textEncoded for m in messages]),
+                        recipient=messages[0].recipient,
+                        senderNumber=messages[0].senderNumber,
+                        smscNumber=messages[0].smscNumber,
+                        processed=False,
+                        udh="",
+                        klass=messages[0].klass,
+                        received=messages[0].received)
+            db.session.add(inbox)
+
+            # delete multiparts messages
+            for message in messages:
+                db.session.delete(message)
