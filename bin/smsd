@@ -4,4 +4,4 @@
 ./manage.py gammu_generate_config -d /usr/src/gammurc
 
 # running smsgw deamon
-gammu-smsd -c /usr/src/gammurc
+gammu-smsd -c /usr/src/gammurc --no-use-log

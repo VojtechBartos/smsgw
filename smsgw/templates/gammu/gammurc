@@ -17,7 +17,6 @@ database = {{DATABASE_NAME}}
 
 deliveryreport = yes
 
-logfile = /var/log/gammu/smsd.log
 debuglevel = 2
 
 runonreceive = /usr/src/app/bin/smsd_hook
