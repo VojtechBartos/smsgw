@@ -16,7 +16,17 @@ machine:
 dependencies:
   pre:
     - pip install setuptools==19.2
+    - npm install -g gulp
 
 test:
   override:
     - nosetests
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - gulp -e release
+      - docker build -t vojtechbartos/smsgw .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push vojtechbartos/smsgw

@@ -28,14 +28,6 @@ RUN \
 # http://comments.gmane.org/gmane.linux.drivers.gammu/10260
 RUN ldconfig
 
-# nodejs installation for building client-side javascript
-RUN \
-  curl -sL https://deb.nodesource.com/setup_5.x | bash - && \
-  apt-get install -y nodejs && \
-  npm install && \
-  npm install -g gulp && \
-  gulp -e release
-
 # python app port
 EXPOSE 5000
 
