@@ -1,7 +1,7 @@
 [gammu]
 
-device = /dev/ttyUSB0
-connection = at
+device = {{GAMMU_DEVICE_SERIAL}}
+connection = {{GAMMU_DEVICE_CONNECTION}}
 
 [smsd]
 
@@ -17,6 +17,7 @@ database = {{DATABASE_NAME}}
 
 deliveryreport = yes
 
+logfile = /var/log/gammu/gammu.log
 debuglevel = 2
 
 runonreceive = /usr/src/app/bin/smsd_hook

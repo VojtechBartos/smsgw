@@ -83,6 +83,8 @@ class GenerateConfigCommand(Command):
         config = render_template('gammu/gammurc', **{
             'GAMMU_DEVICE_ID': current_app.config['GAMMU_DEVICE_ID'],
             'GAMMU_DEVICE_PIN': current_app.config['GAMMU_DEVICE_PIN'],
+            'GAMMU_DEVICE_SERIAL': current_app.config['GAMMU_DEVICE_SERIAL'],
+            'GAMMU_DEVICE_CONNECTION': current_app.config['GAMMU_DEVICE_CONNECTION'],
             'DATABASE_USERNAME': current_app.config['DATABASE_USERNAME'],
             'DATABASE_PASSWORD': current_app.config['DATABASE_PASSWORD'],
             'DATABASE_HOST': current_app.config['DATABASE_HOST'],
