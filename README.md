@@ -61,6 +61,14 @@ make deploy
 # see SMSGW sign in page
 ```
 
+## Issues
+
+- What if i am using VPS in VirtualBox?
+  - Make sure that you have installed VirtualBox Quest Additions
+
+- I am not able to see GSM modem in `/dev`
+  - Follow this [tutorial](https://www.raspberrypi.org/forums/viewtopic.php?f=36&t=80925)
+
 ## TODO's
 
 - Documentation
