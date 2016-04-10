@@ -1,7 +1,7 @@
 app:
   image: vojtechbartos/smsgw
   links:
-    - db
+    - mariadb
     - rabbitmq
   env_file: .env
 
@@ -9,7 +9,7 @@ worker:
   image: vojtechbartos/smsgw
   command: celery -A smsgw.tasks.celery worker
   links:
-    - db
+    - mariadb
     - rabbitmq
   environment:
     C_FORCE_ROOT: 1
@@ -20,7 +20,7 @@ gammu:
   command: ./bin/smsd
   privileged: true
   links:
-    - db
+    - mariadb
     - rabbitmq
   env_file: .env
 
@@ -31,7 +31,7 @@ nginx:
   links:
     - app
 
-db:
+mariadb:
   image: mariadb:5.5
   ports:
     - "3306:3306"
