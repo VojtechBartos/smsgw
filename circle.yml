@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 5.5.0
+    version: 5.10.1
 
   python:
     version: 2.7.11
@@ -16,6 +16,7 @@ machine:
 dependencies:
   pre:
     - pip install setuptools==19.2
+    - npm install npm@3.8.5
     - npm install -g gulp
 
 test:
