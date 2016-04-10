@@ -17,7 +17,7 @@ const isDevelopment = (args.env == 'development');
  * Webpack
  */
 gulp.task('build', () => {
-  gulp
+  return gulp
     .src('./smsgw/static/js/main.js')
     .pipe(gulpWebpack({
       cache: (isDevelopment),
