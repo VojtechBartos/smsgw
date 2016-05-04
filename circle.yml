@@ -1,4 +1,7 @@
 machine:
+  services:
+    - docker
+    
   node:
     version: 5.10.1
 
