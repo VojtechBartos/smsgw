@@ -1,0 +1,22 @@
+---
+
+- block:
+
+  - shell: uname -r
+    ignore_errors: yes
+    changed_when: no
+    register: uname_result
+
+  - name: Install VirtualBox Quest Additions dependencies
+    apt:
+      pkg: "{{ item }}"
+      update_cache: yes
+      state: present
+    with_items:
+      - dkms
+      - build-essential
+      - linux-headers-generic
+      - "linux-headers-{{ uname_result.stdout }}"
+
+  become: yes
+  become_user: root

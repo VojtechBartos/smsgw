@@ -1,2 +1,2 @@
 [smsgw]
-{{ domain }} ansible_ssh_port=22 ansible_ssh_host={{ ip }} ansible_ssh_user={{ user }}
+{{ domain }} ansible_ssh_port=22 ansible_ssh_host={{ ip }} ansible_ssh_user={{ user }} ansible_ssh_pass={{ pass ansible_sudo_pass={{ pass}}

@@ -48,11 +48,11 @@ cp provisioning/hosts.sample provisioning/hosts
 vim provisioning/hosts
 
 # copy sample vars file for SMSGW project
-cp provisioning/roles/smsgw/vars/main.yml.sample provisioning/roles/smsgw/vars/main.yml
+cp provisioning/groups_vars/smsgw/service.yml.sample provisioning/groups_vars/smsgw/service.yml
 
 # update vars file for SMSGW project with your env variables for production,
 # new DB and RabbitMQ will be created
-vim provisioning/roles/smsgw/vars/main.yml
+vim provisioning/groups_vars/smsgw/service.yml
 
 # run ansible provisioning which will prepare and start SMSGW project on your machine
 make deploy
@@ -64,7 +64,7 @@ make deploy
 ## Issues
 
 - What if i am using VPS in VirtualBox?
-  - Make sure that you have installed VirtualBox Quest Additions
+  - Make sure that you have installed VirtualBox Quest Additions. [tutorial](http://en.ig.ma/notebook/2012/virtualbox-guest-additions-on-ubuntu-server)
 
 - I am not able to see GSM modem in `/dev`
   - Follow this [tutorial](https://www.raspberrypi.org/forums/viewtopic.php?f=36&t=80925)

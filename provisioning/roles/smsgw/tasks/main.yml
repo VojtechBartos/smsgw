@@ -1,18 +1,26 @@
 ---
-- name: pull smsgw project
-  git:
-    repo: git@github.com:VojtechBartos/smsgw.git
-    dest: /usr/src/smsgw/
-    accept_hostkey: True
 
-- name: creating env file
-  template:
-    src: ../../../../.env.sample
-    dest: /usr/src/smsgw/.env
+- block:
 
-- name: pulling images
-  command: docker-compose pull
-  args:
-    chdir: /usr/src/smsgw/
-  notify:
-    - docker compose up
+  - name: Pull smsgw project
+    git:
+      repo: https://github.com/VojtechBartos/smsgw.git
+      dest: /usr/src/smsgw/
+      version: master
+      accept_hostkey: True
+      force: yes
+
+  - name: Creating env file
+    template:
+      src: ../../../../.env.sample
+      dest: /usr/src/smsgw/.env
+
+  - name: Pulling images
+    command: docker-compose pull
+    args:
+      chdir: /usr/src/smsgw/
+    notify:
+      - Docker compose up
+
+  become: yes
+  become_user: root

@@ -1,0 +1,36 @@
+---
+
+- block:
+
+  - name: Add user
+    user:
+      name: "{{ item }}"
+    with_items: "{{ users }}"
+
+  - name: Add ssh key for user
+    authorized_key:
+      key: "{{ lookup('file', 'ssh-keys/users/id_rsa.pub.' + item) }}"
+      state: present
+      user: "{{ item }}"
+    with_items: "{{ users }}"
+
+  - name: Add user to sudo group and set shell
+    user:
+      name: "{{ item }}"
+      group: sudo
+      shell: /bin/bash
+    with_items: "{{ users }}"
+
+  - name: Set sudo group to have passwordless sudo
+    lineinfile:
+      dest: /etc/sudoers
+      owner: root
+      group: root
+      mode: 0440
+      line: "%sudo ALL=(ALL) NOPASSWD:ALL"
+      state: present
+      create: yes
+      validate: 'visudo -cf %s'
+
+  become: yes
+  become_user: root

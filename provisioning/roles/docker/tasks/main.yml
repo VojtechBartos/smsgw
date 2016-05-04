@@ -1,8 +1,17 @@
-- name: installing
-  shell: wget -qO- https://get.docker.io/ | sed -e "s/docker.com/docker.io/g" | sh
+---
 
-- name: installing docker compose
-  shell: curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-$(uname -s)-$(uname -m) > /usr/local/bin/docker-compose
+- block:
 
-- name: apply executable permissions to docker compose
-  command: chmod +x /usr/local/bin/docker-compose
+  # TODO(vojta) install it manually
+  - name: Install Docker
+    shell: curl -fsSL https://get.docker.com/ | sh
+
+  - name: Install docker-compose and docker-py
+    pip:
+      name: "{{ item }}"
+    with_items:
+      - docker-compose==1.7.0
+      - docker-py==1.8.0 # to be able to manage docker via ansible
+
+  become: yes
+  become_user: root

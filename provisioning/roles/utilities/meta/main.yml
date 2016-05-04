@@ -1,0 +1,11 @@
+---
+
+dependencies:
+  - role: utilities/ssh
+  - role: utilities/python
+  - role: utilities/htop
+  - role: utilities/curl
+  - role: utilities/git
+  - role: utilities/vim
+  - role: utilities/usbmodeswitch
+  - role: utilities/virtualbox

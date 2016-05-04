@@ -1,5 +1,11 @@
 ---
-- name: docker compose up
-  command: docker-compose up -d
-  args:
-    chdir: /usr/src/smsgw/
+
+- block:
+
+  - name: Docker compose up
+    command: docker-compose up -d
+    args:
+      chdir: /usr/src/smsgw/
+
+  become: yes
+  become_user: root

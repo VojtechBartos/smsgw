@@ -1,0 +1,12 @@
+---
+
+- block:
+
+  - name: Install git
+    apt:
+      pkg: git
+      update_cache: yes
+      state: latest
+
+  become: yes
+  become_user: root

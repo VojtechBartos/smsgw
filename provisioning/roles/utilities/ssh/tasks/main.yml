@@ -1,0 +1,28 @@
+---
+
+- block:
+  - name: Set SSH configuration
+    lineinfile:
+      dest: /etc/ssh/sshd_config
+      regexp: "{{ item.regex }}"
+      line: "{{ item.line }}"
+      state: present
+    with_items:
+      - regex: "^#?PermitRootLogin(.*)$"
+        line: PermitRootLogin no
+      - regex: "^#?RSAAuthentication(.*)$"
+        line: RSAAuthentication yes
+      - regex: "^#?PubkeyAuthentication(.*)$"
+        line: PubkeyAuthentication yes
+      - regex: "^#?RhostsRSAAuthentication(.*)$"
+        line: RhostsRSAAuthentication no
+      - regex: "^#?HostbasedAuthentication(.*)$"
+        line: HostbasedAuthentication no
+      - regex: "^#?ChallengeResponseAuthentication(.*)$"
+        line: ChallengeResponseAuthentication no
+      - regex: "^#?PasswordAuthentication(.*)$"
+        line: PasswordAuthentication no
+    notify: Restart sshd
+
+    become: yes
+    become_user: root

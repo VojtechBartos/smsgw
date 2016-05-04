@@ -1,0 +1,16 @@
+---
+
+- block:
+  - name: Install basic python packages
+    apt:
+      pkg: "{{ item }}"
+      update_cache: false
+      state: latest
+    with_items:
+      - python-dev
+      - python-setuptools
+      - python-pip
+      - python-virtualenv
+
+    become: True
+    become_user: root

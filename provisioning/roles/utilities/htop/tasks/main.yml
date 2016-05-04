@@ -1,0 +1,12 @@
+---
+
+- block:
+
+  - name: Install htop
+    apt:
+      pkg: htop
+      update_cache: yes
+      state: latest
+
+  become: yes
+  become_user: root

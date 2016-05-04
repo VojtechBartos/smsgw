@@ -1,0 +1,12 @@
+---
+
+- block:
+
+  - name: Install curl
+    apt:
+      pkg: curl
+      update_cache: yes
+      state: present
+
+  become: yes
+  become_user: root

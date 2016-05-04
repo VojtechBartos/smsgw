@@ -1,0 +1,12 @@
+---
+
+- block:
+
+  - name: Install usb-modeswitch
+    apt:
+      pkg: usb-modeswitch
+      update_cache: yes
+      state: latest
+
+  become: yes
+  become_user: root

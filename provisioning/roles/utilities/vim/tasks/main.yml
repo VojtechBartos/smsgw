@@ -1,0 +1,12 @@
+---
+
+- block:
+
+  - name: Install vim
+    apt:
+      pkg: vim
+      update_cache: false
+      state: latest
+
+  become: yes
+  become_user: root

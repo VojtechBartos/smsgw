@@ -1,9 +1,0 @@
-- name: installing common packages
-  apt: name={{ item }} update_cache=yes
-  with_items:
-    - htop
-    - make
-    - cmake
-    - curl
-    - vim
-    - git-core
