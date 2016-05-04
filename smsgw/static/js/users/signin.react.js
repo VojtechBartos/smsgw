@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import {findDOMNode} from 'react-dom';
 import {Link} from 'react-router';
 import LaddaButton from 'react-ladda';
 import Immutable from 'immutable';
@@ -19,8 +18,8 @@ class SignIn extends Component {
     e.preventDefault();
 
     const data = {
-      email: findDOMNode(this.refs.email).value,
-      password: findDOMNode(this.refs.password).value
+      email: this.refs.email.getDOMNode().value,
+      password: this.refs.password.getDOMNode().value
     };
 
     signIn(data).then(() => {
@@ -65,9 +64,9 @@ class SignIn extends Component {
                      required />
           </div>
           <LaddaButton
-              loading={pending}
-              buttonStyle="slide-right">
-              Sign in
+              active={pending}
+              style="expand-right">
+            <button>Sign in</button>
           </LaddaButton>
         </form>
 

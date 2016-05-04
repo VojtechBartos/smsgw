@@ -56,5 +56,11 @@ export const dispatchToken = Dispatcher.register(({action, data}) => {
         return users.set(data.uuid, new User(data));
       });
       break;
+
+    case actions.remove:
+      usersCursor(users => {
+        return users.remove(data.uuid);
+      });
+      break;
   }
 });

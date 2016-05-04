@@ -95,10 +95,10 @@ export function resetPassword(uuid, data) {
  * Delete user
  * @param  {String} uuid of user
  */
-export function del(uuid) {
-  let request = api.del(users.del(uuid), { token: _token });
+export function remove(uuid) {
+  let request = api.del(users.delete(uuid), { token: _token });
 
-  return Dispatcher.dispatch(del, request);
+  return Dispatcher.dispatch(remove, request);
 }
 
 /**
@@ -142,7 +142,7 @@ setToString('users', {
   get,
   create,
   update,
-  del,
+  remove,
   signIn,
   signUp,
   signOut,

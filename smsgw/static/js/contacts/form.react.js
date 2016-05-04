@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import {findDOMNode} from 'react-dom';
 import LaddaButton from 'react-ladda';
 import ReactTagsInput from 'react-tagsinput';
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -27,11 +26,11 @@ class Form extends Component {
 
   getData() {
     return {
-      firstName: findDOMNode(this.refs.firstName).value,
-      lastName: findDOMNode(this.refs.lastName).value,
-      phoneNumber: findDOMNode(this.refs.phoneNumber).value,
-      email: findDOMNode(this.refs.email).value,
-      note: findDOMNode(this.refs.note).value,
+      firstName: this.refs.firstName.getDOMNode().value,
+      lastName: this.refs.lastName.getDOMNode().value,
+      phoneNumber: this.refs.phoneNumber.getDOMNode().value,
+      email: this.refs.email.getDOMNode().value,
+      note: this.refs.note.getDOMNode().value,
       tags: this.refs.tags.getTags().map(el => {
         const tag = el.props.tag;
         return (tag instanceof Tag) ? tag.label : tag;
@@ -180,9 +179,9 @@ class Form extends Component {
           </Row>
           <Row>
             <Col md={3}>
-              <LaddaButton loading={this.props.pending}
-                           buttonStyle="slide-right">
-                {this.props.submitTitle}
+              <LaddaButton active={this.props.pending}
+                           style="expand-right">
+                <button>{this.props.submitTitle}</button>
               </LaddaButton>
             </Col>
           </Row>

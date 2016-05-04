@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import {findDOMNode} from 'react-dom';
 import Component from '../components/component.react';
 import LaddaButton from 'react-ladda';
 import {Grid, Row, Col} from 'react-bootstrap';
@@ -14,10 +13,10 @@ class Form extends Component {
 
   getData() {
     return {
-      label: findDOMNode(this.refs.label).value,
-      prefix: findDOMNode(this.refs.prefix).value,
-      callbackUrl: findDOMNode(this.refs.callbackUrl).value,
-      note: findDOMNode(this.refs.note).value
+      label: this.refs.label.getDOMNode().value,
+      prefix: this.refs.prefix.getDOMNode().value,
+      callbackUrl: this.refs.callbackUrl.getDOMNode().value,
+      note: this.refs.note.getDOMNode().value
     };
   }
 
@@ -70,9 +69,9 @@ class Form extends Component {
 
               <div className="cleaner" />
 
-              <LaddaButton loading={this.props.pending}
-                           buttonStyle="slide-right">
-                  {this.props.submitTitle}
+              <LaddaButton active={this.props.pending}
+                           style="expand-right">
+                <button>{this.props.submitTitle}</button>
               </LaddaButton>
             </Col>
           </Row>

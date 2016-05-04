@@ -41,7 +41,7 @@ class List extends Component {
       ]
     };
 
-    if (getAll.pending || !users)
+    if (getAll.pending || remove.pending || !users)
       return <Spinner fullscreen={true} />;
 
     return (
