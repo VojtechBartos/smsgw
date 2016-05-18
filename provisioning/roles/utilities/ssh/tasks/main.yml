@@ -20,8 +20,9 @@
         line: HostbasedAuthentication no
       - regex: "^#?ChallengeResponseAuthentication(.*)$"
         line: ChallengeResponseAuthentication no
+      # temporaly enabling passwd authentication
       - regex: "^#?PasswordAuthentication(.*)$"
-        line: PasswordAuthentication no
+        line: PasswordAuthentication yes
     notify: Restart sshd
 
     become: yes
