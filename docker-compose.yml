@@ -3,6 +3,7 @@ app:
   links:
     - mariadb
     - rabbitmq
+  restart: always
   env_file: .env
 
 worker:
@@ -11,6 +12,7 @@ worker:
   links:
     - mariadb
     - rabbitmq
+  restart: always
   environment:
     C_FORCE_ROOT: 1
   env_file: .env
@@ -22,6 +24,7 @@ gammu:
   links:
     - mariadb
     - rabbitmq
+  restart: 'onfailure:10'
   env_file: .env
 
 nginx:
@@ -30,6 +33,7 @@ nginx:
     - "80:80"
   links:
     - app
+  restart: always
 
 mariadb:
   image: mariadb:5.5
@@ -37,6 +41,7 @@ mariadb:
     - "3306:3306"
   volumes_from:
     - data
+  restart: always
   env_file: .env
 
 rabbitmq:
@@ -45,6 +50,7 @@ rabbitmq:
     - "5672:5672"
   volumes_from:
     - data
+  restart: always
   env_file: .env
 
 data:
