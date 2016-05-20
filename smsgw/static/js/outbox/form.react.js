@@ -82,10 +82,9 @@ class Form extends Component {
     // TODO(vojta) add validation
     const tag = item.props.tag;
     if (typeof tag === 'string' || tag instanceof String)
-      return validate(tag).then(() => cb(true))
-                          .error(() => cb(false));
-
-    cb(true);
+      validate(tag).then(() => cb(true)).catch(() => cb(false));
+    else
+      cb(true);
   }
 
   complete(value) {
