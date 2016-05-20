@@ -12,5 +12,3 @@ gammu:
   build: .
   volumes:
     - ./:/usr/src/app
-  devices:
-    - "/dev/ttyUSB0:/dev/ttyUSB0"

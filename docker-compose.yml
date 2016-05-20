@@ -21,6 +21,8 @@ gammu:
   image: vojtechbartos/smsgw
   command: ./bin/smsd
   privileged: true
+  devices:
+    - "/dev/ttyUSB0:/dev/ttyUSB0"
   links:
     - mariadb
     - rabbitmq
