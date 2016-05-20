@@ -153,7 +153,7 @@ class Form extends Component {
                 <label>To who:</label>
                 <ReactTagsInput ref="respondents"
                                 placeholder="Add contact"
-                                addOnBlur={false}
+                                addOnBlur={true}
                                 validateAsync={(tag, cb) => this.validateAsync(tag, cb)}
                                 beforeTagAdd={tag => this.beforeTagAdd(tag)}
                                 transform={tag => this.transform(tag)}

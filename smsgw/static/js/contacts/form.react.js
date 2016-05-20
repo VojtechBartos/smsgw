@@ -160,7 +160,7 @@ class Form extends Component {
                 <label>Tags</label>
                   <ReactTagsInput ref="tags"
                                   placeholder="Add tag"
-                                  addOnBlur={false}
+                                  addOnBlur={true}
                                   defaultValue={tags}
                                   validate={tag => this.validate(tag)}
                                   transform={tag => this.transform(tag)}
