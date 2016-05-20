@@ -2,7 +2,7 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from datetime import datetime
-from sqlalchemy import ForeignKey, func
+from sqlalchemy import ForeignKey, func, and_
 from sqlalchemy.orm import aliased
 from sqlalchemy.dialects import mysql
 from sqlalchemy.ext.declarative import AbstractConcreteBase
@@ -113,7 +113,11 @@ class SentItem(BaseModel, DateMixin):
             Contact.firstName,
             Contact.lastName
         ) \
-        .outerjoin(Contact, Contact.phoneNumber==cls.destinationNumber) \
+        .outerjoin(
+            Contact,
+            and_(Contact.phoneNumber==cls.destinationNumber,
+                 Contact.userId==cls.userId)
+        ) \
         .filter(cls.userId == user_id) \
         .filter(cls.applicationId == application_id) \
         .group_by(cls.group, cls.destinationNumber) \
