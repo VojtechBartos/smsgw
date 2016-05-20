@@ -2,6 +2,7 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from copy import deepcopy
+from datetime import datetime
 from flask import request
 from flask.ext.classy import FlaskView, route
 
@@ -147,6 +148,8 @@ class OutboxResource(FlaskView):
         Creating new message in outbox via application token key
         """
         data = request.json
+        send_at = str_to_datetime(data.get('send')) if data.get('send') \
+                                                    else datetime.utcnow()
 
         # put message to queue
         outbox = Outbox.send(
@@ -155,7 +158,7 @@ class OutboxResource(FlaskView):
             group=random_string(8),
             destination_number=data.get('phoneNumber'),
             message=data.get('message'),
-            send=str_to_datetime(data.get('send'))
+            send=send_at
         )
 
         return response(outbox.to_dict(), status_code=201)
