@@ -55,7 +55,8 @@ class SentItem(BaseModel, DateMixin):
 
     contact = db.relationship(
         'Contact',
-        primaryjoin="Contact.phoneNumber==SentItem.destinationNumber",
+        primaryjoin="and_(Contact.phoneNumber==SentItem.destinationNumber, "
+                    "Contact.userId==SentItem.userId)",
         foreign_keys=[destinationNumber],
         uselist=True
     )

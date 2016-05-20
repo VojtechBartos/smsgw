@@ -60,7 +60,8 @@ class Outbox(BaseModel, DateMixin):
 
     contact = db.relationship(
         'Contact',
-        primaryjoin="Contact.phoneNumber==Outbox.destinationNumber",
+        primaryjoin="and_(Contact.phoneNumber==Outbox.destinationNumber,"
+                    "Contact.userId==Outbox.userId)",
         foreign_keys=[destinationNumber],
         uselist=False
     )
