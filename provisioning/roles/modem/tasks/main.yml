@@ -1,0 +1,18 @@
+---
+
+- block:
+
+  - name: Adding message file
+    copy:
+      src: 12d1:15ca
+      dest: /etc/usb_modeswitch.d/12d1:15ca
+
+  - name: Adding USB mode switch rule
+    lineinfile:
+      dest: /lib/udev/rules.d/40-usb_modeswitch.rules
+      line: ATTR{idVendor}=="12d1", ATTR{idProduct}=="15ca", RUN+="usb_modeswitch '%b/%k'"
+      insertbefore: LABEL="modeswitch_rules_end"
+      state: present
+
+  become: yes
+  become_user: root

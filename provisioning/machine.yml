@@ -3,4 +3,5 @@
   roles:
     - utilities
     - users
+    - modem
     - smsgw
