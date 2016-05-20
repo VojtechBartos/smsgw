@@ -38,7 +38,19 @@ class InboxResource(FlaskView):
             query = app.inbox if app else user.inbox
             query = query.order_by(Inbox.received.desc())
 
-        return response([message.to_dict() for message in query.all()])
+        def mapper(message):
+            """Removing contact if user is not owner of that contact
+            :param message: {smsgw.models.Inbox}
+            :return: {dict}
+            """
+            item = message.to_dict()
+            user = request.user
+            if message.contact:
+                if user.id != message.contact.userId:
+                    item.pop('contact', None)
+            return item
+
+        return response(map(mapper, query.all()))
 
 
     @route('/inbox/<uuid:inbox_uuid>/', methods=['DELETE'])
