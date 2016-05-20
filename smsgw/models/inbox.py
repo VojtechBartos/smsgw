@@ -37,7 +37,8 @@ class Inbox(BaseModel, DateMixin):
 
     contact = db.relationship(
         'Contact',
-        primaryjoin="Contact.phoneNumber==Inbox.senderNumber",
+        primaryjoin="and_(Contact.phoneNumber==Inbox.senderNumber, "
+                    "Contact.userId==Inbox.userId)",
         foreign_keys=[senderNumber]
     )
 
