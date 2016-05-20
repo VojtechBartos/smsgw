@@ -1,5 +1,6 @@
 app:
   build: .
+  command: ./bin/run_dev
   volumes:
     - ./:/usr/src/app
 

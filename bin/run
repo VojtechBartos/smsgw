@@ -4,4 +4,4 @@
 ./manage.py init
 
 # running server
-./wsgi.py
+gunicorn -c gunicorn.py smsgw:app
