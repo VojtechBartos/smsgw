@@ -19,6 +19,8 @@ database = {{DATABASE_NAME}}
 
 deliveryreport = yes
 
+checksecurity = 0
+
 logfile = /var/log/gammu/gammu.log
 debuglevel = 2
 
