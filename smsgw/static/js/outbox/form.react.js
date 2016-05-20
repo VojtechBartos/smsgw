@@ -3,6 +3,7 @@
 import React from 'react';
 import moment from 'moment';
 import {Map} from 'immutable';
+import {trim} from 'lodash';
 import LaddaButton from 'react-ladda';
 import {Grid, Row, Col, Input, Well} from 'react-bootstrap';
 import DateTimeField from 'react-bootstrap-datetimepicker';
@@ -66,7 +67,7 @@ class Form extends Component {
     if (item instanceof Contact || item instanceof Tag)
       return true;
 
-    if (this.state.completions.size > 0)
+    if (this.state.completions.size > 0 || trim(item).length === 0)
       return false;
 
     return true;
@@ -79,12 +80,12 @@ class Form extends Component {
   }
 
   validateAsync(item, cb) {
-    // TODO(vojta) add validation
     const tag = item.props.tag;
-    if (typeof tag === 'string' || tag instanceof String)
-      validate(tag).then(() => cb(true)).catch(() => cb(false));
-    else
-      cb(true);
+    if ((typeof tag === 'string' || tag instanceof String))
+      if (trim(tag).length > 0)
+        return validate(tag).then(() => cb(true)).catch(() => cb(false));
+
+    cb(true);
   }
 
   complete(value) {
