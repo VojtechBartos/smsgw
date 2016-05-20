@@ -41,7 +41,7 @@ schema = {
             "pattern": patterns.PHONE_NUMBER,
             "messages": {
                 "type": "Phone number needs to be string.",
-                "pattern": "Phone number has invalid format. (+420736202512 as example.)"
+                "pattern": "Phone number has invalid format. (+420736202512 as an example.)"
             }
         },
         "note": {
