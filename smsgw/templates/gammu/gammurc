@@ -6,7 +6,9 @@ connection = {{GAMMU_DEVICE_CONNECTION}}
 [smsd]
 
 phoneid = {{GAMMU_DEVICE_ID}}
+{% if GAMMU_DEVICE_PIN %}
 PIN = {{GAMMU_DEVICE_PIN}}
+{% endif %}
 
 service = sql
 driver = native_mysql
