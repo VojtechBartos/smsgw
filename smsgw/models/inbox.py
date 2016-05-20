@@ -35,9 +35,12 @@ class Inbox(BaseModel, DateMixin):
 
     received = db.Column(db.TIMESTAMP)
 
-    contact = db.relationship('Contact',
-                              primaryjoin="Contact.phoneNumber==Inbox.senderNumber",
-                              foreign_keys=[senderNumber])
+    contact = db.relationship(
+        'Contact',
+        primaryjoin="and_(Contact.phoneNumber==Inbox.senderNumber, "
+                    "Contact.userId==Inbox.userId)",
+        foreign_keys=[senderNumber]
+    )
 
 
     def to_dict(self, properties=None):
