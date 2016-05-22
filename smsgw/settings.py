@@ -7,8 +7,6 @@ from kombu import Queue
 from smsgw.lib.utils import get_sql_alchemy_db_uri, get_rabbitmq_uri
 
 
-WORKERS = multiprocessing.cpu_count() * 2 + 1
-
 SERVER_NAME = os.environ.get('NGINX_HOSTNAME')
 
 DEBUG = os.environ.get('DEBUG', False)
