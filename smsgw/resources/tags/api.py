@@ -33,6 +33,8 @@ class TagsResource(FlaskView):
             like = "%{0}%".format(search)
             tags = tags.filter(Tag._label.like(like))
 
+        tags = tags.order_by(Tag._label.asc())
+
         return response([tag.to_dict() for tag in tags.all()])
 
 

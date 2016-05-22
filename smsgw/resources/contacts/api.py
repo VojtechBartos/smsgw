@@ -34,8 +34,9 @@ class ContactsResource(FlaskView):
             contacts = contacts.filter(or_(Contact.firstName.ilike(like),
                                            Contact.lastName.ilike(like)))
 
+        contacts = contacts.order_by(Contact.lastName.asc()).all()
 
-        return response([contact.to_dict() for contact in contacts.all()])
+        return response([contact.to_dict() for contact in contacts])
 
 
     @route('/<uuid:contact_uuid>/')

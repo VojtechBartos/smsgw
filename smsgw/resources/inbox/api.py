@@ -30,15 +30,18 @@ class InboxResource(FlaskView):
         query = None
 
         if user is None:
-            query = Inbox.query.order_by(Inbox.received.desc())
-
+            query = Inbox.query
             if not request.user.is_admin():
-                raise ErrorResource(message='Not have permissions.', status_code=403)
+                raise ErrorResource(
+                    message='Not have permissions.',
+                    status_code=403
+                )
         else:
             query = app.inbox if app else user.inbox
-            query = query.order_by(Inbox.received.desc())
 
-        return response([message.to_dict() for message in query.all()])
+        messages = query.order_by(Inbox.received.desc()).all()
+
+        return response([message.to_dict() for message in messages])
 
 
     @route('/inbox/<uuid:inbox_uuid>/', methods=['DELETE'])

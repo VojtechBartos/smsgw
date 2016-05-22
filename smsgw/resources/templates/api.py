@@ -23,8 +23,9 @@ class TemplatesResource(FlaskView):
         Getting list of user's templates
         """
         user = kwargs.get('user')
+        templates = user.templates.order_by(Template.label.asc())
 
-        return response([template.to_dict() for template in user.templates.all()])
+        return response([template.to_dict() for template in templates])
 
 
     @route('/<uuid:template_uuid>/')

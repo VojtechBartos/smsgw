@@ -25,7 +25,9 @@ class UsersResource(FlaskView):
         """
         Getting list of all users, only with admin privileges
         """
-        return response([user.to_dict() for user in User.query.all()])
+        users = User.query.order_by(User.lastName.asc()).all()
+
+        return response([user.to_dict() for user in users])
 
 
     @route('/<uuid:user_uuid>/', methods=['GET'])

@@ -25,9 +25,9 @@ class ApplicationsResource(FlaskView):
         Returning list of applications for specific user
         """
         user = kwargs.get('user')
+        applications = user.applications.order_by(Application.label.asc()).all()
 
-        return response([app.to_dict()
-                         for app in user.applications.all()])
+        return response([app.to_dict() for app in applications])
 
 
     @route('/<uuid:application_uuid>/')
