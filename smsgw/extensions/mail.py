@@ -37,7 +37,7 @@ class Mail(object):
         :param html: {bool} if email is plain text or html
         :return: {bool} has benn successfull or not
         """
-        if self.app.config('TESTING', False):
+        if self.app.config.get('TESTING', False):
             return
 
         assert self.domain is not None, "Missing Mailgun domain."
