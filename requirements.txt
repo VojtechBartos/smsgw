@@ -1,7 +1,7 @@
 alembic==0.7.3
 awesome-slugify==1.6
 celery==3.1.17
-flower==0.7.3
+flower==0.8.4
 Flask==0.10.1
 Flask-Bcrypt==0.6.0
 Flask-Classy==0.6.10

@@ -80,5 +80,6 @@ make deploy
 - DevOps
   - ~~write installation steps~~
   - replace `vojtechbartos/nginx` with https://github.com/jwilder/nginx-proxy
+  - add flower monitoring
   - ~~build image on CircleCI and pushing to Docker Hub [via rarous](https://github.com/rarous/rarousnet/blob/master/circle.yml)~~
   - after success push to Docker Hub run ansible provisioning script to deploy and update server
