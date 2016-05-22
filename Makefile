@@ -10,5 +10,8 @@ dev:
 stop:
 	docker-compose stop
 
+kill:
+	docker-compose kill
+
 deploy:
 	(cd provisioning/; ansible-playbook machine.yml)
