@@ -2,7 +2,6 @@
 # http://google-styleguide.googlecode.com/svn/trunk/pyguide.html
 
 from flask import render_template, current_app as app
-from flask.ext.mail import Message
 
 from smsgw.tasks.base import BaseTask
 from smsgw.core import mail
