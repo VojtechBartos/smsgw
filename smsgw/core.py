@@ -4,7 +4,8 @@
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.bcrypt import Bcrypt
 from flask.ext.migrate import Migrate
-from flask.ext.mail import Mail
+
+from smsgw.extensions.mail import Mail
 
 
 db = SQLAlchemy()

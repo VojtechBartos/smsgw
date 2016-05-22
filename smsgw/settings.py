@@ -10,10 +10,15 @@ from smsgw.lib.utils import get_sql_alchemy_db_uri, get_rabbitmq_uri
 SERVER_NAME = os.environ.get('NGINX_HOSTNAME')
 
 DEBUG = os.environ.get('DEBUG', False)
-LOGGING = os.environ.get('LOGGING', False)
 TESTING = os.environ.get('TESTING', False)
 STATIC_FOLDER = os.path.join('static')
 SECRET_KEY = os.urandom(24)
+
+# Logging
+LOGGING = bool(os.environ.get('LOGGING', False))
+LOGGING_EMAIL_BLACKLIST = {
+    # TODO(vojta) figure out what endpoints should be blacklisted
+}
 
 # Database
 DATABASE_DIALECT = 'mysql'
@@ -38,14 +43,10 @@ RABBITMQ_USER = os.environ.get('RABBITMQ_DEFAULT_USER', 'guest')
 RABBITMQ_PASSWORD = os.environ.get('RABBITMQ_DEFAULT_PASS', 'guest')
 
 # Mail
-MAIL_SERVER = os.environ.get('MAIL_SERVER', 'localhost')
-MAIL_PORT = os.environ.get('MAIL_PORT', 25)
-MAIL_USE_SSL = os.environ.get('MAIL_USE_SSL', False)
-MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-DEFAULT_MAIL_SENDER = os.environ.get('MAIL_DEFAULT_SENDER', "info@{0}".format(
-    SERVER_NAME
-))
+MAIL_DEFAULT = os.environ.get('MAIL_DEFAULT', 'hi@vojtech.me')
+MAIL_DEBUG = os.environ.get('MAIL_DEBUG', 'hi@vojtech.me')
+MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN')
+MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY')
 
 # CELERY
 CELERY_IMPORTS = ("smsgw.tasks.callback", "smsgw.tasks.mail")
@@ -64,6 +65,7 @@ CELERYBEAT_SCHEDULE = None
 CELERYD_POOL_RESTARTS = True
 CELERY_ALWAYS_EAGER = TESTING
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = TESTING
+CELERY_ACCEPT_CONTENT = ['pickle']
 
 # Gammu
 GAMMU_VERSION = os.environ.get('GAMMU_VERSION', "1.34.0")

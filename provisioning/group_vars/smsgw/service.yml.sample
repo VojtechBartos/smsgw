@@ -4,6 +4,7 @@
 #   - vojta
 #
 # debug: 1
+# logging: 1
 #
 # hostname: app.smsgw.cz
 #
@@ -16,9 +17,5 @@
 # rabbitmq_user: smsgw
 # rabbitmq_password: smsgw
 #
-# mail_server: smtp.seznam.cz
-# mail_port: 465
-# mail_use_ssl: 1
-# mail_username: smsgw@seznam.cz
-# mail_password: smsgwsmsgw
-# mail_default_sender: smsgw@seznam.cz
+# mailgun_domain: **TOCHANGE**
+# mailgun_api_key: **TOCHANGE

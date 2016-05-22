@@ -1,0 +1,9 @@
+{% for key, value in environ.iteritems() %}{{ key|safe }}: {{ value|safe }}
+{% endfor %}
+
+{% if lcls is mapping %}
+{% for key, value in lcls.iteritems() %}
+  {{ key|safe }}
+  {{ value|safe }}
+{% endfor %}
+{% endif %}

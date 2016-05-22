@@ -137,3 +137,25 @@ def is_special_char(char):
                u'v', u'w', u'x', u'y', u'z', u'ä', u'ñ', u'à']
 
     return char in special
+
+
+def should_be_reported(black_list, status_code, endpoint):
+    """Checking if action by path and reponse status code should be reported
+    :param black_list: {dict} blacklisted status codes and endpoints
+    :param status_code: {int} response status code
+    :param endpoint: {str} endpoint name in format as `UsersResource:index`
+    :return: {bool}
+    """
+    report = True
+    # if we get None from one parameter we want to report it
+    # or blacklist is not dict
+    if None in (black_list, status_code, endpoint) or type(black_list) != dict:
+        return report
+
+    # looking for True/{list} in dictionary value
+    item = black_list.get(status_code)
+    if item is True: # blacklisted whole status_code
+        report = False
+    elif type(item) == list and endpoint in item: # blacklisted specific urls
+        report = False
+    return report
