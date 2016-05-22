@@ -113,9 +113,9 @@ export var sent = {
     if (user && application)
       return `${BASE}/users/${user}/applications/${application}/sent/${uuid}/`;
     else if (user)
-      return `${BASE}/users/${user}/sent/${uuid}`;
+      return `${BASE}/users/${user}/sent/${uuid}/`;
     else
-      return `${BASE}/sent/${uuid}`;
+      return `${BASE}/sent/${uuid}/`;
   }
 };
 
@@ -162,6 +162,6 @@ export function stats(application = null, range = null) {
 
   if (range)
     url = `${url}${range}/`;
-    
+
   return url;
 };
