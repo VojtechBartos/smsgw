@@ -72,6 +72,7 @@ make deploy
 
 - Documentation
 - Better tests coverage
+- Make final JS bundle smaller
 - Packages
   - upgrade `react-router`
   - upgrade `react-tagsinput`
