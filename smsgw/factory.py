@@ -29,8 +29,6 @@ def create_app():
     # TODO(vojta) move it to separate function
     @app.after_request
     def after_request(response):
-        """
-        """
         from smsgw.tasks.mail import MailTask
 
         status_code = response.status_code
