@@ -36,7 +36,7 @@ SQLALCHEMY_DATABASE_URI = get_sql_alchemy_db_uri(
     database=DATABASE_NAME
 )
 # http://stackoverflow.com/questions/18054224/python-sqlalchemy-mysql-server-has-gone-away
-SQLALCHEMY_POOL_RECYCLE = 900
+SQLALCHEMY_POOL_RECYCLE = 60
 
 # RabbitMQ
 RABBITMQ_HOST = os.environ.get('RABBITMQ_HOST', 'rabbitmq')
